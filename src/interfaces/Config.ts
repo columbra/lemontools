@@ -3,6 +3,10 @@ export interface Config {
   name: string;
   author: string;
   sudos: string[] | Snowflake[];
-  production: boolean
-  testServer: Snowflake | string
+  production: boolean;
+  testServer: Snowflake | string;
+  theme: {
+    main: string;
+    secondary: string
+  };
 }
