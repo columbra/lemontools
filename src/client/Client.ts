@@ -84,6 +84,10 @@ export class Bot extends Client {
     this.config = config as Config;
     this.login(process.env.TOKEN);
 
+    this.on("ready", () => {
+      this.logger.info(`${config.name} is ready!`)
+    })
+
     const commandFiles = await globPromise(
       path.join(__dirname, `../commands/**/*.{js,ts}`)
     );
