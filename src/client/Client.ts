@@ -69,7 +69,7 @@ export class Bot extends Client {
   public aliases: Collection<string, string> = new Collection();
   public events: Collection<string, Event> = new Collection();
   public categories: Set<string> = new Set();
-  public cooldowns: Set<Cooldown> = new Set();
+  public cooldowns: Collection<string, Cooldown[]> = new Collection();
   public readonly logger: Logger = logger;
   private someRest: REST = new REST({ version: "9" }).setToken(
     process.env.TOKEN ?? ""
