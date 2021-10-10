@@ -24,7 +24,33 @@ export default class InteractionCreate extends Event {
     this.bot.cooldowns.get(command.name)?.forEach((v) => {
       if (v.user === interaction.user.id) cooldownData = v;
     });
+    const runFunct = () => {
+      command
+        .execute(interaction)
+        .then(() => {
+          const cooldowns = this.bot.cooldowns.get(command.name);
+          const cdd = {
+            until: new Date(Date.now() + command.cooldown),
+            user: interaction.user.id,
+          } as Cooldown;
+          if (!cooldowns) {
+            this.bot.cooldowns.set(command.name, [cdd]);
+          } else {
+            this.bot.cooldowns.set(command.name, [...cooldowns, cdd]);
+          }
+        })
+        .catch((err) => {
+          interaction.reply({
+            ephemeral: true,
+            content: `Whoops! Something went wrong when executing that command.`,
+          });
+          this.bot.logger.error(
+            `Command ${commandName} failed!\nError: ${err}`
+          );
+        });
+    };
     if (cooldownData) {
+      if (Date.now() >= cooldownData.until.getTime()) return runFunct();
       return interaction.reply({
         ephemeral: true,
         embeds: [
@@ -42,26 +68,6 @@ export default class InteractionCreate extends Event {
         ],
       });
     }
-    command
-      .execute(interaction)
-      .then(() => {
-        const cooldowns = this.bot.cooldowns.get(command.name);
-        const cdd = {
-          until: new Date(Date.now() + command.cooldown),
-          user: interaction.user.id,
-        } as Cooldown;
-        if (!cooldowns) {
-          this.bot.cooldowns.set(command.name, [cdd]);
-        } else {
-          this.bot.cooldowns.set(command.name, [...cooldowns, cdd]);
-        }
-      })
-      .catch((err) => {
-        interaction.reply({
-          ephemeral: true,
-          content: `Whoops! Something went wrong when executing that command.`,
-        });
-        this.bot.logger.error(`Command ${commandName} failed!\nError: ${err}`);
-      });
+    runFunct();
   };
 }

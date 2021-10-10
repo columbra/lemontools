@@ -58,4 +58,16 @@ export abstract class Command {
       )
       .setColor(16711680);
   }
+
+  protected capitalise(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  protected simpleEmbed(description: string) {
+    const decimalColour = parseInt(theme.main.replace("#", ""), 16);
+    return new MessageEmbed()
+      .setTimestamp()
+      .setColor(decimalColour)
+      .setDescription(description);
+  }
 }
