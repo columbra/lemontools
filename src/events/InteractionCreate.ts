@@ -2,8 +2,9 @@ import { ClientEvents, CommandInteraction } from "discord.js";
 import { Event } from "../interfaces/Event";
 
 export default class InteractionCreate extends Event {
-  event = "InteractionCreate" as keyof ClientEvents;
-  execute = async (interaction: CommandInteraction) => {
+  event = "interactionCreate" as keyof ClientEvents;
+  execute = async (Ainteraction: CommandInteraction[]) => {
+    const [interaction] = Ainteraction
     if (!interaction.isCommand()) return;
     const { commandName } = interaction;
     const command = this.bot.commands.get(commandName);

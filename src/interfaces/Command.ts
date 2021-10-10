@@ -33,12 +33,12 @@ export abstract class Command {
     this.bot = bot;
   }
 
-  protected embed(opts: MessageEmbedOptions, message: Message) {
+  protected embed(opts: MessageEmbedOptions, interaction: CommandInteraction) {
     const decimalColour = parseInt(theme.main.replace("#", ""), 16);
     return new MessageEmbed(opts)
       .setFooter(
-        `Command run by ${message.author.tag}`,
-        message.author.displayAvatarURL({ dynamic: true })
+        `Command run by ${interaction.user.tag}`,
+        interaction.user.displayAvatarURL({ dynamic: true })
       )
       .setTimestamp()
       .setColor(decimalColour);
