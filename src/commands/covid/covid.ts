@@ -5,7 +5,7 @@ import https from "https";
 
 import humanFormat from "human-format";
 
-export = class Info extends Command {
+export = class Covid extends Command {
   name = "covid";
   disabled? = false;
   description = "Fetch Coronavirus information for your country";
