@@ -70,4 +70,8 @@ export abstract class Command {
       .setColor(decimalColour)
       .setDescription(description);
   }
+
+  protected percentFromDecimal(decimal: number): string {
+    return `${decimal * 100}%`
+  }
 }
