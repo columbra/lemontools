@@ -1,11 +1,11 @@
 {
-  "name": "K-Tools",
+  "name": "Lemon Tools",
   "author": "Windows95",
   "sudos": ["330539533546422272"],
   "production": true,
   "testServer": "895165587188224010",
   "theme": {
-    "main": "#007fff",
-    "secondary": "#90EE90"
+    "main": "#FEF250",
+    "secondary": "#FBF9C2"
   }
 }
