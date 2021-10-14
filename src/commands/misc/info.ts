@@ -29,7 +29,7 @@ export = class Info extends Command {
           config.production ? "Yes" : "No"
         }\n\n**About:**\n${
           config.name
-        } is a multi-use tools bot, which has a multitude of features not covered by other bots, such as QR Code creation, conversation starters and much, much more. Invite me to your servers today! Invite: **[Link](${this.bot.generateInvite(
+        } is a multipurpose tools bot, which has a multitude of features not covered by other bots, such as QR Code creation, conversation starters and much, much more. Invite me to your servers today! Invite: **[Link](${this.bot.generateInvite(
           {
             scopes: ["bot", "applications.commands"],
             permissions: new Permissions(448928796608n),
