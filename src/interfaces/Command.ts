@@ -81,7 +81,7 @@ export abstract class Command {
   }
 
   protected calcNumberFromRatio(number: number, ratio: number): number {
-    return Math.round(number / ratio);
+    return Math.round(number / ratio) - number;
   }
 
   protected getNYTData(

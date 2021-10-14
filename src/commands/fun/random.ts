@@ -32,7 +32,7 @@ export = class Random extends Command {
   sudo = false;
 
   execute = async (interaction: CommandInteraction) => {
-    const crazy = 9007199254740991;
+    const crazy = Number.MAX_SAFE_INTEGER;
     const min = interaction.options.getNumber("min");
     const max = interaction.options.getNumber("max");
     if (min === null || max === null)
