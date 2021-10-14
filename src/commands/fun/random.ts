@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, MessageAttachment } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { Command } from "../../interfaces/Command";
-import { Fun, oneToSix } from "../../static/methods/Fun";
 
 export = class Random extends Command {
   name = "random";
