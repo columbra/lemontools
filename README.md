@@ -14,6 +14,7 @@ This souce code is licensed under the GNU GPL 3.0 License. See LICENSE for more 
 3. Open a terminal window in the directory where you have the code. Type these commands (this is for Windows, differs between OS)
 
 ```bash
+npm ci
 npm run build
 ```
 
