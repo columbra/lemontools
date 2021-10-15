@@ -6,7 +6,7 @@ name: Testing
 on:
   # Triggers the workflow on push or pull request events but only for the main & dev branches
   push:
-    branches: [ main, dev ]
+    branches: [ main ]
   pull_request:
   # Only check PRs for main branch, all PRs should use main
     branches: [ main ]
@@ -26,6 +26,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Install npm packages
+      - name: Install npm packages
+        run: npm ci
       # Runs a single command using the runners shell
       - name: Run Jest Tests with coverage report
         run: npx jest
