@@ -28,4 +28,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run Jest Tests with coverage report
-        run: npm run test
+        run: npx jest
