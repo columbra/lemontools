@@ -30,9 +30,9 @@ jobs:
       - name: Install npm packages
         run: npm install
 
-      # Install ts-jest
-      - name: Install ts-jest
-        run: npm i -D ts-jest
+      # Install ts-jest & typescript
+      - name: Install ts-jest & typescript
+        run: npm i -D ts-jest typescript 
       # Runs a single command using the runners shell
       - name: Run Jest Tests with coverage report
         run: npx jest
