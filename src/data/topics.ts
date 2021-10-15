@@ -12,4 +12,8 @@ export const topics = [
   "Favourite food?",
   "Who would win in a nuclear war?",
   "What type of personality do you describe yourself as having?",
+  "What is your favourite weather?",
+  "Would you rather eternal snow or eternal rain? Why?",
+  "Which public holiday in your country is your favourite? How about your least favourite?",
+  "If you had the ability to declare one day of the year a public holiday for the world, which day would you choose and why? Furthermore, what would the holiday be called?",
 ];
