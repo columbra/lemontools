@@ -35,7 +35,7 @@ export = class DadJoke extends Command {
         const embed = this.embed(
           {
             title: body,
-            url: "icanhazdadjoke.com",
+            url: "https://icanhazdadjoke.com",
             description: `Fetched from [icanhazdadjoke](icanhazdadjoke.com)`
           },
           interaction
