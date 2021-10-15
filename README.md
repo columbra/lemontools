@@ -1,4 +1,5 @@
 # Lemon Tools Source Code
+[![Node.js CI](https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml/badge.svg)](https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml)
 ![lemon tools](https://i.imgur.com/J09xOrO.png)
 
 
