@@ -28,7 +28,7 @@ jobs:
 
       # Install npm packages
       - name: Install npm packages
-        run: npm ci
+        run: npm install
       # Runs a single command using the runners shell
       - name: Run Jest Tests with coverage report
         run: npx jest
