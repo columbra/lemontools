@@ -40,10 +40,11 @@ export = class Calc extends Command {
     }); // WHY: Not bothered to escape all backticks
     const coll = msg.createMessageComponentCollector({
       filter: (i) => i.user.id === interaction.user.id,
-      time: 20e6, // big number
+      time: 60, // 1 minute
       componentType: "BUTTON",
     });
     coll.on("collect", (button) => {
+      coll.resetTimer()
       let val: string;
       try {
         val = button.customId;
