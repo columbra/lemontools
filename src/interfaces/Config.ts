@@ -7,6 +7,6 @@ export interface Config {
   testServer: Snowflake | string;
   theme: {
     main: string;
-    secondary: string
+    secondary: string;
   };
 }

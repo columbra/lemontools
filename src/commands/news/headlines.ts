@@ -53,7 +53,7 @@ export = class NYT extends Command {
   sudo = false;
 
   execute = async (interaction: CommandInteraction) => {
-    await interaction.deferReply()
+    await interaction.deferReply();
     const category = interaction.options.getString("category");
     const data = await this.getNYTData(
       category as TopCategories,
@@ -66,7 +66,7 @@ export = class NYT extends Command {
       {
         author: {
           name: `${headline.byline}`,
-          url: "https://developer.nytimes.com"
+          url: "https://developer.nytimes.com",
         },
         thumbnail: {
           height: 65,
@@ -79,7 +79,7 @@ export = class NYT extends Command {
         image: { height: image.height, width: image.width, url: image.url },
       },
       interaction
-    ); 
-    interaction.editReply({embeds: [embed]})
+    );
+    interaction.editReply({ embeds: [embed] });
   };
 };

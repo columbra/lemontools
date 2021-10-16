@@ -29,7 +29,7 @@ export = class Covid extends Command {
           ["australia", "countries/aus"],
           ["usa", "countries/usa"],
           ["israle", "countries/isr"],
-          ["china", "countries/chn"]
+          ["china", "countries/chn"],
         ])
     );
   sudo = false;

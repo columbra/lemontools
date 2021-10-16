@@ -20,5 +20,5 @@ export const topics = [
   "What are your views on climate change?",
   "What language is the most difficult to learn?",
   "When was the last time you climbed a tree for fun",
-  "What is the most dangerous place on Earth in your opinion?"
+  "What is the most dangerous place on Earth in your opinion?",
 ];

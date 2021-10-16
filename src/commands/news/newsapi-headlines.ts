@@ -38,7 +38,9 @@ export = class Headlines extends Command {
                 name: "Source",
                 value: `**Published by:** ${
                   article.source.name
-                }\n**Published ID:** ${article.source.id ?? "Cannot find ID"}\n\n**[Powered by News API](https://newsapi.org)**`,
+                }\n**Published ID:** ${
+                  article.source.id ?? "Cannot find ID"
+                }\n\n**[Powered by News API](https://newsapi.org)**`,
                 inline: false,
               },
               {

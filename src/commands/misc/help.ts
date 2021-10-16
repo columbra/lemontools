@@ -73,7 +73,12 @@ export = class Help extends Command {
           value: `**Usage:** /${command.name} ${command.usage}\n**Example:** /${command.name} ${command.example}`,
           inline: true,
         });
-      if(command.aliases?.length) fields.push({name: `Aliases`, value: `\`${command.aliases.join(", ")}\``, inline: true})
+      if (command.aliases?.length)
+        fields.push({
+          name: `Aliases`,
+          value: `\`${command.aliases.join(", ")}\``,
+          inline: true,
+        });
       if (fields.length) {
         interaction.reply({
           embeds: [
