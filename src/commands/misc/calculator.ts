@@ -6,7 +6,7 @@ import {
   MessageButton,
 } from "discord.js";
 import { Command } from "../../interfaces/Command";
-import { bitNot, evaluate } from "mathjs";
+import { evaluate } from "mathjs";
 
 export = class Calc extends Command {
   name = "calc";
@@ -44,7 +44,7 @@ export = class Calc extends Command {
       componentType: "BUTTON",
     });
     coll.on("collect", (button) => {
-      coll.resetTimer()
+      coll.resetTimer();
       let val: string;
       try {
         val = button.customId;
