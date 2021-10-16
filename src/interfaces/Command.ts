@@ -3,6 +3,7 @@ import {
   CommandInteraction,
   Interaction,
   Message,
+  MessageActionRow,
   MessageEmbed,
   MessageEmbedOptions,
 } from "discord.js";
@@ -108,5 +109,14 @@ export abstract class Command {
 
   protected rnd(low: number, high: number): number {
     return Math.floor(Math.random() * (high - low + 1)) + low;
+  }
+  protected disabledComponents(
+    components: MessageActionRow[]
+  ): MessageActionRow[] {
+    return components.map((row) => {
+      return new MessageActionRow().addComponents(
+        row.components.map((component) => component.setDisabled(true))
+      );
+    });
   }
 }
