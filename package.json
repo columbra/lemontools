@@ -11,7 +11,7 @@
     "lint": "npx prettier ./src --w",
     "start": "node ./build/src",
     "prepare": "husky install",
-    "deploy": "npm run build && pm2 start ./build/src --name lemon"
+    "deploy": "npm install && npm run build && pm2 start ./build/src --name lemon"
   },
   "keywords": [],
   "author": "",
