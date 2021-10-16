@@ -9,7 +9,8 @@
     "prebuild": "npx rimraf ./build",
     "build": "tsc -p tsconfig.json",
     "lint": "npx prettier ./src --w",
-    "start": "node ./build/src"
+    "start": "node ./build/src",
+    "deploy": "npm run build && pm2 start ./build/src --name lemon"
   },
   "keywords": [],
   "author": "",
