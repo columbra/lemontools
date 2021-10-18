@@ -107,6 +107,7 @@ export class Bot extends Client {
     commandFiles.map(async (file) => {
       const Acommand = (await import(file)).default;
       const command = new Acommand(this);
+      if (command.disabled) return;
       this.commands.set(command.name, command);
       if (command.aliases?.length) {
         command.aliases.map((val: any) => this.aliases.set(val, command.name));
