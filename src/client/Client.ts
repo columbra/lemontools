@@ -1,26 +1,18 @@
 /** @format */
 
-import winston, { transports, Logger } from "winston";
-import {
-  Client,
-  MessageEmbedOptions,
-  Message,
-  Intents,
-  Collection,
-  MessageEmbed,
-  Snowflake,
-} from "discord.js";
-import glob from "glob";
-import { promisify } from "util";
-import { Config } from "../interfaces/Config";
-import dotenv from "dotenv";
-import { Command } from "../interfaces/Command";
-import { Cooldown } from "../interfaces/Cooldown";
-import chalk from "chalk";
-import path from "path";
-import { Event } from "../interfaces/Event";
 import { REST } from "@discordjs/rest";
+import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
+import { Client, Collection, Intents } from "discord.js";
+import dotenv from "dotenv";
+import glob from "glob";
+import path from "path";
+import { promisify } from "util";
+import winston, { Logger, transports } from "winston";
+import { Command } from "../interfaces/Command";
+import { Config } from "../interfaces/Config";
+import { Cooldown } from "../interfaces/Cooldown";
+import { Event } from "../interfaces/Event";
 
 dotenv.config();
 const globPromise = promisify(glob);

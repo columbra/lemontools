@@ -2,8 +2,8 @@
   "name": "Lemon Tools",
   "author": "Windows95",
   "sudos": ["330539533546422272"],
-  "production": true,
-  "testServer": "895165587188224010",
+  "production": false,
+  "testServer": "734674763435343872",
   "theme": {
     "main": "#FEF250",
     "secondary": "#FBF9C2"
