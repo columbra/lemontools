@@ -42,6 +42,9 @@ const loggerColours = {
 const loggerFormat = winston.format.printf(({ level, message, timestamp }) => {
   return chalk`{magenta ${timestamp}} [${level}] ${message}`;
 });
+const fileFormat = winston.format.printf(({ level, message, timestamp }) => {
+  return `${timestamp} [${level}] ${message}`;
+});
 const logger = winston.createLogger({
   levels: loggerLevels,
   transports: [
@@ -53,6 +56,10 @@ const logger = winston.createLogger({
       ),
     }),
     new transports.File({
+      format: winston.format.combine(
+        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        fileFormat
+      ),
       filename: "log.log",
     }),
   ],
