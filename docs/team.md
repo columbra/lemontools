@@ -11,5 +11,3 @@ Want your GitHub profile pic on this list? Open a PR [here](https://github.com/C
 ![Contributors](https://contrib.rocks/image?repo=cooljim/lemontools)
 
 Made with [contributors-img](https://contrib.rocks).
-
-[Back Home](/)
