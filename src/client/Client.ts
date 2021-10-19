@@ -6,6 +6,7 @@ import { Routes } from "discord-api-types/v9";
 import { Client, Collection, Intents } from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
+import mongoose from "mongoose";
 import path from "path";
 import { promisify } from "util";
 import winston, { Logger, transports } from "winston";
@@ -13,6 +14,8 @@ import { Command } from "../interfaces/Command";
 import { Config } from "../interfaces/Config";
 import { Cooldown } from "../interfaces/Cooldown";
 import { Event } from "../interfaces/Event";
+import { GiveawaysManager } from "discord-giveaways";
+import MongooseGiveaways from "../interfaces/GiveawaysManager";
 
 dotenv.config();
 const globPromise = promisify(glob);
@@ -66,17 +69,25 @@ export class Bot extends Client {
   private someRest: REST = new REST({ version: "9" }).setToken(
     process.env.TOKEN ?? ""
   );
+  public mongoose!: typeof mongoose;
+  public giveawayManager!: MongooseGiveaways;
 
-  public constructor() {
+  constructor() {
     super({
       intents: [
         Intents.FLAGS.DIRECT_MESSAGES,
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       ],
     });
   }
   public async start(config: Config): Promise<void> {
+    if (!process.env.MONGOOSE_URI)
+      this.logger.error(
+        new Error("You need to provide a MongoDB URI for Giveaways to work!")
+      );
+    this.mongoose = await mongoose.connect(process.env.MONGOOSE_URI ?? "");
     const commandsToPush: {
       name: string;
       description: string;
@@ -85,6 +96,16 @@ export class Bot extends Client {
     }[] = [];
     this.logger.info(`${config.name} is starting...`);
     this.config = config as Config;
+    this.giveawayManager = new MongooseGiveaways(this, {
+      default: {
+        botsCanWin: false,
+        embedColor: parseInt(
+          this.config?.theme.main.replace("#", "") ?? String(0),
+          16
+        ),
+        reaction: "🎉",
+      },
+    });
     this.login(process.env.TOKEN);
 
     this.on("ready", () => {
