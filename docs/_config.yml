@@ -1,1 +1,6 @@
 theme: jekyll-theme-tactile
+title: Lemon Tools
+description: An open source Discord Bot with a few tricks up it's sleeves!
+timezone: Australia/Sydney
+github:
+  repository_url: //github.com/cooljim/lemontools
