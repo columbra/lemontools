@@ -19,6 +19,6 @@ With our bot, there's a tools for nearly anything. From QRCode generation to con
 # So, what are you waiting for?
 Invite Lemon Tools to your Discord server today!
 
-<button name="button" onclick="https://discord.com/api/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608">Click to Invite</button>
+[![](https://raster.shields.io/badge/-Click%20to%20invite-yellow?style=for-the-badge)](https://discord.com/api/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608)
 
 ![License](https://img.shields.io/github/license/cooljim/lemontools)
