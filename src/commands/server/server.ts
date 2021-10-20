@@ -26,32 +26,32 @@ export = class Server extends Command {
   sudo = false;
 
   execute = async (interaction: CommandInteraction) => {
-    const server = interaction.guild;
-    if (!server)
+    const { guild } = interaction;
+    if (!guild)
       return interaction.reply("You must be in a server to run this command!");
     const embed = this.embed(
       {
-        title: `Information about ${server.name}`,
+        title: `Information about ${guild.name}`,
         description: `**Server description:** ${
-          server.description ?? "No description found"
+          guild.description ?? "No description found"
         }`,
         fields: [
           {
             name: `General Info`,
             value: `**Server created:** <t:${Math.round(
-              server.createdAt.getTime() / 1000
-            )}:R>\n**Server name:** ${server.name}\n**Members:** ${
-              server.memberCount
+              guild.createdAt.getTime() / 1000
+            )}:R>\n**Server name:** ${guild.name}\n**Members:** ${
+              guild.memberCount
             }`,
             inline: true,
           },
           {
             name: `Nitro`,
-            value: `${nitro.get(server.premiumTier)}`,
+            value: `${nitro.get(guild.premiumTier)}`,
             inline: true,
           },
         ],
-        thumbnail: { url: server.iconURL() ?? undefined },
+        thumbnail: { url: guild.iconURL() ?? undefined },
       },
       interaction
     );
