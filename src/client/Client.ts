@@ -14,7 +14,6 @@ import { Command } from "../interfaces/Command";
 import { Config } from "../interfaces/Config";
 import { Cooldown } from "../interfaces/Cooldown";
 import { Event } from "../interfaces/Event";
-import { GiveawaysManager } from "discord-giveaways";
 import MongooseGiveaways from "../interfaces/GiveawaysManager";
 
 dotenv.config();
