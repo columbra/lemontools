@@ -20,17 +20,17 @@ exports.DEFAULT_CHECK_INTERVAL = 15_000;
  */
 exports.GiveawayMessages = {
   giveaway: "🎉🎉 **GIVEAWAY** 🎉🎉",
-  giveawayEnded: "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+  giveawayEnded: "**GIVEAWAY ENDED**",
   inviteToParticipate: "React with 🎉 to participate!",
   winMessage:
-    "Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL}",
-  drawing: "Drawing: {timestamp}",
-  dropMessage: "Be the first to react with 🎉 !",
+    "Congratulations, {winners}! You won **{this.prize}**!\n{this.messageURL} to go to giveaway",
+  drawing: "Winner to be chosen {timestamp}",
+  dropMessage: "Be the first to react with 🎉!",
   embedFooter: "{this.winnerCount} winner(s)",
-  noWinner: "Giveaway cancelled, no valid participations.",
+  noWinner: "Giveaway cancelled, no valid participants.",
   winners: "Winner(s):",
   endedAt: "Ended at",
-  hostedBy: "Hosted by: {this.hostedBy}",
+  hostedBy: "Hosted by {this.hostedBy}",
 };
 
 /**
@@ -111,7 +111,7 @@ exports.LastChanceOptions = {
  */
 exports.PauseOptions = {
   isPaused: false,
-  content: "⚠️ **THIS GIVEAWAY IS PAUSED !** ⚠️",
+  content: "⏲ **THIS GIVEAWAY IS PAUSED !** ⏲",
   unPauseAfter: null,
   embedColor: "#FFFF00",
   durationAfterPause: null,
