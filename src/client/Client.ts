@@ -3,7 +3,7 @@
 import { REST } from "@discordjs/rest";
 import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
-import { Client, Collection, Intents } from "discord.js";
+import { Client, Collection, Intents, HexColorString } from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
 import mongoose from "mongoose";
@@ -105,10 +105,7 @@ export class Bot extends Client {
     this.giveawayManager = new MongooseGiveaways(this, {
       default: {
         botsCanWin: false,
-        embedColor: parseInt(
-          this.config?.theme.main.replace("#", "") ?? String(0),
-          16
-        ),
+        embedColor: (config.theme.main as HexColorString) ?? "YELLOW",
         reaction: "🎉",
       },
     });
