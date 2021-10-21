@@ -25,6 +25,7 @@ export = class QRCode extends Command {
         .setRequired(true)
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const url = interaction.options.getString("url");

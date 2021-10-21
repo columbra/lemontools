@@ -26,6 +26,7 @@ export = class Colour extends Command {
         .setRequired(true)
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const colour = interaction.options.getString("colour");

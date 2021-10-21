@@ -23,6 +23,7 @@ export = class Calc extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     let msg: Message;

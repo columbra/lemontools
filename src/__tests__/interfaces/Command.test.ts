@@ -18,6 +18,7 @@ test("command class", () => {
       .setName(this.name)
       .setDescription(this.description);
     sudo = false;
+    perms = [];
 
     execute = async (interaction: any) => {
       {

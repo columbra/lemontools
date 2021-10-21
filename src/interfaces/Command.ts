@@ -6,6 +6,7 @@ import {
   MessageActionRow,
   MessageEmbed,
   MessageEmbedOptions,
+  PermissionResolvable,
 } from "discord.js";
 import { Bot } from "../client/Client";
 import { theme } from "../../config.json";
@@ -32,6 +33,7 @@ export abstract class Command {
     "addSubcommand" | "addSubcommandGroup"
   >;
   abstract sudo: boolean;
+  abstract perms: PermissionResolvable[];
 
   abstract execute: (interaction: CommandInteraction) => Promise<any>;
 

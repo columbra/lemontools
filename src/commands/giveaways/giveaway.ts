@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { CommandInteraction, Message } from "discord.js";
+import { CommandInteraction, Message, PermissionResolvable } from "discord.js";
 import ms from "ms";
 import { Command } from "../../interfaces/Command";
 
@@ -24,8 +24,17 @@ export = class GiveawayCommand extends Command {
         .setRequired(true)
     );
   sudo = false;
+  perms: PermissionResolvable[] = ["MANAGE_MESSAGES"];
 
   execute = async (interaction: CommandInteraction) => {
+    if (typeof interaction.member?.permissions === "string")
+      return interaction.reply(
+        "Error! No permissions. You need the MANAGE_MESSAGES permissions to begin giveaways!"
+      );
+    if (!interaction.member?.permissions.has("MANAGE_MESSAGES"))
+      return interaction.reply(
+        "Error! No permissions. You need the MANAGE_MESSAGES permissions to begin giveaways!"
+      );
     const { channel } = interaction;
     const gChannel = interaction.options.getChannel("channel");
 

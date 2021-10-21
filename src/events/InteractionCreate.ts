@@ -26,7 +26,27 @@ export default class InteractionCreate extends Event {
     });
     if (!interaction.inGuild())
       return interaction.reply("Must be in server to execute commands!");
-    const runFunct = () => {
+    if (typeof interaction.member.permissions === "string")
+      return interaction.reply({
+        ephemeral: true,
+        content: "Something went wrong!",
+      });
+    if (
+      command.perms.length &&
+      !interaction.member.permissions.has(command.perms)
+    )
+      return interaction.reply({
+        ephemeral: true,
+        content: `Sorry, but you're not allowed to do that! You need these permissions: ${command.perms
+          .map((e) => `\`${e}\``)
+          .join("\n")}`,
+      });
+    if (command.sudo && !this.bot.config?.sudos.includes(interaction.user.id))
+      return interaction.reply({
+        ephemeral: true,
+        content: `Sorry, but you're not allowed to do that! You need these permissions:\n\`BOT_OWNER\``,
+      });
+    const runFunct = (): void => {
       command
         .execute(interaction)
         .then(() => {

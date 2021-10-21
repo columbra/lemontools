@@ -18,6 +18,7 @@ export = class Topic extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const embed = this.embed(

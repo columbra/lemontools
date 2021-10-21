@@ -27,6 +27,7 @@ export = class Help extends Command {
       opt.setName("command").setDescription("Command to look up")
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const query = interaction.options.getString("command");

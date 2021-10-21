@@ -23,6 +23,7 @@ export = class UserInfo extends Command {
         .setRequired(false)
     );
   sudo = false;
+  perms = [];
 
   execute = async (ctx: CommandInteraction) => {
     const user = ctx.options.getUser("user") ?? ctx.user;

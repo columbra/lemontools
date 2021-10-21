@@ -19,6 +19,7 @@ export = class AskReddit extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const posts: RedditPost[] = [];

@@ -18,6 +18,7 @@ export = class Dice extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const img = Fun.drawDice(this.rnd(1, 6) as oneToSix);

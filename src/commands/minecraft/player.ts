@@ -24,6 +24,7 @@ export = class MinecraftPlayer extends Command {
         .setRequired(true)
     );
   sudo = false;
+  perms = [];
 
   execute = async (ctx: CommandInteraction) => {
     const player = ctx.options.getString("player");

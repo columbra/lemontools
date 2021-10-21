@@ -29,6 +29,7 @@ export = class Random extends Command {
         .setRequired(true)
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const crazy = Number.MAX_SAFE_INTEGER;

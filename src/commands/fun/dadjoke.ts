@@ -18,6 +18,7 @@ export = class DadJoke extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     interaction.deferReply();

@@ -51,6 +51,7 @@ export = class NYT extends Command {
         .addChoices(typeArray.map((e) => [e, e]))
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     await interaction.deferReply();

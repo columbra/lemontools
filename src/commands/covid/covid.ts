@@ -33,6 +33,7 @@ export = class Covid extends Command {
         ])
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     await interaction.deferReply();
