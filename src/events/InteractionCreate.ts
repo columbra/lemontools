@@ -24,6 +24,8 @@ export default class InteractionCreate extends Event {
     this.bot.cooldowns.get(command.name)?.forEach((v) => {
       if (v.user === interaction.user.id) cooldownData = v;
     });
+    if (!interaction.inGuild())
+      return interaction.reply("Must be in server to execute commands!");
     const runFunct = () => {
       command
         .execute(interaction)
