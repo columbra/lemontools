@@ -107,6 +107,7 @@ export class Bot extends Client {
         botsCanWin: false,
         embedColor: (config.theme.main as HexColorString) ?? "YELLOW",
         reaction: "🎉",
+        embedColorEnd: "#36393F",
       },
     });
     this.login(process.env.TOKEN);
