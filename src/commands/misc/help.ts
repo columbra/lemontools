@@ -80,13 +80,20 @@ export = class Help extends Command {
           value: `\`${command.aliases.join(", ")}\``,
           inline: true,
         });
+      if (command.perms.length)
+        fields.push({
+          name: `Perms Required`,
+          value: `${command.perms.map((e) => `\`${e}\``).join("\n")}`,
+        });
       if (fields.length) {
         interaction.reply({
           embeds: [
             this.embed(
               {
                 title: `${command.name}`,
-                description: command.description,
+                description: `${command.description}${
+                  command.sudo ? "\n\n**Command is `BOT_OWNER` only!**" : ""
+                }`,
                 fields,
               },
               interaction
