@@ -62,10 +62,17 @@ export default class InteractionCreate extends Event {
           }
         })
         .catch((err) => {
-          interaction.reply({
-            ephemeral: true,
-            content: `Whoops! Something went wrong when executing that command.`,
-          });
+          interaction
+            .reply({
+              ephemeral: true,
+              content: `Whoops! Something went wrong when executing that command.`,
+            })
+            .catch((err) => {
+              this.bot.logger.error(err);
+              interaction.channel?.send(
+                `Whoops! Something went wrong when executing that command.`
+              );
+            });
           this.bot.logger.error(
             `Command ${commandName} failed!\nError: ${err}`
           );
