@@ -1,6 +1,5 @@
 import { ContextMenuCommandBuilder } from "@discordjs/builders";
 import { ContextMenuInteraction } from "discord.js";
-import { ContextType } from "../../interfaces/ApplicationCommandType";
 import { ContextMenu } from "../../interfaces/ContextMenu";
 
 export = class UserInfo extends ContextMenu {
