@@ -1,42 +1,36 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
 import {
-  CommandInteraction,
+  ContextMenuCommandBuilder,
+  ContextMenuCommandType,
+} from "@discordjs/builders";
+import {
+  ApplicationCommandType,
+  ContextMenuInteraction,
+  Interaction,
   MessageActionRow,
   MessageEmbed,
   MessageEmbedOptions,
   PermissionResolvable,
 } from "discord.js";
-import request from "request";
 import { theme } from "../../config.json";
 import { Bot } from "../client/Client";
-import { Article, TopCategories } from "./NYT";
 
-export abstract class Command {
+export abstract class ContextMenu {
   bot: Bot;
-  abstract name: string;
-  abstract disabled?: boolean;
-  abstract description: string;
-  abstract usage?: string;
-  abstract aliases?: string[];
-  abstract args?: boolean;
-  abstract example?: string;
-  abstract cooldown: number;
-  abstract category: string;
-  abstract guildOnly: boolean;
-  abstract data: Omit<
-    SlashCommandBuilder,
-    "addSubcommand" | "addSubcommandGroup"
-  >;
-  abstract sudo: boolean;
-  abstract perms: PermissionResolvable[];
+  abstract readonly name: string;
+  abstract readonly data: ContextMenuCommandBuilder;
 
-  abstract execute: (interaction: CommandInteraction) => Promise<any>;
+  abstract readonly type: ContextMenuCommandType;
+  abstract readonly perms: PermissionResolvable[];
+  abstract readonly cooldown: number;
 
   public constructor(bot: Bot) {
     this.bot = bot;
   }
 
-  protected embed(opts: MessageEmbedOptions, interaction: CommandInteraction) {
+  abstract execute: (
+    interaction: ContextMenuInteraction
+  ) => Promise<any> | Promise<never>;
+  protected embed(opts: MessageEmbedOptions, interaction: Interaction) {
     const decimalColour = parseInt(theme.main.replace("#", ""), 16);
     return new MessageEmbed(opts)
       .setFooter(
@@ -80,28 +74,6 @@ export abstract class Command {
 
   protected calcNumberFromRatio(number: number, ratio: number): number {
     return Math.round(number / ratio) - number;
-  }
-
-  protected getNYTData(
-    category: TopCategories,
-    apikey: string
-  ): Promise<Article[]> {
-    return new Promise((resolve, reject) => {
-      request(
-        `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${apikey}`,
-
-        (err, res, body) => {
-          if (err) reject(err);
-          let data;
-          try {
-            data = JSON.parse(body);
-            resolve(data.results as Article[]);
-          } catch (err) {
-            reject(err);
-          }
-        }
-      );
-    });
   }
 
   protected rnd(low: number, high: number): number {

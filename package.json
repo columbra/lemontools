@@ -17,7 +17,7 @@
   "author": "",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "@discordjs/builders": "^0.6.0",
+    "@discordjs/builders": "^0.7.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@types/ms": "^0.7.31",
     "@types/node-fetch": "^3.0.3",

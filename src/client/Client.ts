@@ -2,7 +2,10 @@
 
 import { REST } from "@discordjs/rest";
 import chalk from "chalk";
-import { Routes } from "discord-api-types/v9";
+import {
+  RESTPostAPIApplicationCommandsJSONBody,
+  Routes,
+} from "discord-api-types/v9";
 import { Client, Collection, Intents, HexColorString } from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
@@ -12,6 +15,7 @@ import { promisify } from "util";
 import winston, { Logger, transports } from "winston";
 import { Command } from "../interfaces/Command";
 import { Config } from "../interfaces/Config";
+import { ContextMenu } from "../interfaces/ContextMenu";
 import { Cooldown } from "../interfaces/Cooldown";
 import { Event } from "../interfaces/Event";
 import MongooseGiveaways from "../interfaces/GiveawaysManager";
@@ -67,6 +71,7 @@ const logger = winston.createLogger({
 export class Bot extends Client {
   public config: Config | undefined;
   public commands: Collection<string, Command> = new Collection();
+  public contextMenu: Collection<string, ContextMenu> = new Collection();
   public aliases: Collection<string, string> = new Collection();
   public events: Collection<string, Event> = new Collection();
   public categories: Set<string> = new Set();
@@ -100,6 +105,7 @@ export class Bot extends Client {
       options: any[];
       default_permission: boolean | undefined;
     }[] = [];
+    const contextsToPush: any[] = [];
     this.logger.info(`${config.name} is starting...`);
     this.config = config as Config;
     this.giveawayManager = new MongooseGiveaways(this, {
@@ -114,6 +120,20 @@ export class Bot extends Client {
 
     this.on("ready", () => {
       this.logger.info(`${config.name} is ready!`);
+    });
+
+    const contextFiles = await globPromise(
+      path.join(__dirname, `../context/**/*.{js,ts}`)
+    );
+    this.logger.info("Loaded context menu files into memory");
+
+    contextFiles.forEach(async (file) => {
+      const Acontext = (await import(file)).default;
+      const context: ContextMenu = new Acontext(this);
+      this.contextMenu.set(context.name, context);
+      const data = context.data.toJSON();
+      // delete data.default_permission;
+      contextsToPush.push(data);
     });
 
     const commandFiles = await globPromise(
@@ -148,18 +168,18 @@ export class Bot extends Client {
       });
     });
 
-    this.logger.info("Refreshing slash commands");
+    this.logger.info("Refreshing commands");
     if (!config.production) {
       this.logger.warn(
         "Non-production environment detected! Only refreshing commands for test guild"
       );
       try {
-        await this.someRest.put(
+        const res = await this.someRest.put(
           Routes.applicationGuildCommands(
             process.env.CLIENT_ID?.replaceAll('"', "") ?? "",
             config.testServer
           ),
-          { body: commandsToPush }
+          { body: [...commandsToPush, ...contextsToPush] }
         );
       } catch (err) {
         this.logger.error(
@@ -173,7 +193,7 @@ export class Bot extends Client {
       try {
         await this.someRest.put(
           Routes.applicationCommands(process.env.CLIENT_ID as string),
-          { body: commandsToPush }
+          { body: [...contextsToPush, ...commandsToPush] }
         );
       } catch (err) {
         this.logger.error(
