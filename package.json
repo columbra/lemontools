@@ -21,6 +21,7 @@
     "@discordjs/rest": "^0.1.0-canary.0",
     "@types/ms": "^0.7.31",
     "@types/node-fetch": "^3.0.3",
+    "axios": "^0.24.0",
     "canvas": "^2.8.0",
     "chalk": "^4.1.2",
     "chartjs-node-canvas": "^3.2.0",
@@ -30,6 +31,7 @@
     "dotenv": "^10.0.0",
     "glob": "^7.2.0",
     "got": "^11.8.2",
+    "he": "^1.2.0",
     "human-format": "^0.11.0",
     "mathjs": "^9.5.1",
     "mongoose": "^6.0.11",
@@ -40,6 +42,7 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.4",
+    "@types/he": "^1.1.2",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.3",
     "@types/request": "^2.48.7",
