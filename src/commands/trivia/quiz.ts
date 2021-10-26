@@ -31,6 +31,15 @@ export = class Quiz extends Command {
       "https://opentdb.com/api.php?amount=1&type=multiple"
     );
     const { data } = body as unknown as any;
+    if (data.response_code === 4)
+      return ctx.reply({
+        embeds: [
+          this.simpleEmbed(
+            "Sorry, but the bot is out of new questions! Perhaps wait a few minutes for more questions to come!"
+          ),
+        ],
+        ephemeral: true,
+      });
     const result: Result = data.results[0];
     const embed = this.embed(
       {
