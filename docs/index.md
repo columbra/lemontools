@@ -6,7 +6,7 @@ layout: default
 
 ![Lemon Tools Logo](https://i.imgur.com/2x6Et4V.png)
 
-[![Discord Bots](https://top.gg/api/widget/896309687136436234.svg)(https://top.gg/bot/896309687136436234)
+[![Discord Bots](https://top.gg/api/widget/896309687136436234.svg)](https://top.gg/bot/896309687136436234)
 
 > Lemon Tools is an open-sourced, completely free-to-use Discord Bot with a few tricks up it’s sleeves! It can fetch the news, get Coronavirus information and host giveaways.
 

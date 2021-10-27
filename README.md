@@ -2,7 +2,7 @@
 
 [![Node.js CI](https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml/badge.svg)](https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml)
 ![lemon tools](https://i.imgur.com/J09xOrO.png)
-[![Discord Bots](https://top.gg/api/widget/896309687136436234.svg)(https://top.gg/bot/896309687136436234)
+[![Discord Bots](https://top.gg/api/widget/896309687136436234.svg)](https://top.gg/bot/896309687136436234)
 
 This souce code is licensed under the GNU GPL 3.0 License. See LICENSE for more information.
 
