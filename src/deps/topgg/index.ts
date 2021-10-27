@@ -19,7 +19,7 @@ export function AutoPoster(
   token: string,
   client: any,
   options?: PosterOptions
-): BasePoster {
+): DJSPoster | DJSSharderPoster {
   if (!token) throw new Error("Top.gg token is missing");
   if (!client) throw new Error("Client is missing");
   let DiscordJS;
