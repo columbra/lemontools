@@ -2,11 +2,8 @@
 
 import { REST } from "@discordjs/rest";
 import chalk from "chalk";
-import {
-  RESTPostAPIApplicationCommandsJSONBody,
-  Routes,
-} from "discord-api-types/v9";
-import { Client, Collection, Intents, HexColorString } from "discord.js";
+import { Routes } from "discord-api-types/v9";
+import { Client, Collection, HexColorString, Intents } from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
 import mongoose from "mongoose";
