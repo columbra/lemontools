@@ -18,6 +18,7 @@ export = class DadJoke extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     interaction.deferReply();
@@ -36,7 +37,7 @@ export = class DadJoke extends Command {
           {
             title: body,
             url: "https://icanhazdadjoke.com",
-            description: `Fetched from [icanhazdadjoke](icanhazdadjoke.com)`
+            description: `Fetched from [icanhazdadjoke](icanhazdadjoke.com)`,
           },
           interaction
         );

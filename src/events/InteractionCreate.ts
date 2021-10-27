@@ -24,7 +24,29 @@ export default class InteractionCreate extends Event {
     this.bot.cooldowns.get(command.name)?.forEach((v) => {
       if (v.user === interaction.user.id) cooldownData = v;
     });
-    const runFunct = () => {
+    if (!interaction.inGuild())
+      return interaction.reply("Must be in server to execute commands!");
+    if (typeof interaction.member.permissions === "string")
+      return interaction.reply({
+        ephemeral: true,
+        content: "Something went wrong!",
+      });
+    if (
+      command.perms.length &&
+      !interaction.member.permissions.has(command.perms)
+    )
+      return interaction.reply({
+        ephemeral: true,
+        content: `Sorry, but you're not allowed to do that! You need these permissions: ${command.perms
+          .map((e) => `\`${e}\``)
+          .join("\n")}`,
+      });
+    if (command.sudo && !this.bot.config?.sudos.includes(interaction.user.id))
+      return interaction.reply({
+        ephemeral: true,
+        content: `Sorry, but you're not allowed to do that! You need these permissions:\n\`BOT_OWNER\``,
+      });
+    const runFunct = (): void => {
       command
         .execute(interaction)
         .then(() => {
@@ -40,10 +62,17 @@ export default class InteractionCreate extends Event {
           }
         })
         .catch((err) => {
-          interaction.reply({
-            ephemeral: true,
-            content: `Whoops! Something went wrong when executing that command.`,
-          });
+          interaction
+            .reply({
+              ephemeral: true,
+              content: `Whoops! Something went wrong when executing that command.`,
+            })
+            .catch((err) => {
+              this.bot.logger.error(err);
+              interaction.channel?.send(
+                `Whoops! Something went wrong when executing that command.`
+              );
+            });
           this.bot.logger.error(
             `Command ${commandName} failed!\nError: ${err}`
           );

@@ -1,26 +1,23 @@
 /** @format */
 
-import winston, { transports, Logger } from "winston";
-import {
-  Client,
-  MessageEmbedOptions,
-  Message,
-  Intents,
-  Collection,
-  MessageEmbed,
-  Snowflake,
-} from "discord.js";
-import glob from "glob";
-import { promisify } from "util";
-import { Config } from "../interfaces/Config";
-import dotenv from "dotenv";
-import { Command } from "../interfaces/Command";
-import { Cooldown } from "../interfaces/Cooldown";
-import chalk from "chalk";
-import path from "path";
-import { Event } from "../interfaces/Event";
 import { REST } from "@discordjs/rest";
+import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
+import { Client, Collection, HexColorString, Intents } from "discord.js";
+import dotenv from "dotenv";
+import glob from "glob";
+import mongoose from "mongoose";
+import path from "path";
+import { promisify } from "util";
+import winston, { Logger, transports } from "winston";
+import AutoPoster, { DJSPoster, DJSSharderPoster } from "../deps/topgg";
+import { BasePoster } from "../deps/topgg/structs/BasePoster";
+import { Command } from "../interfaces/Command";
+import { Config } from "../interfaces/Config";
+import { ContextMenu } from "../interfaces/ContextMenu";
+import { Cooldown } from "../interfaces/Cooldown";
+import { Event } from "../interfaces/Event";
+import MongooseGiveaways from "../interfaces/GiveawaysManager";
 
 dotenv.config();
 const globPromise = promisify(glob);
@@ -47,6 +44,9 @@ const loggerColours = {
 const loggerFormat = winston.format.printf(({ level, message, timestamp }) => {
   return chalk`{magenta ${timestamp}} [${level}] ${message}`;
 });
+const fileFormat = winston.format.printf(({ level, message, timestamp }) => {
+  return `${timestamp} [${level}] ${message}`;
+});
 const logger = winston.createLogger({
   levels: loggerLevels,
   transports: [
@@ -58,6 +58,10 @@ const logger = winston.createLogger({
       ),
     }),
     new transports.File({
+      format: winston.format.combine(
+        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        fileFormat
+      ),
       filename: "log.log",
     }),
   ],
@@ -66,6 +70,7 @@ const logger = winston.createLogger({
 export class Bot extends Client {
   public config: Config | undefined;
   public commands: Collection<string, Command> = new Collection();
+  public contextMenu: Collection<string, ContextMenu> = new Collection();
   public aliases: Collection<string, string> = new Collection();
   public events: Collection<string, Event> = new Collection();
   public categories: Set<string> = new Set();
@@ -74,29 +79,80 @@ export class Bot extends Client {
   private someRest: REST = new REST({ version: "9" }).setToken(
     process.env.TOKEN ?? ""
   );
+  public mongoose!: typeof mongoose;
+  public giveawayManager!: MongooseGiveaways;
+  public readonly topggStats!: DJSPoster | DJSSharderPoster;
 
-  public constructor() {
+  constructor() {
     super({
       intents: [
         Intents.FLAGS.DIRECT_MESSAGES,
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       ],
     });
+    if (!process.env.TOKEN) {
+      this.logger.error(
+        "Token was not defined! Make sure you have a .env file with the TOKEN field!"
+      );
+      throw null;
+    }
+    if (this.config?.production && process.env.TOPGG) {
+      this.topggStats = AutoPoster(process.env.TOPGG, this, {
+        postOnStart: true,
+      });
+    } else if (this.config?.production) {
+      this.logger.warn(
+        "Non-production environment detected! Not posting to top.gg with statistics."
+      );
+    } else {
+      this.logger.warn(
+        "Production environment detected, but no top.gg token! Proceeding without refreshing statistics..."
+      );
+    }
   }
   public async start(config: Config): Promise<void> {
+    if (!process.env.MONGOOSE_URI)
+      this.logger.error(
+        new Error("You need to provide a MongoDB URI for Giveaways to work!")
+      );
+    this.mongoose = await mongoose.connect(process.env.MONGOOSE_URI ?? "");
     const commandsToPush: {
       name: string;
       description: string;
       options: any[];
       default_permission: boolean | undefined;
     }[] = [];
+    const contextsToPush: any[] = [];
     this.logger.info(`${config.name} is starting...`);
     this.config = config as Config;
+    this.giveawayManager = new MongooseGiveaways(this, {
+      default: {
+        botsCanWin: false,
+        embedColor: (config.theme.main as HexColorString) ?? "YELLOW",
+        reaction: "🎉",
+        embedColorEnd: "#36393F",
+      },
+    });
     this.login(process.env.TOKEN);
 
     this.on("ready", () => {
       this.logger.info(`${config.name} is ready!`);
+    });
+
+    const contextFiles = await globPromise(
+      path.join(__dirname, `../context/**/*.{js,ts}`)
+    );
+    this.logger.info("Loaded context menu files into memory");
+
+    contextFiles.forEach(async (file) => {
+      const Acontext = (await import(file)).default;
+      const context: ContextMenu = new Acontext(this);
+      this.contextMenu.set(context.name, context);
+      const data = context.data.toJSON();
+      // delete data.default_permission;
+      contextsToPush.push(data);
     });
 
     const commandFiles = await globPromise(
@@ -107,6 +163,7 @@ export class Bot extends Client {
     commandFiles.map(async (file) => {
       const Acommand = (await import(file)).default;
       const command = new Acommand(this);
+      if (command.disabled) return;
       this.commands.set(command.name, command);
       if (command.aliases?.length) {
         command.aliases.map((val: any) => this.aliases.set(val, command.name));
@@ -130,18 +187,18 @@ export class Bot extends Client {
       });
     });
 
-    this.logger.info("Refreshing slash commands");
+    this.logger.info("Refreshing commands");
     if (!config.production) {
       this.logger.warn(
         "Non-production environment detected! Only refreshing commands for test guild"
       );
       try {
-        await this.someRest.put(
+        const res = await this.someRest.put(
           Routes.applicationGuildCommands(
             process.env.CLIENT_ID?.replaceAll('"', "") ?? "",
             config.testServer
           ),
-          { body: commandsToPush }
+          { body: [...commandsToPush, ...contextsToPush] }
         );
       } catch (err) {
         this.logger.error(
@@ -155,7 +212,7 @@ export class Bot extends Client {
       try {
         await this.someRest.put(
           Routes.applicationCommands(process.env.CLIENT_ID as string),
-          { body: commandsToPush }
+          { body: [...contextsToPush, ...commandsToPush] }
         );
       } catch (err) {
         this.logger.error(

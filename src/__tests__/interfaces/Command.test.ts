@@ -18,6 +18,7 @@ test("command class", () => {
       .setName(this.name)
       .setDescription(this.description);
     sudo = false;
+    perms = [];
 
     execute = async (interaction: any) => {
       {
@@ -26,12 +27,12 @@ test("command class", () => {
         expect(val).toBeLessThanOrEqual(1000);
       }
       {
-        const val = this.capitalise("testing")
-        expect(val).toBe("Testing")
+        const val = this.capitalise("testing");
+        expect(val).toBe("Testing");
       }
       {
-        const val = this.percentFromDecimal(0.1)
-        expect(val).toBe("10%")
+        const val = this.percentFromDecimal(0.1);
+        expect(val).toBe("10%");
       }
     };
   }

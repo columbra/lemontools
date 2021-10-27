@@ -16,4 +16,9 @@ export const topics = [
   "Would you rather eternal snow or eternal rain? Why?",
   "Which public holiday in your country is your favourite? How about your least favourite?",
   "If you had the ability to declare one day of the year a public holiday for the world, which day would you choose and why? Furthermore, what would the holiday be called?",
+  "What is your favourite celebrity",
+  "What are your views on climate change?",
+  "What language is the most difficult to learn?",
+  "When was the last time you climbed a tree for fun",
+  "What is the most dangerous place on Earth in your opinion?",
 ];

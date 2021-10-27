@@ -11,4 +11,6 @@ _site
 .jekyll-cache
 .jekyll-metadata
 vendor
+_site
+.jekyll*
 Gemfile*

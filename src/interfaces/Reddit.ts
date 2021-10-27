@@ -71,7 +71,7 @@ export interface RedditPost {
   is_crosspostable: boolean;
   pinned: boolean;
   over_numbernumber: boolean;
-  over_18: boolean
+  over_18: boolean;
   all_awardings: unknown[];
   awarders: unknown[];
   media_only: boolean;

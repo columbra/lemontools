@@ -1,0 +1,12 @@
+// Example of the config file!
+{
+  "name": "Name of bot",
+  "author": "Your name",
+  "sudos": ["Discord User ID to grant sudo", "another ID"],
+  "production": false, // Set to true to add commands to every server
+  "testServer": "734674763435343872", // ID of testing server
+  "theme": {
+    "main": "#FEF250", // Hex code of main colour
+    "secondary": "#FBF9C2" // hex code of secondary colour
+  }
+}

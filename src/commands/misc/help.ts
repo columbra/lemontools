@@ -27,6 +27,7 @@ export = class Help extends Command {
       opt.setName("command").setDescription("Command to look up")
     );
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const query = interaction.options.getString("command");
@@ -73,14 +74,26 @@ export = class Help extends Command {
           value: `**Usage:** /${command.name} ${command.usage}\n**Example:** /${command.name} ${command.example}`,
           inline: true,
         });
-      if(command.aliases?.length) fields.push({name: `Aliases`, value: `\`${command.aliases.join(", ")}\``, inline: true})
+      if (command.aliases?.length)
+        fields.push({
+          name: `Aliases`,
+          value: `\`${command.aliases.join(", ")}\``,
+          inline: true,
+        });
+      if (command.perms.length)
+        fields.push({
+          name: `Perms Required`,
+          value: `${command.perms.map((e) => `\`${e}\``).join("\n")}`,
+        });
       if (fields.length) {
         interaction.reply({
           embeds: [
             this.embed(
               {
                 title: `${command.name}`,
-                description: command.description,
+                description: `${command.description}${
+                  command.sudo ? "\n\n**Command is `BOT_OWNER` only!**" : ""
+                }`,
                 fields,
               },
               interaction

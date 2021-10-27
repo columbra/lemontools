@@ -1,0 +1,7 @@
+export const enum EmbedColours {
+  EMBED_COLOUR = "#2f3136",
+  COLOURLESS = "#36393F",
+  DISCORD_BLURPLE = "#7289DA",
+  HOVER_COLOURLESS = "#32353b",
+  DISCORD_LIGHT_BLURPLE = "#5865f2",
+}

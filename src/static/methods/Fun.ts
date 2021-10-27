@@ -5,7 +5,6 @@ import { Canvas, createCanvas, NodeCanvasRenderingContext2D } from "canvas";
 
 // overhead
 
-
 /*
 This function draws a dice to the canvas.
 ctx is the canvas context
@@ -25,7 +24,6 @@ function drawDice(
   diceColor: string,
   dotColor: string
 ) {
-  
   const dots = [];
   ctx.save();
   ctx.fillStyle = diceColor;
@@ -70,7 +68,7 @@ function drawDice(
     ctx.arc(dots[j].x, dots[j].y, size * 0.07, 0, 2 * Math.PI);
     ctx.fill();
   }
-    return canvas.toBuffer();
+  return canvas.toBuffer();
 }
 
 // I took the roundRect function below from here:
@@ -153,8 +151,6 @@ function roundRect(
   if (stroke) {
     ctx.stroke();
   }
-
-
 }
 
 export type oneToSix = 1 | 2 | 3 | 4 | 5 | 6;

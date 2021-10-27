@@ -19,6 +19,7 @@ export = class AskReddit extends Command {
     .setName(this.name)
     .setDescription(this.description);
   sudo = false;
+  perms = [];
 
   execute = async (interaction: CommandInteraction) => {
     const posts: RedditPost[] = [];
@@ -42,8 +43,12 @@ export = class AskReddit extends Command {
             name: `${post.author} • on ${post.subreddit_name_prefixed}`,
             url: `https://reddit.com/u/${post.author}`,
           },
-          description: `**Upvotes:** ${post.ups}\n**Downvotes:** ${this.calcNumberFromRatio(post.ups, post.upvote_ratio)
-          }\n**Percent upvoted** ${this.percentFromDecimal(
+          description: `**Upvotes:** ${
+            post.ups
+          }\n**Downvotes:** ${this.calcNumberFromRatio(
+            post.ups,
+            post.upvote_ratio
+          )}\n**Percent upvoted** ${this.percentFromDecimal(
             post.upvote_ratio
           )}\n\n**Posted at:** <t:${post.created_utc}:F> (<t:${
             post.created_utc

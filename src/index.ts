@@ -20,8 +20,8 @@
 /**
  * @see https://cooljim.github.io/lemontools/
  */
-import * as File from "../config.json"
-import { Bot } from "./client/Client"
-import { Config } from "./interfaces/Config"
+import * as File from "../config.json";
+import { Bot } from "./client/Client";
+import { Config } from "./interfaces/Config";
 
-new Bot().start(File as Config)
+new Bot().start(File as Config);
