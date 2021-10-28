@@ -1,7 +1,45 @@
-theme: jekyll-theme-tactile
+remote_theme: mmistakes/minimal-mistakes
 title: Lemon Tools
-description: An open source Discord Bot with a few tricks up it's sleeves!
+subtitle: An open source Discord Bot with a few tricks up it's sleeves!
 timezone: Australia/Sydney
 github:
   repository_url: //github.com/cooljim/lemontools
 show_downloads: true
+plugins: [jekyll-include-cache, jekyll-paginator]
+
+# Theme Settings
+minimal_mistakes_skin: air
+repository: cooljim/lemontools
+teaser: https://i.imgur.com/2x6Et4V.png
+logo: https://i.imgur.com/J09xOrO.png
+
+author:
+  name: "Jim Ke"
+  bio: "Coder of many things, from Discord Bots to Websites!"
+  location: "Sydney, Australia"
+  email:
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:jimke@gmail.com"
+
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+locale: "en-AU"
+paginate: 5
+paginate_path: /page:num/
+baseurl: /lemontools
+url: cooljim.github.io
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      comments: false
+      share: true
+      related: true
+      toc: true
