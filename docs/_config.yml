@@ -27,7 +27,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 locale: "en-AU"
 paginate: 5
 paginate_path: /page:num/
-baseurl: /lemontools
+baseurl: /lemontools/
 url: cooljim.github.io
 
 defaults:
