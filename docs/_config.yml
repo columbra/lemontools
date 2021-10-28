@@ -29,6 +29,7 @@ paginate: 5
 paginate_path: /page:num/
 baseurl: /lemontools/
 url: cooljim.github.io
+search: true
 
 defaults:
   # _posts
