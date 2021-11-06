@@ -4,6 +4,13 @@ dist/
 build/
 *.log
 coverage/
+.jekyll*
+_site
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
 _site
 .jekyll*
 Gemfile*

@@ -81,7 +81,7 @@ export class Bot extends Client {
   );
   public mongoose!: typeof mongoose;
   public giveawayManager!: MongooseGiveaways;
-  public readonly topggStats!: DJSPoster | DJSSharderPoster;
+  public topggStats!: DJSPoster | DJSSharderPoster;
 
   constructor() {
     super({
@@ -92,25 +92,6 @@ export class Bot extends Client {
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       ],
     });
-    if (!process.env.TOKEN) {
-      this.logger.error(
-        "Token was not defined! Make sure you have a .env file with the TOKEN field!"
-      );
-      throw null;
-    }
-    if (this.config?.production && process.env.TOPGG) {
-      this.topggStats = AutoPoster(process.env.TOPGG, this, {
-        postOnStart: true,
-      });
-    } else if (this.config?.production) {
-      this.logger.warn(
-        "Non-production environment detected! Not posting to top.gg with statistics."
-      );
-    } else {
-      this.logger.warn(
-        "Production environment detected, but no top.gg token! Proceeding without refreshing statistics..."
-      );
-    }
   }
   public async start(config: Config): Promise<void> {
     if (!process.env.MONGOOSE_URI)
@@ -140,6 +121,25 @@ export class Bot extends Client {
     this.on("ready", () => {
       this.logger.info(`${config.name} is ready!`);
     });
+    if (!process.env.TOKEN) {
+      this.logger.error(
+        "Token was not defined! Make sure you have a .env file with the TOKEN field!"
+      );
+      throw null;
+    }
+    if (this.config?.production && process.env.TOPGG) {
+      this.topggStats = AutoPoster(process.env.TOPGG, this, {
+        postOnStart: true,
+      });
+    } else if (!this.config?.production) {
+      this.logger.warn(
+        "Non-production environment detected! Not posting to top.gg with statistics."
+      );
+    } else {
+      this.logger.warn(
+        "Production environment detected, but no top.gg token! Proceeding without refreshing statistics..."
+      );
+    }
 
     const contextFiles = await globPromise(
       path.join(__dirname, `../context/**/*.{js,ts}`)

@@ -1,9 +1,8 @@
 ---
 title: The Team
 permalink: /team
+layout: single
 ---
-
-# The Team
 
 Want your GitHub profile pic on this list? Open a PR [here](https://github.com/CoolJim/lemontools/pulls) and if it get accepted, your name will pop up here!
 
