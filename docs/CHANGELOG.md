@@ -5,7 +5,7 @@ permalink: /changelog
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
-# v1.3.0 (Unreleased)
+# v1.3.0
 
 ## Whats new
 
