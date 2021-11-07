@@ -135,4 +135,11 @@ export abstract class Command {
 
     return array;
   }
+
+  protected eph(content: string) {
+    return {
+      ephemeral: true,
+      content,
+    };
+  }
 }
