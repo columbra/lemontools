@@ -5,7 +5,7 @@ timezone: Australia/Sydney
 github:
   repository_url: //github.com/cooljim/lemontools
 show_downloads: true
-plugins: [jekyll-include-cache, jekyll-paginator]
+plugins: [jekyll-include-cache]
 
 # Theme Settings
 minimal_mistakes_skin: air
@@ -25,8 +25,6 @@ author:
 
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 locale: "en-AU"
-paginate: 5
-paginate_path: /page:num/
 baseurl: /lemontools/
 url: cooljim.github.io
 
