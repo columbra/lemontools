@@ -118,7 +118,7 @@ export class Bot extends Client {
     });
     this.login(process.env.TOKEN);
 
-    this.on("ready", () => {
+    this.once("ready", () => {
       this.logger.info(`${config.name} is ready!`);
     });
     if (!process.env.TOKEN) {
