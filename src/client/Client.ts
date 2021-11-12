@@ -1,25 +1,24 @@
 /** @format */
 
 import { REST } from "@discordjs/rest";
+import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
 import { Client, Collection, HexColorString, Intents } from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
 import mongoose from "mongoose";
+import * as osu from "node-os-utils";
 import path from "path";
 import { promisify } from "util";
 import winston, { Logger, transports } from "winston";
 import AutoPoster, { DJSPoster, DJSSharderPoster } from "../deps/topgg";
-import { BasePoster } from "../deps/topgg/structs/BasePoster";
 import { Command } from "../interfaces/Command";
 import { Config } from "../interfaces/Config";
 import { ContextMenu } from "../interfaces/ContextMenu";
 import { Cooldown } from "../interfaces/Cooldown";
 import { Event } from "../interfaces/Event";
 import MongooseGiveaways from "../interfaces/GiveawaysManager";
-import { Point, InfluxDB } from "@influxdata/influxdb-client";
-import * as osu from "node-os-utils";
 
 dotenv.config();
 const globPromise = promisify(glob);
