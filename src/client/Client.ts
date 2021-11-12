@@ -18,6 +18,8 @@ import { ContextMenu } from "../interfaces/ContextMenu";
 import { Cooldown } from "../interfaces/Cooldown";
 import { Event } from "../interfaces/Event";
 import MongooseGiveaways from "../interfaces/GiveawaysManager";
+import { Point, InfluxDB } from "@influxdata/influxdb-client";
+import * as osu from "node-os-utils";
 
 dotenv.config();
 const globPromise = promisify(glob);
@@ -82,6 +84,8 @@ export class Bot extends Client {
   public mongoose!: typeof mongoose;
   public giveawayManager!: MongooseGiveaways;
   public topggStats!: DJSPoster | DJSSharderPoster;
+  private readonly Influx: { org: string; bucket: string; url: string };
+  private InfluxClient;
 
   constructor() {
     super({
@@ -91,6 +95,15 @@ export class Bot extends Client {
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       ],
+    });
+    this.Influx = {
+      org: process.env.ORG ?? "Lemontools",
+      bucket: process.env.BUCKET ?? "Lemontools monitoring",
+      url: process.env.URL ?? "http://localhost:8086",
+    };
+    this.InfluxClient = new InfluxDB({
+      url: this.Influx.url,
+      token: process.env.INFLUX,
     });
   }
   public async start(config: Config): Promise<void> {
@@ -120,6 +133,7 @@ export class Bot extends Client {
 
     this.once("ready", () => {
       this.logger.info(`${config.name} is ready!`);
+      this.initMonitoring();
     });
     if (!process.env.TOKEN) {
       this.logger.error(
@@ -222,5 +236,35 @@ export class Bot extends Client {
     }
 
     this.logger.info("Refreshed all slash commands");
+  }
+  private async initMonitoring() {
+    setInterval(async () => {
+      const token = process.env.INFLUX;
+      if (!token) {
+        this.logger.warn(
+          "InfluxDB token missing. Will not write monitoring data to DB!"
+        );
+        return;
+      }
+      const writeApi = this.InfluxClient.getWriteApi(
+        this.Influx.org,
+        this.Influx.bucket
+      );
+      writeApi.useDefaultTags({
+        env: this.config?.production ? "production" : "development",
+      });
+      const mem = new Point("memory");
+      const cpu = new Point("cpu");
+
+      mem
+        .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1024 / 1024)
+        .floatField(
+          "heapTotal_mb",
+          process.memoryUsage().heapTotal / 1024 / 1024
+        );
+      cpu.floatField("percentage", await osu.cpu.usage());
+      writeApi.writePoints([mem, cpu]);
+      writeApi.close();
+    }, 3000);
   }
 }
