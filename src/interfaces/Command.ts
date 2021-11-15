@@ -142,4 +142,15 @@ export abstract class Command {
       content,
     };
   }
+  protected msToTime(duration: number): string {
+    var day, hour, minute, seconds;
+    seconds = Math.floor(duration / 1000);
+    minute = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    day = Math.floor(hour / 24);
+    hour = hour % 24;
+    return `${day} day(s) ${hour}:${minute}:${seconds}`;
+  }
 }

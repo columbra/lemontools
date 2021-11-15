@@ -4,7 +4,7 @@ import { REST } from "@discordjs/rest";
 import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
-import { Client, Collection, HexColorString, Intents } from "discord.js";
+import { Client, Collection, Guild, HexColorString, Intents } from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
 import mongoose from "mongoose";
@@ -254,6 +254,7 @@ export class Bot extends Client {
       });
       const mem = new Point("memory");
       const cpu = new Point("cpu");
+      const botinfo = new Point("botinfo");
 
       mem
         .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1024 / 1024)
@@ -262,7 +263,13 @@ export class Bot extends Client {
           process.memoryUsage().heapTotal / 1024 / 1024
         );
       cpu.floatField("percentage", await osu.cpu.usage());
-      writeApi.writePoints([mem, cpu]);
+      botinfo.floatField("servers", (await this.guilds.fetch()).size);
+      botinfo.floatField(
+        "cache_members",
+        this.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0)
+      );
+
+      writeApi.writePoints([mem, cpu, botinfo]);
       writeApi.close();
     }, 3000);
   }
