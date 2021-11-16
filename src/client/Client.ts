@@ -4,7 +4,14 @@ import { REST } from "@discordjs/rest";
 import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
-import { Client, Collection, Guild, HexColorString, Intents } from "discord.js";
+import {
+  Client,
+  Collection,
+  Guild,
+  HexColorString,
+  Intents,
+  Message,
+} from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
 import mongoose from "mongoose";
@@ -85,6 +92,8 @@ export class Bot extends Client {
   public topggStats!: DJSPoster | DJSSharderPoster;
   private readonly Influx: { org: string; bucket: string; url: string };
   private InfluxClient;
+  public snipedMessages = new Collection<string, Message[]>(); // Array of Sniped Messages, ID is per channel. Max is 3 snipes per channel
+  public recentMessages = new Collection<string, Message[]>(); // Array of recent messages ID is per channel. If message is deleted it will look up the message
 
   constructor() {
     super({
@@ -94,6 +103,7 @@ export class Bot extends Client {
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       ],
+      partials: ["MESSAGE"],
     });
     this.Influx = {
       org: process.env.ORG ?? "Lemontools",
