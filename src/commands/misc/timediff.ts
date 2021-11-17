@@ -11,7 +11,7 @@ export = class TimeDiff extends Command {
   args = true;
   example = "2021 Nov 11 2020";
   cooldown = 1_000;
-  category = "time";
+  category = "misc.";
   guildOnly = false;
   data = new SlashCommandBuilder()
     .setName(this.name)
