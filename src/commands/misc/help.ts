@@ -32,22 +32,20 @@ export = class Help extends Command {
   execute = async (interaction: CommandInteraction) => {
     const query = interaction.options.getString("command");
     if (!query) {
-      const fields: Array<EmbedFieldData> = [...this.bot.categories].map(
-        (val) => {
-          return {
-            name: `${this.capitalise(val)} • **[${
-              this.bot.commands.filter(
-                (cmd) => cmd.category.toLowerCase() === val.toLowerCase()
-              ).size
-            }]**`,
-            value: this.bot.commands
-              .filter((cmd) => cmd.category.toLowerCase() === val.toLowerCase())
-              .map((cmd) => `\`${cmd.name}\``)
-              .join("\n"),
-            inline: true,
-          };
-        }
-      );
+      const fields: EmbedFieldData[] = [...this.bot.categories].map((val) => {
+        return {
+          name: `${this.capitalise(val)} • **[${
+            this.bot.commands.filter(
+              (cmd) => cmd.category.toLowerCase() === val.toLowerCase()
+            ).size
+          }]**`,
+          value: this.bot.commands
+            .filter((cmd) => cmd.category.toLowerCase() === val.toLowerCase())
+            .map((cmd) => `\`${cmd.name}\``)
+            .join("\n"),
+          inline: true,
+        };
+      });
       interaction.reply({
         embeds: [
           this.embed(
