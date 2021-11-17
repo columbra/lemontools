@@ -30,9 +30,11 @@ export = class Evaluate extends Command {
     );
     try {
       const ret = funct.bind(interaction)();
-      interaction.reply(`Success! Returned \`\`\`${ret}\`\`\``);
+      const embed = this.simpleEmbed(`Success. Returned:\n\`\`\`${ret}\`\`\``);
+      interaction.reply({ embeds: [embed] });
     } catch (err) {
-      interaction.reply(`error! ${err}`);
+      const embed = this.errorEmbed(new Error(err as string));
+      interaction.reply({ embeds: [embed] });
     }
   };
 };
