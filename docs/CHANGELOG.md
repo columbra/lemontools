@@ -11,6 +11,13 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 
 - Added `/pokemon` command. Search up Pokémon and get moves, stats and more
 - Added `/coin` to flip coins
+- Added `/timediff` to calculate the difference between two dates/times.
+- Added `/snipe` to snipe your friends (see recently deleted messages). **Please do not use this as a tools for harassment!**
+
+## Changes
+
+- Changed internal `/eval` command
+- Did some internal refactoring
 
 # v1.3.0
 
