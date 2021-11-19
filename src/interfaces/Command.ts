@@ -69,7 +69,6 @@ export abstract class Command {
   protected simpleEmbed(description: string) {
     const decimalColour = parseInt(theme.main.replace("#", ""), 16);
     return new MessageEmbed()
-      .setTimestamp()
       .setColor(decimalColour)
       .setDescription(description);
   }
