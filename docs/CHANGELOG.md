@@ -1,6 +1,7 @@
 ---
 title: Changelog
 permalink: /changelog
+format: single
 ---
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
