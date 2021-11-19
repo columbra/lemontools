@@ -43,7 +43,7 @@ export = class Help extends Command {
             .filter((cmd) => cmd.category.toLowerCase() === val.toLowerCase())
             .map((cmd) => `\`${cmd.name}\``)
             .join("\n"),
-          inline: false,
+          inline: true,
         };
       });
       interaction.reply({
