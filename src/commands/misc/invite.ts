@@ -38,6 +38,10 @@ export = class Invite extends Command {
           "https://discord.com/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608"
         )
         .setLabel("Invite"),
+      new MessageButton()
+        .setStyle("LINK")
+        .setURL("https://cooljim.github.io/lemontools")
+        .setLabel("Website"),
     ]);
     interaction.reply({ embeds: [embed], components: [row] });
   };
