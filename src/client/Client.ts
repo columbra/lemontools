@@ -7,7 +7,6 @@ import { Routes } from "discord-api-types/v9";
 import {
   Client,
   Collection,
-  Guild,
   HexColorString,
   Intents,
   Message,
