@@ -187,6 +187,10 @@ export class Bot extends Client {
       const Acommand = (await import(file)).default;
       const command = new Acommand(this);
       if (command.disabled) return;
+      if (this.commands.get(command.name))
+        return this.logger.error(
+          `Duplicate command ${command.name}! File: ${file}`
+        );
       this.commands.set(command.name, command);
       if (command.aliases?.length) {
         command.aliases.map((val: any) => this.aliases.set(val, command.name));
