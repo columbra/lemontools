@@ -20,6 +20,10 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 - Changed internal `/eval` command
 - Did some internal refactoring
 
+## Fixes
+
+- Attempted to fix internal security issue
+
 # v1.3.0
 
 ## What's new
