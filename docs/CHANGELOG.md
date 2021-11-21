@@ -15,6 +15,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 - Added `/timediff` to calculate the difference between two dates/times.
 - Added `/snipe` to snipe your friends (see recently deleted messages). **Please do not use this as a tools for harassment!**
 - Added `/invite` to get an invite for the bot
+- Added `/embed` to create your own embeds
 
 ## Changes
 
