@@ -16,6 +16,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 - Added `/snipe` to snipe your friends (see recently deleted messages). **Please do not use this as a tools for harassment!**
 - Added `/invite` to get an invite for the bot
 - Added `/embed` to create your own embeds
+- Added permissions system!
 
 ## Changes
 
