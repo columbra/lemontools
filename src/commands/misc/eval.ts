@@ -24,6 +24,7 @@ export = class Evaluate extends Command {
   perms = [];
 
   execute = async (interaction: CommandInteraction) => {
+    await interaction.deferReply();
     const funct = new Function(
       interaction.options.getString("js") ??
         "return new Error('Somethign went wrong')"
@@ -31,10 +32,10 @@ export = class Evaluate extends Command {
     try {
       const ret = funct.bind(interaction)();
       const embed = this.simpleEmbed(`Success. Returned:\n\`\`\`${ret}\`\`\``);
-      interaction.reply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
     } catch (err) {
       const embed = this.errorEmbed(new Error(err as string));
-      interaction.reply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
     }
   };
 };
