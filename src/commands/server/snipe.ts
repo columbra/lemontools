@@ -1,6 +1,8 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
+import { BotPermissions } from "../../interfaces/BotPermissions";
 import { Command } from "../../interfaces/Command";
+import { User } from "../../schema/User";
 
 export = class Snipe extends Command {
   name = "snipe";
@@ -24,6 +26,15 @@ export = class Snipe extends Command {
   perms = [];
 
   execute = async (ctx: CommandInteraction) => {
+    const perms = +(
+      (await User.findOne({ id: ctx.user.id })).permissions ?? 0b10
+    );
+    if (perms & BotPermissions.BANNED_FROM_SNIPE)
+      return ctx.reply({
+        embeds: [
+          this.simpleEmbed("You are banned from using the snipe command."),
+        ],
+      });
     const snipes = this.bot.snipedMessages.get(ctx.channelId);
     const snipeNum = (ctx.options.getNumber("snipenum") ?? 1) - 1;
 

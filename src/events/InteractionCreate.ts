@@ -13,6 +13,8 @@ export default class InteractionCreate extends Event {
     const perms = +(
       (await User.findOne({ id: interaction.user.id })).permissions ?? 0b10
     );
+    if (perms & 0b1)
+      return interaction.reply(`You are banned from using this bot!`);
     const command = this.bot.commands.get(commandName);
     if (!command) {
       const err = new Error(`Command file missing for command ${commandName}`);
