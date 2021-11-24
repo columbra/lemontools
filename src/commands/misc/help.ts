@@ -1,12 +1,8 @@
-import { Command } from "../../interfaces/Command";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import {
-  CommandInteraction,
-  MessageEmbed,
-  Collection,
-  EmbedFieldData,
-} from "discord.js";
+import { CommandInteraction, EmbedFieldData } from "discord.js";
 import * as config from "../../../config.json";
+import { Command } from "../../interfaces/Command";
+import { inviteRow } from "../../static/inviteRow";
 
 export = class Help extends Command {
   name = "help";
@@ -57,7 +53,9 @@ export = class Help extends Command {
             interaction
           ),
         ],
+        components: [inviteRow],
       });
+      /* Below is the logic for selecting a single command */
     } else {
       const command = this.bot.commands.get(query);
       if (!command)
@@ -97,6 +95,7 @@ export = class Help extends Command {
               interaction
             ),
           ],
+          components: [inviteRow],
         });
       } else {
         interaction.reply({

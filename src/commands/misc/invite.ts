@@ -1,17 +1,14 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import {
-  CommandInteraction,
-  MessageActionRow,
-  MessageButton,
-} from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { Command } from "../../interfaces/Command";
+import { inviteRow } from "../../static/inviteRow";
 
 export = class Invite extends Command {
   name = "invite";
   disabled? = false;
   description = "Invite the bot";
   usage = "";
-  aliases = ["invitation", "vote"];
+  aliases = ["invitation", "vote", "inviteinfo"];
   args = false;
   example = "";
   cooldown = 0;
@@ -27,22 +24,7 @@ export = class Invite extends Command {
     const embed = this.simpleEmbed(
       "Click on any of the links below to go to that site."
     );
-    const row = new MessageActionRow().addComponents([
-      new MessageButton()
-        .setStyle("LINK")
-        .setURL("https://top.gg/bot/896309687136436234")
-        .setLabel("Vote"),
-      new MessageButton()
-        .setStyle("LINK")
-        .setURL(
-          "https://discord.com/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608"
-        )
-        .setLabel("Invite"),
-      new MessageButton()
-        .setStyle("LINK")
-        .setURL("https://cooljim.github.io/lemontools")
-        .setLabel("Website"),
-    ]);
-    interaction.reply({ embeds: [embed], components: [row] });
+
+    interaction.reply({ embeds: [embed], components: [inviteRow] });
   };
 };
