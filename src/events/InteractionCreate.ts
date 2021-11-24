@@ -11,7 +11,7 @@ export default class InteractionCreate extends Event {
     if (!interaction.isCommand()) return;
     const { commandName } = interaction;
     const perms = +(
-      (await User.findOne({ id: interaction.user.id })).permissions ?? 0b10
+      (await User.findOne({ id: interaction.user.id }))?.permissions ?? 0b10
     );
     if (perms & 0b1)
       return interaction.reply(`You are banned from using this bot!`);

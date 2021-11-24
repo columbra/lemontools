@@ -27,7 +27,7 @@ export = class Snipe extends Command {
 
   execute = async (ctx: CommandInteraction) => {
     const perms = +(
-      (await User.findOne({ id: ctx.user.id })).permissions ?? 0b10
+      (await User.findOne({ id: ctx.user.id }))?.permissions ?? 0b10
     );
     if (perms & BotPermissions.BANNED_FROM_SNIPE)
       return ctx.reply({

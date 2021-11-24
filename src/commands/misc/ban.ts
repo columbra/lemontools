@@ -4,12 +4,12 @@ import { BotPermissions } from "../../interfaces/BotPermissions";
 import { Command } from "../../interfaces/Command";
 import { User } from "../../schema/User";
 
-export = class MakeSudo extends Command {
-  name = "makesudo";
+export = class BanUser extends Command {
+  name = "banuser";
   disabled? = false;
-  description = "Make a person have sudo permissions";
+  description = "Ban a user from the bot";
   usage = "<user>";
-  aliases = ["addgroup", "makeroot"];
+  aliases = ["sudoban", "b"];
   args = true;
   example = "Windows95#6969";
   cooldown = 1_000;
@@ -19,7 +19,7 @@ export = class MakeSudo extends Command {
     .setName(this.name)
     .setDescription(this.description)
     .addUserOption((opt) =>
-      opt.setName("user").setDescription("User to give sudo").setRequired(true)
+      opt.setName("user").setDescription("User to ban").setRequired(true)
     );
   sudo = true;
   perms = [];
@@ -32,20 +32,15 @@ export = class MakeSudo extends Command {
     if (!user) {
       const newUser = new User({
         id: query.id,
-        permissions: BotPermissions.SUDO,
-        note: "New user added through /makesudo;",
+        permissions: BotPermissions.BANNED,
+        note: "BANNED WITHOUT MERCY!",
       });
       await newUser.save();
-      ctx.reply({ embeds: [this.simpleEmbed("Added new sudo!")] });
+      ctx.reply({ embeds: [this.simpleEmbed("BANNED! F")] });
     } else {
-      const perms = user.permissions | BotPermissions.SUDO;
-      await User.findOneAndUpdate(
-        { id: query.id },
-        { permissions: perms },
-        { new: true }
-      );
-
-      ctx.reply({ embeds: [this.simpleEmbed("Added new sudo!")] });
+      const perms = user.permissions | BotPermissions.BANNED;
+      await User.findOneAndUpdate({ id: query.id }, { permissions: perms });
+      ctx.reply({ embeds: [this.simpleEmbed("BANNED! F")] });
     }
   };
 };
