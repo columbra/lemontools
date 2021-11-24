@@ -21,7 +21,7 @@ The `type` of a commit can be any one of the following types:
 - `BREAKING` - A breaking change
 - `perf` - A minor change to improve performance which does not affect UX
 - `refractor` - A code change which does not fix anything or add a new feature
-- `lint`/`style` - Stylistic changes to the code (e.g. linting) which dosen't affect the actual meaning of the code
+- `lint`/`style` - Stylistic changes to the code (e.g. linting) which doesn't affect the actual meaning of the code
 - `docs` - Documentation or website update
 - `test` - Modifying or adding tests (permitted only in `src/__tests__`)
 - `ci` - Changes relating to CI
