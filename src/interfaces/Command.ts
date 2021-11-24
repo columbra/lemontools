@@ -17,7 +17,6 @@ export abstract class Command {
   abstract disabled?: boolean;
   abstract description: string;
   abstract usage?: string;
-  abstract aliases?: string[];
   abstract args?: boolean;
   abstract example?: string;
   abstract cooldown: number;
