@@ -114,6 +114,7 @@ export abstract class Command {
       );
     });
   }
+  // slow algorithm
   protected shuffle(array: any[]) {
     let currentIndex = array.length,
       randomIndex;
