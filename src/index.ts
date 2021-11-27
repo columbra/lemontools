@@ -22,4 +22,11 @@ import * as File from "../config.json";
 import { Bot } from "./client/Client";
 import { Config } from "./interfaces/Config";
 
+String.prototype.eph = function (this: string) {
+  return {
+    ephemeral: true,
+    content: this,
+  };
+};
+
 new Bot().start(File as Config);
