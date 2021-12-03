@@ -27,6 +27,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 ## Fixes
 
 - Attempted to fix internal security issue
+- Fixed broken commands (`/dadjoke`)
 
 # v1.3.0
 
