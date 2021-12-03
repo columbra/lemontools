@@ -29,4 +29,14 @@ String.prototype.eph = function (this: string) {
   };
 };
 
-new Bot().start(File as Config);
+const bot = new Bot();
+bot.start(File as Config);
+
+// Error handling
+process.on("uncaughtException", (err) => {
+  bot.logger.error(`An error occured! Error:\n${err.message}.\n\n${err.stack}`);
+});
+
+process.on("unhandledRejection", () => {
+  bot.logger.error(`An uncaught Promise rejection occured!`);
+});
