@@ -6,10 +6,10 @@ import {
   MessageEmbedOptions,
   PermissionResolvable,
 } from "discord.js";
-import request from "request";
 import { theme } from "../../config.json";
 import { Bot } from "../client/Client";
 import { Article, TopCategories } from "./NYT";
+import axios from "axios";
 
 export abstract class Command {
   bot: Bot;
@@ -85,20 +85,16 @@ export abstract class Command {
     apikey: string
   ): Promise<Article[]> {
     return new Promise((resolve, reject) => {
-      request(
-        `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${apikey}`,
-
-        (err, res, body) => {
-          if (err) reject(err);
-          let data;
-          try {
-            data = JSON.parse(body);
-            resolve(data.results as Article[]);
-          } catch (err) {
-            reject(err);
-          }
-        }
-      );
+      axios
+        .get(
+          `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${apikey}`
+        )
+        .then((res) => {
+          resolve(res.data.results);
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 
