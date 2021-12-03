@@ -29,7 +29,7 @@ feature_row3:
     excerpt: Lemon Tools is fully open sourced, and intends to stay that way. Contribute by creating a Pull Request, or download your copy of the code
     btn_label: View GitHub Repo
     btn_class: btn--info
-    url: //github.com/cooljim/lemontools
+    url: https//github.com/cooljim/lemontools
 feature_row4:
   - title: So, what are you waiting for?
     excerpt: Invite Lemon Tools to your Discord server today!

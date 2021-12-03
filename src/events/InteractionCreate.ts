@@ -1,6 +1,8 @@
 import { ClientEvents, CommandInteraction } from "discord.js";
+import { BotPermissions } from "../interfaces/BotPermissions";
 import { Cooldown } from "../interfaces/Cooldown";
 import { Event } from "../interfaces/Event";
+import { User } from "../schema/User";
 
 export default class InteractionCreate extends Event {
   event = "interactionCreate" as keyof ClientEvents;
@@ -8,6 +10,11 @@ export default class InteractionCreate extends Event {
     const [interaction] = Ainteraction;
     if (!interaction.isCommand()) return;
     const { commandName } = interaction;
+    const perms = +(
+      (await User.findOne({ id: interaction.user.id }))?.permissions ?? 0b10
+    );
+    if (perms & 0b1)
+      return interaction.reply(`You are banned from using this bot!`);
     const command = this.bot.commands.get(commandName);
     if (!command) {
       const err = new Error(`Command file missing for command ${commandName}`);
@@ -41,11 +48,16 @@ export default class InteractionCreate extends Event {
           .map((e) => `\`${e}\``)
           .join("\n")}`,
       });
-    if (command.sudo && !this.bot.config?.sudos.includes(interaction.user.id))
+    if (
+      command.sudo &&
+      !(perms & BotPermissions.OWNER || perms & BotPermissions.SUDO)
+    ) {
+      // Big bitwise logic
       return interaction.reply({
         ephemeral: true,
-        content: `Sorry, but you're not allowed to do that! You need these permissions:\n\`BOT_OWNER\``,
+        content: `Sorry, but you're not allowed to do that! You need these permissions: \`${BotPermissions.OWNER}\` OR \`${BotPermissions.SUDO}\`. (Bot Owner or Sudo). You only have these permissions: ${perms}`,
       });
+    }
     const runFunct = (): void => {
       command
         .execute(interaction)

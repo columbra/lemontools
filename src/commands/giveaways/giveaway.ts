@@ -22,6 +22,7 @@ export = class GiveawayCommand extends Command {
         .setName("channel")
         .setDescription("Channel to send giveaway to")
         .setRequired(true)
+        .addChannelType(0)
     );
   sudo = false;
   perms: PermissionResolvable[] = ["MANAGE_MESSAGES"];

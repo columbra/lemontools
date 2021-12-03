@@ -21,7 +21,7 @@ export = class Dog extends Command {
   perms = [];
 
   execute = async (interaction: CommandInteraction) => {
-    interaction.deferReply();
+    await interaction.deferReply();
     request(
       "https://dog.ceo/api/breeds/image/random",
       { json: true },

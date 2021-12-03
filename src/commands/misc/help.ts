@@ -1,12 +1,8 @@
-import { Command } from "../../interfaces/Command";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import {
-  CommandInteraction,
-  MessageEmbed,
-  Collection,
-  EmbedFieldData,
-} from "discord.js";
+import { CommandInteraction, EmbedFieldData } from "discord.js";
 import * as config from "../../../config.json";
+import { Command } from "../../interfaces/Command";
+import { inviteRow } from "../../static/inviteRow";
 
 export = class Help extends Command {
   name = "help";
@@ -32,22 +28,20 @@ export = class Help extends Command {
   execute = async (interaction: CommandInteraction) => {
     const query = interaction.options.getString("command");
     if (!query) {
-      const fields: Array<EmbedFieldData> = [...this.bot.categories].map(
-        (val) => {
-          return {
-            name: `${this.capitalise(val)} • **[${
-              this.bot.commands.filter(
-                (cmd) => cmd.category.toLowerCase() === val.toLowerCase()
-              ).size
-            }]**`,
-            value: this.bot.commands
-              .filter((cmd) => cmd.category.toLowerCase() === val.toLowerCase())
-              .map((cmd) => `\`${cmd.name}\``)
-              .join("\n"),
-            inline: true,
-          };
-        }
-      );
+      const fields: EmbedFieldData[] = [...this.bot.categories].map((val) => {
+        return {
+          name: `${this.capitalise(val)} • **[${
+            this.bot.commands.filter(
+              (cmd) => cmd.category.toLowerCase() === val.toLowerCase()
+            ).size
+          }]**`,
+          value: this.bot.commands
+            .filter((cmd) => cmd.category.toLowerCase() === val.toLowerCase())
+            .map((cmd) => `\`${cmd.name}\``)
+            .join("\n"),
+          inline: true,
+        };
+      });
       interaction.reply({
         embeds: [
           this.embed(
@@ -59,7 +53,9 @@ export = class Help extends Command {
             interaction
           ),
         ],
+        components: [inviteRow],
       });
+      /* Below is the logic for selecting a single command */
     } else {
       const command = this.bot.commands.get(query);
       if (!command)
@@ -72,12 +68,6 @@ export = class Help extends Command {
         fields.push({
           name: `How to use`,
           value: `**Usage:** /${command.name} ${command.usage}\n**Example:** /${command.name} ${command.example}`,
-          inline: true,
-        });
-      if (command.aliases?.length)
-        fields.push({
-          name: `Aliases`,
-          value: `\`${command.aliases.join(", ")}\``,
           inline: true,
         });
       if (command.perms.length)
@@ -99,6 +89,7 @@ export = class Help extends Command {
               interaction
             ),
           ],
+          components: [inviteRow],
         });
       } else {
         interaction.reply({

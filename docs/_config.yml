@@ -17,8 +17,16 @@ author:
   name: "Jim Ke"
   bio: "Coder of many things, from Discord Bots to Websites!"
   location: "Sydney, Australia"
-  email:
   links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:jimke@gmail.com"
+
+footer:
+  links:
+    - label: GitHub
+      icon: fab fa-github fa-fw
+      url: //github.com/cooljim/lemontools
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:jimke@gmail.com"
@@ -27,6 +35,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 locale: "en-AU"
 baseurl: /lemontools/
 url: cooljim.github.io
+search: true
 
 defaults:
   # _posts

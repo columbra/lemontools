@@ -1,0 +1,10 @@
+main:
+  - title: The Team
+    url: /team/
+
+  - title: Give Feedback
+    url: https://github.com/CoolJim/lemontools/issues/new/choose
+  - title: Posts
+    url: /posts
+  - title: Archive
+    url: /posts-year

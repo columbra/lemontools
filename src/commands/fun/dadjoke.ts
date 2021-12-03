@@ -21,7 +21,7 @@ export = class DadJoke extends Command {
   perms = [];
 
   execute = async (interaction: CommandInteraction) => {
-    interaction.deferReply();
+    await interaction.deferReply();
     request(
       "https://icanhazdadjoke.com/",
       {

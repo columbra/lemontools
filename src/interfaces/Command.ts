@@ -17,7 +17,6 @@ export abstract class Command {
   abstract disabled?: boolean;
   abstract description: string;
   abstract usage?: string;
-  abstract aliases?: string[];
   abstract args?: boolean;
   abstract example?: string;
   abstract cooldown: number;
@@ -69,7 +68,6 @@ export abstract class Command {
   protected simpleEmbed(description: string) {
     const decimalColour = parseInt(theme.main.replace("#", ""), 16);
     return new MessageEmbed()
-      .setTimestamp()
       .setColor(decimalColour)
       .setDescription(description);
   }
@@ -116,6 +114,7 @@ export abstract class Command {
       );
     });
   }
+  // slow algorithm
   protected shuffle(array: any[]) {
     let currentIndex = array.length,
       randomIndex;
@@ -134,5 +133,23 @@ export abstract class Command {
     }
 
     return array;
+  }
+
+  protected eph(content: string) {
+    return {
+      ephemeral: true,
+      content,
+    };
+  }
+  protected msToTime(duration: number): string {
+    var day, hour, minute, seconds;
+    seconds = Math.floor(duration / 1000);
+    minute = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    day = Math.floor(hour / 24);
+    hour = hour % 24;
+    return `${day} day(s) ${hour}:${minute}:${seconds}`;
   }
 }

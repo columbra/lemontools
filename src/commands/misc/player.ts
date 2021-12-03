@@ -12,7 +12,7 @@ export = class MinecraftPlayer extends Command {
   args = true;
   example = "JimBoi2K";
   cooldown = 5_000;
-  category = "minecraft";
+  category = "misc.";
   guildOnly = false;
   data = new SlashCommandBuilder()
     .setName(this.name)

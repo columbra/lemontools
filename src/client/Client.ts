@@ -1,17 +1,24 @@
 /** @format */
 
 import { REST } from "@discordjs/rest";
+import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import chalk from "chalk";
 import { Routes } from "discord-api-types/v9";
-import { Client, Collection, HexColorString, Intents } from "discord.js";
+import {
+  Client,
+  Collection,
+  HexColorString,
+  Intents,
+  Message,
+} from "discord.js";
 import dotenv from "dotenv";
 import glob from "glob";
 import mongoose from "mongoose";
+import * as osu from "node-os-utils";
 import path from "path";
 import { promisify } from "util";
 import winston, { Logger, transports } from "winston";
 import AutoPoster, { DJSPoster, DJSSharderPoster } from "../deps/topgg";
-import { BasePoster } from "../deps/topgg/structs/BasePoster";
 import { Command } from "../interfaces/Command";
 import { Config } from "../interfaces/Config";
 import { ContextMenu } from "../interfaces/ContextMenu";
@@ -82,6 +89,10 @@ export class Bot extends Client {
   public mongoose!: typeof mongoose;
   public giveawayManager!: MongooseGiveaways;
   public topggStats!: DJSPoster | DJSSharderPoster;
+  private readonly Influx: { org: string; bucket: string; url: string };
+  private InfluxClient;
+  public snipedMessages = new Collection<string, Message[]>(); // Array of Sniped Messages, ID is per channel. Max is 3 snipes per channel
+  public recentMessages = new Collection<string, Message[]>(); // Array of recent messages ID is per channel. If message is deleted it will look up the message
 
   constructor() {
     super({
@@ -91,6 +102,16 @@ export class Bot extends Client {
         Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       ],
+      partials: ["MESSAGE"],
+    });
+    this.Influx = {
+      org: process.env.ORG ?? "Default",
+      bucket: process.env.BUCKET ?? "Lemontools monitoring",
+      url: process.env.URL ?? "http://localhost:8086",
+    };
+    this.InfluxClient = new InfluxDB({
+      url: this.Influx.url,
+      token: process.env.INFLUX,
     });
   }
   public async start(config: Config): Promise<void> {
@@ -118,8 +139,9 @@ export class Bot extends Client {
     });
     this.login(process.env.TOKEN);
 
-    this.on("ready", () => {
+    this.once("ready", () => {
       this.logger.info(`${config.name} is ready!`);
+      this.initMonitoring();
     });
     if (!process.env.TOKEN) {
       this.logger.error(
@@ -164,6 +186,10 @@ export class Bot extends Client {
       const Acommand = (await import(file)).default;
       const command = new Acommand(this);
       if (command.disabled) return;
+      if (this.commands.get(command.name))
+        return this.logger.error(
+          `Duplicate command ${command.name}! File: ${file}`
+        );
       this.commands.set(command.name, command);
       if (command.aliases?.length) {
         command.aliases.map((val: any) => this.aliases.set(val, command.name));
@@ -222,5 +248,42 @@ export class Bot extends Client {
     }
 
     this.logger.info("Refreshed all slash commands");
+  }
+  private async initMonitoring() {
+    setInterval(async () => {
+      const token = process.env.INFLUX;
+      if (!token) {
+        this.logger.warn(
+          "InfluxDB token missing. Will not write monitoring data to DB!"
+        );
+        return;
+      }
+      const writeApi = this.InfluxClient.getWriteApi(
+        this.Influx.org,
+        this.Influx.bucket
+      );
+      writeApi.useDefaultTags({
+        env: this.config?.production ? "production" : "development",
+      });
+      const mem = new Point("memory");
+      const cpu = new Point("cpu");
+      const botinfo = new Point("botinfo");
+
+      mem
+        .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1024 / 1024)
+        .floatField(
+          "heapTotal_mb",
+          process.memoryUsage().heapTotal / 1024 / 1024
+        );
+      cpu.floatField("percentage", await osu.cpu.usage());
+      botinfo.floatField("servers", (await this.guilds.fetch()).size);
+      botinfo.floatField(
+        "cache_members",
+        this.guilds.cache.reduce((acc, g) => acc + g.memberCount, 0)
+      );
+
+      writeApi.writePoints([mem, cpu, botinfo]);
+      writeApi.close();
+    }, 3000);
   }
 }

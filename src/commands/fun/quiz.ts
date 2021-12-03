@@ -18,7 +18,7 @@ export = class Quiz extends Command {
   args = false;
   example = "";
   cooldown = 7_000;
-  category = "trivia";
+  category = "fun";
   guildOnly = false;
   data = new SlashCommandBuilder()
     .setName(this.name)

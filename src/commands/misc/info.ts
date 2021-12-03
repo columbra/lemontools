@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, Permissions } from "discord.js";
 import { Command } from "../../interfaces/Command";
+import { inviteRow } from "../../static/inviteRow";
 import * as config from "../../../config.json";
 
 export = class Info extends Command {
@@ -39,6 +40,6 @@ export = class Info extends Command {
       },
       interaction
     );
-    interaction.reply({ embeds: [embed] });
+    interaction.reply({ embeds: [embed], components: [inviteRow] });
   };
 };
