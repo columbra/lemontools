@@ -105,7 +105,7 @@ export class Bot extends Client {
       partials: ["MESSAGE"],
     });
     this.Influx = {
-      org: process.env.ORG ?? "Lemontools",
+      org: process.env.ORG ?? "Default",
       bucket: process.env.BUCKET ?? "Lemontools monitoring",
       url: process.env.URL ?? "http://localhost:8086",
     };
