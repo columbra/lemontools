@@ -6,6 +6,20 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# v1.4.1
+
+## What's new
+
+Nothing yet...
+
+## Changes
+
+Nothing yet...
+
+## Fixes
+
+- Removed the vulnerable and deprecated [`request`](https://www.npmjs.com/package/request) library. This fixes
+
 # v1.4.0
 
 ## What's new
