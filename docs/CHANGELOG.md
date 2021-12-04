@@ -18,7 +18,7 @@ Nothing yet...
 
 ## Fixes
 
-- Removed the vulnerable and deprecated [`request`](https://www.npmjs.com/package/request) library. This fixes
+- Removed the vulnerable and deprecated [`request`](https://www.npmjs.com/package/request) library. This fixes the Prototype Pollution bug
 
 # v1.4.0
 
