@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import request from "request";
+import axios from "axios";
 import { Command } from "../../interfaces/Command";
 
 export = class APOD extends Command {
@@ -22,25 +22,24 @@ export = class APOD extends Command {
 
   execute = async (interaction: CommandInteraction) => {
     await interaction.deferReply();
-    request(
-      "https://api.nasa.gov/planetary/apod?api_key=" + process.env.NASA_API,
-      {
-        json: true,
-      },
-      (err, res, body) => {
-        if (err)
-          return interaction.editReply({ embeds: [this.errorEmbed(err)] });
+    axios
+      .get(
+        `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API}`
+      )
+      .then((res) => {
         const embed = this.embed(
           {
-            author: { name: body.copyright ?? "NASA" },
+            author: { name: res.data.copyright ?? "NASA" },
             title: "NASA's Astronomy Picture of the Day",
-            image: { url: body.hdurl },
-            description: body.explanation,
+            image: { url: res.data.hdurl },
+            description: res.data.explanation,
           },
           interaction
         );
         return interaction.editReply({ embeds: [embed] });
-      }
-    );
+      })
+      .catch((err) =>
+        interaction.editReply({ embeds: [this.errorEmbed(err)] })
+      );
   };
 };

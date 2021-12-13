@@ -37,6 +37,6 @@ process.on("uncaughtException", (err) => {
   bot.logger.error(`An error occured! Error:\n${err.message}.\n\n${err.stack}`);
 });
 
-process.on("unhandledRejection", () => {
-  bot.logger.error(`An uncaught Promise rejection occured!`);
+process.on("unhandledRejection", (err) => {
+  bot.logger.error(`A Promise rejection occured!`);
 });

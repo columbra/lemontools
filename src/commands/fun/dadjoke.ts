@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import request from "request";
+import axios from "axios";
 import { Command } from "../../interfaces/Command";
 
 export = class DadJoke extends Command {
@@ -22,27 +22,25 @@ export = class DadJoke extends Command {
 
   execute = async (interaction: CommandInteraction) => {
     await interaction.deferReply();
-    request(
-      "https://icanhazdadjoke.com/",
-      {
-        json: false,
+
+    axios
+      .get("https://icanhazdadjoke.com", {
         headers: {
           Accept: "text/plain",
           "User-Agent":
-            "Lemon Tools DiscordBot (https://cooljim.github.io/lemontools) mailto:jimke2000@gmail.com",
+            "Lemon Tools Discord Bot (https://github.com/cooljim/lemontools)",
         },
-      },
-      (err, res, body) => {
+      })
+      .then((res) => {
         const embed = this.embed(
           {
-            title: body,
+            title: res.data,
             url: "https://icanhazdadjoke.com",
             description: `Fetched from [icanhazdadjoke](icanhazdadjoke.com)`,
           },
           interaction
         );
         interaction.editReply({ embeds: [embed] });
-      }
-    );
+      });
   };
 };

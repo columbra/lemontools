@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import request from "request";
+import axios from "axios";
 import { Command } from "../../interfaces/Command";
 
 export = class Mars extends Command {
@@ -22,18 +22,15 @@ export = class Mars extends Command {
 
   execute = async (interaction: CommandInteraction) => {
     await interaction.deferReply();
-    request(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${this.rnd(
-        1,
-        1000
-      )}&api_key=${process.env.NASA_API}`,
-      {
-        json: true,
-      },
-      (err, res, body) => {
-        if (err)
-          return interaction.editReply({ embeds: [this.errorEmbed(err)] });
-        const { photos } = body;
+    axios
+      .get(
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${this.rnd(
+          1,
+          1000
+        )}&api_key=${process.env.NASA_API}`
+      )
+      .then((res) => {
+        const { photos } = res.data;
         const photo = photos[Math.floor(Math.random() * photos.length)];
         const embed = this.embed(
           {
@@ -50,7 +47,9 @@ export = class Mars extends Command {
           interaction
         );
         interaction.editReply({ embeds: [embed] });
-      }
-    );
+      })
+      .catch((err) =>
+        interaction.editReply({ embeds: [this.errorEmbed(err)] })
+      );
   };
 };

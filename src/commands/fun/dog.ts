@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import request from "request";
+import axios from "axios";
 import { Command } from "../../interfaces/Command";
 
 export = class Dog extends Command {
@@ -22,21 +22,17 @@ export = class Dog extends Command {
 
   execute = async (interaction: CommandInteraction) => {
     await interaction.deferReply();
-    request(
-      "https://dog.ceo/api/breeds/image/random",
-      { json: true },
-      (err, res, body) => {
-        const embed = this.embed(
-          {
-            title: "Random doggo",
-            image: {
-              url: body.message,
-            },
+    axios.get("https://dog.ceo/api/breeds/image/random").then((res) => {
+      const embed = this.embed(
+        {
+          title: "Random doggo",
+          image: {
+            url: res.data.message,
           },
-          interaction
-        );
-        interaction.editReply({ embeds: [embed] });
-      }
-    );
+        },
+        interaction
+      );
+      interaction.editReply({ embeds: [embed] });
+    });
   };
 };

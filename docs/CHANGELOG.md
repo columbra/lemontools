@@ -6,6 +6,20 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# v1.4.1
+
+## What's new
+
+- Added some very basic moderation commands: `/kick` and `/ban`
+
+## Changes
+
+Nothing yet...
+
+## Fixes
+
+- Removed the vulnerable and deprecated [`request`](https://www.npmjs.com/package/request) library. This fixes the Prototype Pollution bug
+
 # v1.4.0
 
 ## What's new
