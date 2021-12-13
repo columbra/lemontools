@@ -10,7 +10,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 
 ## What's new
 
-Nothing yet...
+- Added some very basic moderation commands: `/kick` and `/ban`
 
 ## Changes
 
