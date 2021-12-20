@@ -32,7 +32,9 @@ String.prototype.eph = function (this: string) {
 const bot = new Bot();
 bot.start(File as Config);
 
-// Error handling
+/**
+ * Error handling for uncaughtExceptions and unhandledRejections
+ */
 process.on("uncaughtException", (err) => {
   bot.logger.error(`An error occured! Error:\n${err.message}.\n\n${err.stack}`);
 });
