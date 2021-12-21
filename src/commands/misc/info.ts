@@ -3,6 +3,10 @@ import { CommandInteraction, Permissions } from "discord.js";
 import { Command } from "../../interfaces/Command";
 import { inviteRow } from "../../static/inviteRow";
 import * as config from "../../../config.json";
+import Emojis from "../../interfaces/Emoji";
+import os from "node-os-utils";
+
+const { cpu, os: sys } = os;
 
 export = class Info extends Command {
   name = "info";
@@ -37,6 +41,14 @@ export = class Info extends Command {
             permissions: new Permissions(448928796608n),
           }
         )})**`,
+        fields: [
+          {
+            name: "Stats for Nerds",
+            value: `${Emojis.NODE} Node Version \`${
+              process.version
+            }\`\n<:lemoncpu:922643272550219808> CPU Cores \`${cpu.count()}\`\n:desktop: OS Type ${sys.type()}\nPlatform/Architecture \`${sys.platform()}/${sys.arch()}\``,
+          },
+        ],
       },
       interaction
     );
