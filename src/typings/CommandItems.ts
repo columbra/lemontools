@@ -15,7 +15,7 @@ export interface RunOptions {
 export type ExecuteFunction = (options: RunOptions) => Promise<any>;
 
 export type CommandType = {
-  sudo: boolean;
+  sudo?: boolean;
   perms: PermissionResolvable[];
   execute: ExecuteFunction;
   usage?: string;
