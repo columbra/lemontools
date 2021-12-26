@@ -9,6 +9,7 @@ export default class Command implements CommandType {
   name: string;
   usage: string;
   example: string;
+  category: string
   constructor(opt: CommandType) {
     Object.assign(this, opt);
   }

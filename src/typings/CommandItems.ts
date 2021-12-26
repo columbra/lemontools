@@ -20,4 +20,5 @@ export type CommandType = {
   execute: ExecuteFunction;
   usage?: string;
   example?: string;
+  category: string
 } & ChatInputApplicationCommandData;
