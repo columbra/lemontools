@@ -6,6 +6,7 @@ import {
 } from "discord.js";
 import { MessageActionRow, MessageButton } from "discord.js";
 import Bot from "../classes/Bot";
+import { LemonEmojis } from "./emoji";
 
 function embed(
   opt: MessageEmbedOptions,
@@ -35,22 +36,26 @@ function errorMessage(err: string): InteractionReplyOptions {
 const inviteRow = new MessageActionRow().addComponents([
   new MessageButton()
     .setStyle("LINK")
-    .setURL("https://top.gg/bot/896309687136436234")
-    .setLabel("Vote"),
+    .setURL("https://top.gg/bot/896309687136436234/vote")
+    .setLabel("Vote")
+    .setEmoji("🗳"), // Ballot box emoji
   new MessageButton()
     .setStyle("LINK")
     .setURL(
       "https://discord.com/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608"
     )
-    .setLabel("Invite"),
+    .setLabel("Invite")
+    .setEmoji("🔗"), // Link Emoji
   new MessageButton()
     .setStyle("LINK")
     .setURL("https://cooljim.github.io/lemontools")
-    .setLabel("Website"),
+    .setLabel("Website")
+    .setEmoji("🖥"), // Computer Emoji
   new MessageButton()
     .setStyle("LINK")
     .setURL("https://discord.gg/h9bRr6FNsM")
-    .setLabel("Support Server"),
+    .setLabel("Support Server")
+    .setEmoji(LemonEmojis.LemonTools),
 ]);
 
 export { simpleEmbed, embed, errorMessage, inviteRow };
