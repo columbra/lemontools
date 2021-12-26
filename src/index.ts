@@ -1,3 +1,13 @@
+/**
+ * @copyright © Copyright Lemon Bots 2021
+ * @license GPL-3.0-only
+ * @author Jim Ke
+ * 
+ * Lemon Tools v2 Source Code
+ * See LICENSE for license information
+ * 
+ * :)
+ */
 import * as dotenv from "./lib/dotenv";
 import path from "path";
 import Bot from "./classes/Bot";
