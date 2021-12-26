@@ -1,0 +1,12 @@
+bot:
+  name: &botname "Name of bot"
+  author: &author "Your preferred nickname (Discord username or something else)"
+  sudos: ["array", "of discord IDs", "to give SUDO privledges"]
+
+style:
+  # Colour *must* be spelt the proper way
+  # a.k.a. the non-US way
+  colour:
+    primary: "Primary colour hex code. Use in embeds"
+    secondary: "Secondary colour hex code."
+  
