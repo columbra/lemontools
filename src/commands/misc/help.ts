@@ -95,6 +95,10 @@ export default new Command({
             ),
           ],
         });
+        i.reply({
+          fetchReply: true,
+          content: "Loading category data...",
+        }).then((m) => (m as Message).delete());
       });
     } else {
       const command = bot.commands.get(query.replace("/", ""));
