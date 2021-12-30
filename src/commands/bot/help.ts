@@ -19,6 +19,7 @@ export default new Command({
       name: "command",
       description: "Command to get specific information about",
       type: "STRING",
+      autocomplete: true
     },
   ],
 
