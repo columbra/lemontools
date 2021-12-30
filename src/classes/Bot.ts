@@ -6,7 +6,7 @@ import {
   Collection,
 } from "discord.js";
 import winston, { transports } from "winston";
-import { CommandType } from "../typings/CommandItems";
+import { CommandOptions } from "../typings/CommandItems";
 import syncglob from "glob";
 import { promisify } from "util";
 import { CommandRegisterOptions } from "../typings/Bot";
@@ -50,7 +50,7 @@ const fileFormat = winston.format.printf(({ level, message, timestamp }) => {
 });
 
 export default class Bot extends Client {
-  public commands = new Collection<string, CommandType>();
+  public commands = new Collection<string, CommandOptions>();
   public readonly logger: winston.Logger;
   public readonly config: Record<string, any>;
   constructor() {
@@ -113,7 +113,7 @@ export default class Bot extends Client {
     );
 
     for (const commandFile of commandFiles) {
-      const command: CommandType = (await import(commandFile)).default;
+      const command: CommandOptions = (await import(commandFile)).default;
       if (!command) {
         this.logger.error(`Command not found for file ${commandFile}.`);
         continue;

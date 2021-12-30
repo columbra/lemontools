@@ -1,7 +1,7 @@
 import { PermissionResolvable } from "discord.js";
-import { CommandType, ExecuteFunction } from "../typings/CommandItems";
+import { CommandOptions, ExecuteFunction } from "../typings/CommandItems";
 
-export default class Command implements CommandType {
+export default class Command implements CommandOptions {
   sudo: boolean;
   perms: PermissionResolvable[];
   execute: ExecuteFunction;
@@ -10,7 +10,7 @@ export default class Command implements CommandType {
   usage: string;
   example: string;
   category: string
-  constructor(opt: CommandType) {
+  constructor(opt: CommandOptions) {
     Object.assign(this, opt);
   }
 }
