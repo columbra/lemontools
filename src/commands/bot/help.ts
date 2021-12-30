@@ -21,7 +21,7 @@ export default new Command({
       name: "command",
       description: "Command to get specific information about",
       type: "STRING",
-      autocomplete: true
+      autocomplete: true,
     },
   ],
 
@@ -115,7 +115,7 @@ export default new Command({
 
       fields.push({
         name: `Usage`,
-        value: `/${command.name} ${command.usage ?? ""}`,
+        value: `\`/${command.name} ${command.usage ?? ""}\``,
       });
       fields.push({
         name: `Category`,
@@ -124,7 +124,7 @@ export default new Command({
 
       fields.push({
         name: "Example",
-        value: `/${command.name} ${command.example ?? ""}`,
+        value: `\`/${command.name} ${command.example ?? ""}\``,
       });
 
       if (command.options?.length) {
@@ -144,7 +144,7 @@ export default new Command({
           embed(
             {
               fields,
-              title: `/${command.name}`,
+              title: `\`/${command.name}\``,
               description: command.description,
             },
             ctx,
