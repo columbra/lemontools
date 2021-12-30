@@ -158,7 +158,7 @@ export default class Bot extends Client {
     );
 
     for (const file of autoCompleteFiles) {
-      const autoComplete: AutoCompleter = await import(file);
+      const autoComplete: AutoCompleter = (await import(file)).default;
       this.autocomplete.set(autoComplete.command, autoComplete);
       this.logger.debug(
         `Registered auto completer for command ${autoComplete.command}`
