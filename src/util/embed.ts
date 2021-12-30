@@ -25,7 +25,7 @@ function simpleEmbed(str: string, bot: Bot): MessageEmbed {
   return new MessageEmbed()
     .setDescription(str)
     .setColor(
-      parseInt(bot.config.config.style.colour.primary.replace("#", ""), 16)
+      parseInt(bot.config.style.colour.primary.replace("#", ""), 16)
     );
 }
 
