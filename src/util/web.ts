@@ -1,6 +1,6 @@
-import got from "got/dist/source";
+import axios from "axios";
 
 export async function getJSON<T = unknown>(url: string) {
-  const res = await got(url).json<T>();
+  const res: T = JSON.parse((await axios.get(url)).data);
   return res;
 }
