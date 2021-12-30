@@ -90,7 +90,7 @@ export default new Command({
                 title: `Commands for category \`${capitalise(selection)}\``,
                 description: `${commands
                   .filter((v) => v.category === selection)
-                  .map((c) => `\`${c.name}\``)
+                  .map((c) => `\`${c.name}\` - ${c.description}\n`)
                   .join(" ")}\n***Hint:*** *You can type /command [command] to view more information about it*`,
               },
               ctx,
