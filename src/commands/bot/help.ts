@@ -12,7 +12,7 @@ import { capitalise } from "../../util/strings";
 export default new Command({
   name: "help",
   description: "List all my commands or get information on a specific command",
-  category: "misc",
+  category: "bot",
   perms: [],
   options: [
     {
