@@ -4,6 +4,7 @@ import {
   Client,
   ClientEvents,
   Collection,
+  Options,
 } from "discord.js";
 import winston, { transports } from "winston";
 import { CommandOptions } from "../typings/CommandItems";
@@ -14,6 +15,7 @@ import Event from "./Event";
 import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
+import AutoCompleter from "./AutoComplete";
 
 /**
  * --------------------
@@ -53,6 +55,7 @@ export default class Bot extends Client {
   public commands = new Collection<string, CommandOptions>();
   public readonly logger: winston.Logger;
   public readonly config: Record<string, any>;
+  public autocomplete = new Collection<string, AutoCompleter>();
   constructor() {
     super({
       intents: ["GUILDS"],
@@ -143,6 +146,23 @@ export default class Bot extends Client {
         .default;
       this.on(event.event, (...args) => event.run(this, ...args));
       this.logger.debug(`Registered event listener for ${event.event}`);
+    }
+
+    /**
+     * --------------------
+     * Autocomplete
+     * --------------------
+     */
+    const autoCompleteFiles = await glob(
+      path.join(__dirname, "../autocomplete/*.{js,ts}")
+    );
+
+    for (const file of autoCompleteFiles) {
+      const autoComplete: AutoCompleter = await import(file);
+      this.autocomplete.set(autoComplete.command, autoComplete);
+      this.logger.debug(
+        `Registered auto completer for command ${autoComplete.command}`
+      );
     }
   }
 
