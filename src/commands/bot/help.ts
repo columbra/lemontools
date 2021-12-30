@@ -14,6 +14,8 @@ export default new Command({
   description: "List all my commands or get information on a specific command",
   category: "bot",
   perms: [],
+  example: "info",
+  usage: "[command]",
   options: [
     {
       name: "command",

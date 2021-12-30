@@ -11,6 +11,9 @@ export default new Command({
   description: "Fetch a random hot post from a subreddit",
   category: "reddit",
   perms: [],
+  usage: "<subreddit>",
+  example: "facepalm",
+  
 
   options: [
     {
