@@ -2,6 +2,12 @@ bot:
   name: &botname "Name of bot"
   author: &author "Your preferred nickname (Discord username or something else)"
   sudos: ["array", "of discord IDs", "to give SUDO privledges"]
+  perms: 274878286912 # A permissions integer. Search Discord bot permission integer to see info about it
+  description: >-
+    type
+    a 
+    very long
+    description here. 
 
 style:
   # Colour *must* be spelt the proper way
