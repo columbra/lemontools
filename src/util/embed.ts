@@ -15,7 +15,10 @@ function embed(
 ): MessageEmbed {
   return new MessageEmbed(opt)
     .setColor(parseInt(bot.config.style.colour.primary.replace("#", ""), 16))
-    .setFooter(`Command run by ${ctx.user.username}`, ctx.user.avatarURL())
+    .setFooter({
+      text: `Command run by ${ctx.user.username}`,
+      iconURL: ctx.user.avatarURL()
+    })
     .setTimestamp();
 }
 function simpleEmbed(str: string, bot: Bot): MessageEmbed {
