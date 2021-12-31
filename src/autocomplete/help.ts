@@ -8,6 +8,6 @@ export default new AutoCompleter({
       .map(([, c]) => ({
         name: c.name,
         value: c.name,
-      }));
+      })).slice(0,20); // 25 limit
   },
 });
