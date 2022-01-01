@@ -19,6 +19,8 @@ export default new Command({
       required: true,
     },
   ],
+  usage: "<country>",
+  example: "Australia",
 
   async execute({ bot, ctx, args }) {
     await ctx.deferReply();
