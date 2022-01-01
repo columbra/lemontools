@@ -2,9 +2,11 @@
   "dependencies": {
     "@types/js-yaml": "^4.0.5",
     "axios": "^0.24.0",
+    "canvas": "^2.8.0",
     "chalk": "4.x.x",
     "chart.js": "^3.7.0",
     "chartjs-node-canvas": "^4.1.5",
+    "cheerio": "^1.0.0-rc.10",
     "discord.js": "^13.3.1",
     "glob": "^7.2.0",
     "js-yaml": "^4.1.0",
