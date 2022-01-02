@@ -54,6 +54,7 @@ export default new Command({
         ]);
       }
       res.setDescription(
+        `${commands.size} commands\n` +
         Array.from(categories)
           .map((c) => `\`${capitalise(c)}\``)
           .join(" ")
