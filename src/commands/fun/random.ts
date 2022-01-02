@@ -24,6 +24,8 @@ export default new Command({
       required: true,
     },
   ],
+  example: "12 40",
+  usage: "<min> <max>",
 
   async execute({ bot, ctx, args }) {
     const min = args.getNumber("min");
