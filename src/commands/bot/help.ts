@@ -5,7 +5,7 @@ import {
   MessageSelectMenu,
 } from "discord.js";
 import Command from "../../classes/Command";
-import { disabledComponents } from "../../util/components";
+import { disabledComponents as disableComponents } from "../../util/components";
 import { embed, errorMessage, inviteRow } from "../../util/embed";
 import { capitalise } from "../../util/strings";
 
@@ -75,7 +75,7 @@ export default new Command({
       comp.on("end", () => {
         if (selected) return;
         ctx.editReply({
-          components: disabledComponents([
+          components: disableComponents([
             new MessageActionRow().addComponents([choices]),
           ]),
         });
