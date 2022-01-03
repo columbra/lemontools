@@ -55,9 +55,9 @@ export default new Command({
       }
       res.setDescription(
         `${commands.size} commands\n` +
-        Array.from(categories)
-          .map((c) => `\`${capitalise(c)}\``)
-          .join(" ")
+          Array.from(categories)
+            .map((c) => `\`${capitalise(c)}\``)
+            .join(" ")
       );
       ctx.editReply({
         embeds: [res],
@@ -83,8 +83,12 @@ export default new Command({
       comp.on("collect", (i) => {
         const [selection] = i.values;
         selected = true;
-        ctx.editReply({
-          components: [inviteRow],
+        comp.resetTimer();
+        i.update({
+          components: [
+            new MessageActionRow().addComponents([choices]),
+            inviteRow,
+          ],
           embeds: [
             embed(
               {
@@ -92,17 +96,15 @@ export default new Command({
                 description: `${commands
                   .filter((v) => v.category === selection)
                   .map((c) => `\`${c.name}\` - ${c.description}\n`)
-                  .join(" ")}\n***Hint:*** *You can type /command [command] to view more information about it*`,
+                  .join(
+                    " "
+                  )}\n***Hint:*** *You can type /command [command] to view more information about it*`,
               },
               ctx,
               bot
             ),
           ],
         });
-        i.reply({
-          fetchReply: true,
-          content: "Loading category data...",
-        }).then((m) => (m as Message).delete());
       });
     } else {
       const command = bot.commands.get(query.replace("/", ""));
