@@ -39,7 +39,7 @@ export default new Event("interactionCreate", async (bot, ctx) => {
     bot.logger.error(
       `Command ${commandName} failed to execute with this error: ${err}`
     );
-    if (!ctx.replied) return ctx.reply("Something went wrong");
-    return ctx.followUp("Something went wrong");
+    if (!ctx.replied) return ctx.reply(errorMessage(`Something went wrong whilst running that command`));
+    return ctx.followUp(errorMessage("Something went wrong whilst running that command"));
   }
 });
