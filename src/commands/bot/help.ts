@@ -71,9 +71,7 @@ export default new Command({
         filter: (i) => i.user.id === ctx.user.id,
         time: 30000,
       });
-      let selected = false;
       comp.on("end", () => {
-        if (selected) return;
         ctx.editReply({
           components: disableComponents([
             new MessageActionRow().addComponents([choices]),
@@ -82,7 +80,6 @@ export default new Command({
       });
       comp.on("collect", (i) => {
         const [selection] = i.values;
-        selected = true;
         comp.resetTimer();
         i.update({
           components: [
