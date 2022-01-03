@@ -75,6 +75,8 @@ export default new Command({
         ctx.editReply({
           components: disableComponents([
             new MessageActionRow().addComponents([choices]),
+          ]).concat([
+            inviteRow
           ]),
         });
       });
