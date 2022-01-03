@@ -97,7 +97,7 @@ export default new Command({
                   .map((c) => `\`${c.name}\` - ${c.description}\n`)
                   .join(
                     " "
-                  )}\n***Hint:*** *You can type /command [command] to view more information about it*`,
+                  )}\n***Hint:*** *You can type /help [command] to view more information about it*`,
               },
               ctx,
               bot
