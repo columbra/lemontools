@@ -86,7 +86,7 @@ export default new Command({
     GiveawayManager.start(channel, {
       prize,
       winnerCount: winners,
-      duration: +duration,
+      duration: durationMillis,
       messages: {
         giveaway: message,
         giveawayEnded: endMessage,
