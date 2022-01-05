@@ -1,22 +1,23 @@
+import axios from "axios";
 import chalk from "chalk";
 import {
   ApplicationCommandDataResolvable,
   Client,
   ClientEvents,
   Collection,
-  Options,
 } from "discord.js";
-import winston, { transports } from "winston";
-import { CommandOptions } from "../typings/CommandItems";
-import syncglob from "glob";
-import { promisify } from "util";
-import { CommandRegisterOptions } from "../typings/Bot";
-import Event from "./Event";
 import fs from "fs";
+import syncglob from "glob";
 import yaml from "js-yaml";
+import mongoose from "mongoose";
 import path from "path";
+import { promisify } from "util";
+import winston, { transports } from "winston";
+import { CommandRegisterOptions } from "../typings/Bot";
+import { CommandOptions } from "../typings/CommandItems";
 import AutoCompleter from "./AutoComplete";
-import axios from "axios";
+import Event from "./Event";
+import GiveawaysManager from "./GiveawayManager";
 
 /**
  * --------------------
@@ -57,9 +58,11 @@ export default class Bot extends Client {
   public readonly logger: winston.Logger;
   public readonly config: Record<string, any>;
   public autocomplete = new Collection<string, AutoCompleter>();
+  public GiveawayManager: GiveawaysManager;
+  public db: typeof mongoose.Connection;
   constructor() {
     super({
-      intents: ["GUILDS"],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS"],
     });
     this.logger = winston.createLogger({
       levels: loggerLevels,
@@ -86,7 +89,19 @@ export default class Bot extends Client {
     );
     this.logger.debug(`Loaded configuration`);
   }
-  public start() {
+  public async start() {
+    this.logger.info(`Start function called`)
+    this.db = (await mongoose.connect(process.env.MONGO)).Connection;
+    this.logger.info("Connected to MongoDB database.");
+
+    this.GiveawayManager = new GiveawaysManager(this, {
+      default: {
+        botsCanWin: false,
+        embedColor: this.config.style.colour.primary,
+        reaction: "🎉",
+      },
+    });
+    this.logger.info("Giveaways ready")
     this.logger.debug(`Starting...`);
     if (process.env.ENVIRONMENT === "debug")
       this.logger.warn("Debug mode enabled.");
@@ -193,7 +208,7 @@ export default class Bot extends Client {
   }
 
   private _axiosMiddlewares() {
-    this.logger.debug("Registering Axios interceptor")
+    this.logger.debug("Registering Axios interceptor");
     axios.interceptors.request.use(
       (cfg) =>
         Object.defineProperty(cfg, "User-Agent", {
