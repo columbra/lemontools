@@ -8,7 +8,7 @@ import type {
 import { ChannelTypes } from "discord.js/typings/enums";
 import Command from "../../classes/Command";
 import ms, { StringValue } from "../../lib/ms";
-import { errorMessage, simpleEmbed } from "../../util/embed";
+import { embed, errorMessage, simpleEmbed } from "../../util/embed";
 
 export default new Command({
   name: "giveaway",
@@ -90,10 +90,21 @@ export default new Command({
       messages: {
         giveaway: message,
         giveawayEnded: endMessage,
+        winMessage: {
+          embed: embed({
+            title: `:partying_face: Congratulations to...`,
+            description: `{winners}`
+          }, ctx, bot),
+        },
       },
     }).then((g) => {
       ctx.reply({
-        embeds: [simpleEmbed(`Your giveaway for **${prize}** has begun! [Click to go see](${g.messageURL})`, bot)],
+        embeds: [
+          simpleEmbed(
+            `Your giveaway for **${prize}** has begun! [Click to go see](${g.messageURL})`,
+            bot
+          ),
+        ],
       });
     });
   },
