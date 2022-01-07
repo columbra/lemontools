@@ -47,6 +47,8 @@ export default new Command({
       type: "STRING",
     },
   ],
+  usage: "<channel> <duration> <prize> <winners> [message] [endmessage]",
+  example: "#giveaways 1w $10 Paypal 1",
 
   async execute({ bot, ctx, args }) {
     const { GiveawayManager } = bot;
