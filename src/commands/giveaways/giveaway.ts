@@ -86,7 +86,7 @@ export default new Command({
         winMessage: {
           embed: embed({
             title: `:partying_face: Congratulations to...`,
-            description: `{winners}`
+            description: `{winners}! You won **{this.prize}**!\n\n [**Click to see giveaway**]({this.messageURL})`
           }, ctx, bot),
         },
       },
