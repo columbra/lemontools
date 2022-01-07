@@ -1,10 +1,3 @@
-import type {
-  BaseGuildTextChannel,
-  CategoryChannel,
-  DMChannel,
-  GuildBasedChannel,
-  TextBasedChannel,
-} from "discord.js";
 import { ChannelTypes } from "discord.js/typings/enums";
 import Command from "../../classes/Command";
 import ms, { StringValue } from "../../lib/ms";
