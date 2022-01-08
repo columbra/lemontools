@@ -68,6 +68,12 @@ export default new Command({
           `Please specify a valid duration... \`${duration}\` is not a valid duration!`
         )
       );
+    if (BigInt(durationMillis) > BigInt(31540000000000))
+      return ctx.reply(
+        errorMessage(
+          "Hey! Your giveaway can't last more than a thousand years... Why would you set it to last a thousand years anyways???"
+        )
+      );
     if (
       !channel
         .permissionsFor(ctx.guild.me)
@@ -86,10 +92,14 @@ export default new Command({
         giveaway: message,
         giveawayEnded: endMessage,
         winMessage: {
-          embed: embed({
-            title: `:partying_face: Congratulations to...`,
-            description: `{winners}! You won **{this.prize}**!\n\n [**Click to see giveaway**]({this.messageURL})`
-          }, ctx, bot),
+          embed: embed(
+            {
+              title: `:partying_face: Congratulations to...`,
+              description: `{winners}! You won **{this.prize}**!\n\n [:arrow_upper_right: **Click to see giveaway**]({this.messageURL})`,
+            },
+            ctx,
+            bot
+          ),
         },
       },
     }).then((g) => {
