@@ -52,6 +52,8 @@ export default new Command({
       ],
     },
   ],
+  usage: "<subcommand> <prize>",
+  example: "end $10 Paypal",
 
   async execute({ bot, ctx, args }) {
     const subcmd = args.getSubcommand(true); // true here asserts that there must be a subcommand (for typechecking reasons)
