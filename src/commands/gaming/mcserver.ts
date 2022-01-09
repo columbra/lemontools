@@ -2,7 +2,6 @@ import Command from "../../classes/Command";
 import { MCServer } from "../../typings/mcserver";
 import { embed } from "../../util/embed";
 import { LemonEmojis } from "../../util/emoji";
-import { capitalise } from "../../util/strings";
 import { getJSON } from "../../util/web";
 
 export default new Command({
@@ -38,17 +37,21 @@ export default new Command({
           },
           {
             name: "MOTD",
-            value: `\`\`\`${data.motd.clean.join("\n")}\`\`\``,
+            value: `\`\`\`${
+              data.motd?.clean.join("\n") ?? "No MOTD Found..."
+            }\`\`\``,
           },
           {
             name: "Players",
-            value: `Online: \`${data.players.online.toLocaleString()}\`
-            Maximum: \`${data.players.max.toLocaleString()}\``,
+            value: `Online: \`${
+              data.players?.online.toLocaleString() ?? "Unknown"
+            }\`
+            Maximum: \`${data?.players?.max.toLocaleString() ?? "Unknown"}\``,
           },
           {
             name: "Miscellaneous",
             value: `IP Address: \`${data.ip}\`
-            Version: \`${data.version}\``,
+            Version: \`${data.version ?? "Unknown"}\``,
           },
         ],
         thumbnail: {
