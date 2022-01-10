@@ -1,3 +1,4 @@
+import { InfluxDB as Influx, Point } from "@influxdata/influxdb-client";
 import axios from "axios";
 import chalk from "chalk";
 import {
@@ -5,6 +6,8 @@ import {
   Client,
   ClientEvents,
   Collection,
+  LimitedCollection,
+  Options,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
@@ -18,6 +21,7 @@ import { CommandOptions } from "../typings/CommandItems";
 import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
+import os from "os";
 
 /**
  * --------------------
@@ -60,10 +64,34 @@ export default class Bot extends Client {
   public autocomplete = new Collection<string, AutoCompleter>();
   public GiveawayManager: GiveawaysManager;
   public db: typeof mongoose.Connection;
+  private readonly InfluxConfig = {
+    org: process.env.ORG,
+    bucket: process.env.BUCKET,
+    url: process.env.INFLUX_URL,
+  };
+  private InfluxDB: Influx;
   constructor() {
     super({
       intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS"],
+      // Credit: salvage
+      /**
+       * @author Salvage_Dev#3650
+       */
+      makeCache: Options.cacheWithLimits({
+        // Keep default thread sweeping behavior
+        ...Options.defaultMakeCacheSettings,
+        // Override MessageManager
+        MessageManager: {
+          sweepInterval: 300,
+          sweepFilter: LimitedCollection.filterByLifetime({
+            lifetime: 1800,
+            getComparisonTimestamp: (e) =>
+              e.editedTimestamp ?? e.createdTimestamp,
+          }),
+        },
+      }),
     });
+
     this.logger = winston.createLogger({
       levels: loggerLevels,
       transports: [
@@ -87,10 +115,14 @@ export default class Bot extends Client {
     this.config = yaml.load(
       fs.readFileSync(path.join(__dirname, "../../config.yaml"), "utf-8")
     );
+    this.InfluxDB = new Influx({
+      url: this.InfluxConfig.url,
+      token: process.env.INFLUX_URL,
+    });
     this.logger.debug(`Loaded configuration`);
   }
   public async start() {
-    this.logger.info(`Start function called`)
+    this.logger.info(`Start function called`);
     this.db = (await mongoose.connect(process.env.MONGO)).Connection;
     this.logger.info("Connected to MongoDB database.");
 
@@ -101,7 +133,7 @@ export default class Bot extends Client {
         reaction: "🎉",
       },
     });
-    this.logger.info("Giveaways ready")
+    this.logger.info("Giveaways ready");
     this.logger.debug(`Starting...`);
     if (process.env.ENVIRONMENT === "debug")
       this.logger.warn("Debug mode enabled.");
@@ -120,6 +152,8 @@ export default class Bot extends Client {
     this.login(process.env.BOT_TOKEN);
     this._register();
     this._axiosMiddlewares();
+    this.initMonitoring();
+    this.logger.info("Influx monitoring set up");
   }
   private async _register() {
     /**
@@ -218,5 +252,67 @@ export default class Bot extends Client {
       (err) => Promise.reject(err)
     );
     this.logger.info("Finished registering Axios interceptors/middlewares");
+  }
+  private initMonitoring() {
+    setInterval(async () => {
+      const write = this.InfluxDB.getWriteApi(
+        this.InfluxConfig.org,
+        this.InfluxConfig.bucket
+      );
+      write.useDefaultTags({
+        env: this._isDev() ? "development" : "production",
+      });
+      const mem = new Point("memory");
+      const cpu = new Point("cpu");
+      const botinfo = new Point("botinfo");
+
+      mem
+        .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1048576) // 1048576 = 1024 ** 2
+        .floatField("heapTotal_mb", process.memoryUsage().heapTotal / 1048576);
+
+      /**
+       * @IMPORTANT
+       *
+       * CPU measurement reporting has changed. Instead of reporting cpu total usage
+       * we are now only reporting CPU used by the bot itself.
+       */
+
+      cpu.floatField("percentage", this._percentiseCpu(os.cpus()));
+
+      botinfo.floatField("servers", (await this.guilds.fetch()).size);
+
+      /**
+       * @IMPORTANT
+       *
+       * New field: cache_servers! These should help monitor
+       * how full the cache is and if it's being cleared or not.
+       *
+       * Field measurement change: Instead of reducing guild member
+       * size, get cache size of actual users. This will indicate the amount
+       * of users in cache, not the amount of users in *server* cache
+       */
+      botinfo.floatField("cache_members", this.users.cache.size);
+      botinfo.floatField("cache_servers", this.guilds.cache.size);
+
+      write.writePoints([mem, cpu, botinfo]);
+      write.close().then(() => this.logger.debug("Wrote to Influx monitoring"));
+    }, 60_000);
+  }
+  private _percentiseCpu(cpus: os.CpuInfo[]) {
+    // The following is taken from https://stackoverflow.com/questions/63289933/get-process-cpu-usage-in-percentage
+
+    // Get first cpu (since node only uses 1 cpu)
+    const cpu = cpus[0];
+
+    // Get total time
+    const total = Object.values(cpu.times).reduce((acc, tv) => acc + tv, 0);
+
+    // Normalize the one returned by process.cpuUsage()
+    // (microseconds VS miliseconds)
+    const usage = process.cpuUsage();
+    const currentCPUUsage = (usage.user + usage.system) * 1000;
+
+    // Find out the percentage used for this specific CPU and return it
+    return (currentCPUUsage / total) * 100;
   }
 }
