@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.21.0",
     "@types/js-yaml": "^4.0.5",
     "axios": "^0.24.0",
     "canvas": "^2.8.0",
