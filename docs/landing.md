@@ -63,3 +63,6 @@ feature_row4:
 {% include paginator.html %}
 
 ![License](https://img.shields.io/github/license/cooljim/lemontools)
+<a href="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml">
+<img src="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml/badge.svg" />
+</a>

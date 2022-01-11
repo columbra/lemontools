@@ -30,6 +30,9 @@ footer:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:jimke@gmail.com"
+    - label: Discord
+      icon: fab fa-discord fa-fw
+      url: https://discord.gg/h9bRr6FNsM
 
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 locale: "en-AU"
