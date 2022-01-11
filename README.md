@@ -3,9 +3,6 @@
 <p align="center">
   <img src="https://i.imgur.com/x8CCQmk.png" />
   <br />
-  <a href="https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml">
-    <img src="https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml/badge.svg" />
-  </a>
     <a href="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml">
     <img src="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml/badge.svg" />
   </a>
