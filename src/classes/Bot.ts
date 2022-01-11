@@ -115,9 +115,10 @@ export default class Bot extends Client {
     this.config = yaml.load(
       fs.readFileSync(path.join(__dirname, "../../config.yaml"), "utf-8")
     );
+    console.log(this.InfluxConfig);
     this.InfluxDB = new Influx({
       url: this.InfluxConfig.url,
-      token: process.env.INFLUX_URL,
+      token: process.env.INFLUX,
     });
     this.logger.debug(`Loaded configuration`);
   }
@@ -253,7 +254,7 @@ export default class Bot extends Client {
     );
     this.logger.info("Finished registering Axios interceptors/middlewares");
   }
-  private initMonitoring() {
+  private async initMonitoring() {
     setInterval(async () => {
       const write = this.InfluxDB.getWriteApi(
         this.InfluxConfig.org,
