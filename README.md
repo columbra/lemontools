@@ -44,4 +44,4 @@ Once that is done, run
 $ node ./build
 ```
 
-The bot should start. If it does not, open an [Issue](github.com/cooljim/lemontools/issues/new) describing your problem.
+The bot should start. If it does not, open an [Issue](https://github.com/cooljim/lemontools/issues/new) describing your problem.
