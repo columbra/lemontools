@@ -117,7 +117,7 @@ export default class Bot extends Client {
     );
     this.InfluxDB = new Influx({
       url: this.InfluxConfig.url,
-      token: process.env.INFLUX_URL,
+      token: process.env.INFLUX,
     });
     this.logger.debug(`Loaded configuration`);
   }
