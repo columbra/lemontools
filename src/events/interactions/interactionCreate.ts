@@ -19,7 +19,7 @@ export default new Event("interactionCreate", async (bot, ctx) => {
       )
       .catch((err) =>
         bot.logger.error(`Error whilst sending error to user: ${err}`)
-      );;
+      );
   if (command.perms.length) {
     if (typeof ctx.member.permissions === "string") return;
     if (!ctx.member.permissions.has(command.perms))
@@ -48,11 +48,17 @@ export default new Event("interactionCreate", async (bot, ctx) => {
       `Command ${commandName} failed to execute with this error: ${err}`
     );
     if (!ctx.replied)
-      return ctx.reply(
-        errorMessage(`Something went wrong whilst running that command`)
+      return ctx
+        .reply(errorMessage(`Something went wrong whilst running that command`))
+        .catch((err) =>
+          bot.logger.error(`Error whilst sending error to user: ${err}`)
+        );
+    return ctx
+      .followUp(
+        errorMessage("Something went wrong whilst running that command")
+      )
+      .catch((err) =>
+        bot.logger.error(`Error whilst sending error to user: ${err}`)
       );
-    return ctx.followUp(
-      errorMessage("Something went wrong whilst running that command")
-    );
   }
 });
