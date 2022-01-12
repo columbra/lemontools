@@ -14,7 +14,7 @@ export default new Command({
       const { data } = await getJSON<ApodResponse>(
         `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA}`
       );
-      ctx.editReply({
+      await ctx.editReply({
         embeds: [
           embed(
             {
