@@ -3,9 +3,6 @@
 <p align="center">
   <img src="https://i.imgur.com/x8CCQmk.png" />
   <br />
-  <a href="https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml">
-    <img src="https://github.com/CoolJim/lemontools/actions/workflows/node.js.yml/badge.svg" />
-  </a>
     <a href="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml">
     <img src="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml/badge.svg" />
   </a>
@@ -47,4 +44,4 @@ Once that is done, run
 $ node ./build
 ```
 
-The bot should start. If it does not, open an [Issue](github.com/cooljim/lemontools/issues/new) describing your problem.
+The bot should start. If it does not, open an [Issue](https://github.com/cooljim/lemontools/issues/new) describing your problem.
