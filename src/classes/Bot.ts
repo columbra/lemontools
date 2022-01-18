@@ -115,7 +115,6 @@ export default class Bot extends Client {
     this.config = yaml.load(
       fs.readFileSync(path.join(__dirname, "../../config.yaml"), "utf-8")
     );
-    console.log(this.InfluxConfig);
     this.InfluxDB = new Influx({
       url: this.InfluxConfig.url,
       token: process.env.INFLUX,
