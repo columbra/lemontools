@@ -5,6 +5,7 @@ import { errorMessage } from "../../util/embed";
 export default new Event("interactionCreate", async (bot, ctx) => {
   if (!ctx.isCommand()) return;
   const { commandName } = ctx;
+  bot.logger.debug(`Command ${commandName} recieved from gateway.`);
   const command = bot.commands.get(commandName);
   if (!command)
     return bot.logger.error(
@@ -60,5 +61,7 @@ export default new Event("interactionCreate", async (bot, ctx) => {
       .catch((err) =>
         bot.logger.error(`Error whilst sending error to user: ${err}`)
       );
+  } finally {
+    bot.logger.debug(`Command ${commandName} processed`);
   }
 });
