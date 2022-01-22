@@ -7,7 +7,6 @@ export default class Command implements CommandOptions {
   execute: ExecuteFunction;
   description: string;
   name: string;
-  usage: string;
   example: string;
   category: string
   constructor(opt: CommandOptions) {

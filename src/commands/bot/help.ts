@@ -1,4 +1,6 @@
 import {
+  ApplicationCommandNumericOption,
+  ApplicationCommandOption,
   EmbedFieldData,
   Message,
   MessageActionRow,
@@ -75,9 +77,7 @@ export default new Command({
         ctx.editReply({
           components: disableComponents([
             new MessageActionRow().addComponents([choices]),
-          ]).concat([
-            inviteRow
-          ]),
+          ]).concat([inviteRow]),
         });
       });
       comp.on("collect", (i) => {
@@ -114,10 +114,22 @@ export default new Command({
           )
         );
       const fields: EmbedFieldData[] = [];
+      let usage = "";
+      if (command.options.length) {
+        command.options.forEach((opt) => {
+          const sym = (
+            opt as ApplicationCommandNumericOption
+          ) /* To stop TS from complaining iT doES nOt ExiSt oN sUBcoMMand gRoup */
+            .required
+            ? "<>"
+            : "[]";
+          usage += ` ${sym[0]}${opt.name}${sym[1]}`;
+        });
+      }
 
       fields.push({
         name: `Usage`,
-        value: `\`/${command.name} ${command.usage ?? ""}\``,
+        value: `\`/${command.name}${usage}\``,
       });
       fields.push({
         name: `Category`,
