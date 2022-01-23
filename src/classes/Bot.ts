@@ -269,6 +269,12 @@ export default class Bot extends Client {
       const mem = new Point("memory");
       const cpu = new Point("cpu");
       const botinfo = new Point("botinfo");
+      const latency = new Point()
+
+      /**
+       * Latency
+       */
+      latency.floatField("ws", this.ws.ping)
 
       mem
         .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1048576) // 1048576 = 1024 ** 2
@@ -298,7 +304,7 @@ export default class Bot extends Client {
       botinfo.floatField("cache_members", this.users.cache.size);
       botinfo.floatField("cache_servers", this.guilds.cache.size);
 
-      write.writePoints([mem, cpu, botinfo]);
+      write.writePoints([mem, cpu, botinfo, latency]);
       write.close().then(() => this.logger.debug("Wrote to Influx monitoring"));
     }, 60_000);
   }
