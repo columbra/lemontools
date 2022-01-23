@@ -7,6 +7,7 @@ import {
   ClientEvents,
   Collection,
   LimitedCollection,
+  MessageEmbed,
   Options,
 } from "discord.js";
 import fs from "fs";
@@ -22,6 +23,8 @@ import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
 import os from "os";
+import Reminder from "../schema/Reminder";
+import { embed } from "../util/embed";
 
 /**
  * --------------------
@@ -153,6 +156,7 @@ export default class Bot extends Client {
     this._register();
     this._axiosMiddlewares();
     this.initMonitoring();
+    this.initReminders();
     this.logger.info("Influx monitoring set up");
   }
   private async _register() {
@@ -314,5 +318,105 @@ export default class Bot extends Client {
 
     // Find out the percentage used for this specific CPU and return it
     return (currentCPUUsage / total) * 100;
+  }
+
+  private async initReminders() {
+    // Wait for ready
+    await this._readyPromise(this);
+    // First check if any timers have already expired
+    // $lt = get all that are lower than Date.now() (which means)
+    // they have expired
+    this.logger.info(`Attempting to find any expired reminders`);
+    const expd = await Reminder.find({ time: { $lt: Date.now() } });
+    this.logger.debug(`Found ${expd.length} expired reminders (initial sweep)`);
+    Promise.all(
+      expd.map(async (r) => {
+        const user = await this.users.fetch(r.userId);
+        user
+          .send({
+            embeds: [
+              new MessageEmbed()
+                .setTitle("A reminder has expired")
+                .setDescription(
+                  `Your reminder set for <t:${Math.round(
+                    r.time / 1000
+                  )}:F> has expired. The reminder was:
+          
+          ${r.reminder}`
+                )
+                .setThumbnail("https://img.icons8.com/fluency/344/alarm.png")
+                .setFooter({
+                  text: "Icons From icons8.com",
+                })
+                .setColor(this.config.style.colour.primary),
+              ,
+            ],
+          })
+          .then(() => {
+            // Teardown function
+            // DO NOT REMOVE .then since without it the
+            // document does not delete. I have no idea
+            // why, dont question it.
+            Reminder.deleteOne({ uuid: r.uuid }).then();
+          })
+          .catch((err) =>
+            this.logger.error(
+              `Error sending reminder to user ${r.userId}! ${err}`
+            )
+          );
+      })
+    );
+
+    // Then check every minute
+    setInterval(async () => {
+      const expd = await Reminder.find({ time: { $lt: Date.now() } });
+      this.logger.debug(
+        `Found ${expd.length} expired reminders (after initial)`
+      );
+      if (expd.length === 0) return;
+      Promise.all(
+        expd.map(async (r) => {
+          const user = await this.users.fetch(r.userId);
+          user
+            .send({
+              embeds: [
+                new MessageEmbed()
+                  .setTitle("A reminder has expired")
+                  .setDescription(
+                    `Your reminder set for <t:${Math.round(
+                      r.time / 1000
+                    )}:F> has expired. The reminder was:
+          
+          ${r.reminder}`
+                  )
+                  .setThumbnail("https://img.icons8.com/fluency/344/alarm.png")
+                  .setFooter({
+                    text: "Icons From icons8.com",
+                  })
+                  .setColor(this.config.style.colour.primary),
+              ],
+            })
+            .then(() => {
+              // Teardown function
+              // DO NOT REMOVE .then since without it the
+              // document does not delete. I have no idea
+              // why, dont question it.
+              Reminder.deleteOne({ uuid: r.uuid }).then();
+            })
+            .catch((err) =>
+              this.logger.error(
+                `Error sending reminder to user ${r.userId}! ${err}`
+              )
+            );
+        })
+      );
+    }, 10_000); // TODO: Replace with 60k
+  }
+
+  private _readyPromise(that: this) {
+    return new Promise((resolve) => {
+      if (this.isReady()) return resolve(true);
+      that.on("ready", () => resolve(true));
+    });
   }
 }
