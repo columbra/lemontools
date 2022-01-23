@@ -28,3 +28,8 @@ export function makeUUID(userId: string): Promise<string> {
     });
   });
 }
+
+export function testUUID(uuid: string) {
+  const regex = /\d+-\d+-\d{18}-\d+/;
+  return regex.test(uuid)
+}
