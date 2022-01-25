@@ -1,10 +1,11 @@
 export default class CacheManager {
-  private _cache = new Map<string, CacheObject>();
+  private _cache: Map<string, CacheObject>;
   public misses: number;
   public hits: number;
 
   constructor(public options: CacheOptions) {
-    setInterval(this._sweep, options.sweepInterval ?? 60_000); // Default is every minute
+    this._cache = new Map<string, CacheObject>();
+    setInterval(() => this._sweep(), options.sweepInterval ?? 60_000); // Default is every minute
   }
   /**
    * Set a key in the cache. Similar to `Map.set()`
