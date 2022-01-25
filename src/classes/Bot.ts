@@ -427,4 +427,8 @@ export default class Bot extends Client {
       that.on("ready", () => resolve(true));
     });
   }
+
+  private _initGiveawaysDMs() {
+    // Initialise DMs on react
+  }
 }
