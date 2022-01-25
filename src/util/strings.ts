@@ -5,11 +5,12 @@ import { sleep } from "./promise";
 export function capitalise(str: string) {
   return str[0].toUpperCase() + str.substring(1);
 }
+export function epherr(strings: TemplateStringsArray, ...any) // Overload to satisfy TypeScript
 export function epherr(strings: TemplateStringsArray): InteractionReplyOptions {
   return {
     embeds: [
       new MessageEmbed({
-        description: strings.raw[0],
+        description: strings.raw.join(""),
         color: "RED",
       }),
     ],
