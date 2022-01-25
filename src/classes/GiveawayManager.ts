@@ -1,4 +1,4 @@
-import { GiveawaysManager as GWM } from "../lib/discord-giveaways/esm.mjs";
+import { GiveawaysManager as GWM } from "../lib/discord-giveaways/";
 import { UpdateWithAggregationPipeline, UpdateQuery } from "mongoose";
 import Giveaway from "../schema/Giveaway";
 
