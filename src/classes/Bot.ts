@@ -25,6 +25,7 @@ import GiveawaysManager from "./GiveawayManager";
 import os from "os";
 import Reminder from "../schema/Reminder";
 import { embed } from "../util/embed";
+import CacheManager from "../lib/cache";
 
 /**
  * --------------------
@@ -73,6 +74,7 @@ export default class Bot extends Client {
     url: process.env.INFLUX_URL,
   };
   private InfluxDB: Influx;
+  public cache = new CacheManager({});
   constructor() {
     super({
       intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS"],
@@ -269,12 +271,12 @@ export default class Bot extends Client {
       const mem = new Point("memory");
       const cpu = new Point("cpu");
       const botinfo = new Point("botinfo");
-      const latency = new Point()
+      const latency = new Point();
 
       /**
        * Latency
        */
-      latency.floatField("ws", this.ws.ping)
+      latency.floatField("ws", this.ws.ping);
 
       mem
         .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1048576) // 1048576 = 1024 ** 2
