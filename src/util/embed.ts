@@ -17,16 +17,14 @@ function embed(
     .setColor(parseInt(bot.config.style.colour.primary.replace("#", ""), 16))
     .setFooter({
       text: `Command run by ${ctx.user.username}`,
-      iconURL: ctx.user.avatarURL()
+      iconURL: ctx.user.avatarURL(),
     })
     .setTimestamp();
 }
 function simpleEmbed(str: string, bot: Bot): MessageEmbed {
   return new MessageEmbed()
     .setDescription(str)
-    .setColor(
-      parseInt(bot.config.style.colour.primary.replace("#", ""), 16)
-    );
+    .setColor(parseInt(bot.config.style.colour.primary.replace("#", ""), 16));
 }
 
 function errorMessage(err: string): InteractionReplyOptions {
@@ -60,5 +58,20 @@ const inviteRow = new MessageActionRow().addComponents([
     .setLabel("Support Server")
     .setEmoji(LemonEmojis.LemonTools),
 ]);
+
+export function epherrf(str: string): InteractionReplyOptions {
+  return {
+    embeds: [
+      new MessageEmbed({
+        description: str,
+        color: "RED",
+      }),
+    ],
+    components: [
+      inviteRow
+    ],
+    ephemeral: true,
+  };
+}
 
 export { simpleEmbed, embed, errorMessage, inviteRow };
