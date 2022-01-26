@@ -1,6 +1,6 @@
 import { MessageEmbedOptions } from "discord.js";
 import Command from "../../classes/Command";
-import Welcome from "../../schema/Welcome";
+import Welcome, { WelcomeInterface } from "../../schema/Welcome";
 import { epherrf, simpleEmbed } from "../../util/embed";
 
 export default new Command({
@@ -35,7 +35,12 @@ export default new Command({
     },
     {
       name: "whodid",
-      description: "Delete and disable welcome DMs",
+      description: "Find out who changed the welcome DMs last",
+      type: "SUB_COMMAND",
+    },
+    {
+      name: "preview",
+      description: "Preview the welcome DM",
       type: "SUB_COMMAND",
     },
   ],
@@ -102,7 +107,40 @@ export default new Command({
           ],
         });
         break;
-
+      case "whodid":
+        const document: WelcomeInterface = await Welcome.findOne({
+          serverId: ctx.guildId,
+        }).exec();
+        if (!document)
+          return ctx.reply(
+            epherrf(
+              `Your server doesn't have welcome DMs enabled. Use \`/welcome edit\` to add one`
+            )
+          );
+        ctx.reply({
+          embeds: [
+            simpleEmbed(
+              `The last change was made by <@${document.lastChangesBy}> ID: \`${document.lastChangesBy}\``,
+              bot
+            ),
+          ],
+        });
+        break;
+      case "preview":
+        const doc: WelcomeInterface = await Welcome.findOne({
+          serverId: ctx.guildId,
+        }).exec();
+        if (!doc)
+          return ctx.reply(
+            epherrf(
+              `Your server doesn't have welcome DMs enabled. Use \`/welcome edit\` to add one`
+            )
+          );
+        ctx.reply({
+          content: "Your embed should look like this:",
+          embeds: [doc.embed],
+        });
+        break;
       default:
         ctx.reply(
           epherrf(
