@@ -13,4 +13,4 @@ export interface WelcomeInterface {
   lastChangesBy: string;
 }
 
-export default model("WelcomeScheme", WelcomeSchema);
+export default model("WelcomeSchema", WelcomeSchema);
