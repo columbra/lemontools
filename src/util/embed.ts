@@ -72,6 +72,7 @@ export function epherrf(str: string): InteractionReplyOptions {
     ],
     ephemeral: true,
   };
+}
 
 export const enum EmbedColours {
   EMBED_COLOUR = "#2f3136",
