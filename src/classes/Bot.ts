@@ -259,7 +259,7 @@ export default class Bot extends Client {
     );
     this.logger.info("Finished registering Axios interceptors/middlewares");
   }
-  
+
   private async initMonitoring() {
     setInterval(async () => {
       const write = this.InfluxDB.getWriteApi(
@@ -272,7 +272,7 @@ export default class Bot extends Client {
       const mem = new Point("memory");
       const cpu = new Point("cpu");
       const botinfo = new Point("botinfo");
-      const latency = new Point();
+      const latency = new Point("latency");
 
       /**
        * Latency
