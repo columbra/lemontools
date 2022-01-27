@@ -8,7 +8,9 @@ import {
   Collection,
   LimitedCollection,
   MessageEmbed,
+  MessageReaction,
   Options,
+  User,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
@@ -24,8 +26,10 @@ import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
 import os from "os";
 import Reminder from "../schema/Reminder";
-import { embed } from "../util/embed";
+import { embed, EmbedColours } from "../util/embed";
 import CacheManager from "../lib/cache";
+import giveaway from "../commands/giveaways/giveaway";
+import Giveaway from "../lib/discord-giveaways/src/Giveaway";
 
 /**
  * --------------------
@@ -154,11 +158,14 @@ export default class Bot extends Client {
       this.logger.warn(
         "Non-standard environment used. This may cause unexpected behaviour. Please reset the environment to one of debug, dev or production"
       );
+
+    // Call setup functions
     this.login(process.env.BOT_TOKEN);
     this._register();
     this._axiosMiddlewares();
-    this.initMonitoring();
-    this.initReminders();
+    this._initMonitoring();
+    this._initReminders();
+    this._initGiveawaysDMs();
     this.logger.info("Influx monitoring set up");
   }
   private async _register() {
@@ -260,7 +267,7 @@ export default class Bot extends Client {
     this.logger.info("Finished registering Axios interceptors/middlewares");
   }
 
-  private async initMonitoring() {
+  private async _initMonitoring() {
     setInterval(async () => {
       const write = this.InfluxDB.getWriteApi(
         this.InfluxConfig.org,
@@ -329,7 +336,7 @@ export default class Bot extends Client {
     return (currentCPUUsage / total) * 100;
   }
 
-  private async initReminders() {
+  private async _initReminders() {
     // Wait for ready
     await this._readyPromise(this);
     // First check if any timers have already expired
@@ -427,5 +434,36 @@ export default class Bot extends Client {
       if (this.isReady()) return resolve(true);
       that.on("ready", () => resolve(true));
     });
+  }
+
+  private _initGiveawaysDMs() {
+    // Initialise DMs on react
+    this.GiveawayManager.on(
+      "giveawayReactionAdded",
+      async (giveaway: Giveaway, member: User, reaction: MessageReaction) => {
+        member
+          .send({
+            embeds: [
+              new MessageEmbed()
+                .setDescription(
+                  `${reaction.emoji} Your entry into the giveaway :arrow_upper_right: [**${
+                    giveaway.prize
+                  }**](${giveaway.messageURL}) has succeeded!\n\nServer: **${
+                    (await this.guilds.fetch(giveaway.guildId)).name
+                  }**`
+                )
+                .setFooter({
+                  text: "This bot is providing a service. To disable further DMs, block the bot.",
+                })
+                .setColor(EmbedColours.EMBED_COLOUR),
+            ],
+          })
+          .catch((r) =>
+            this.logger.warn(
+              `Failed whilst sending message to user about giveaway entried: ${r}`
+            )
+          );
+      }
+    );
   }
 }
