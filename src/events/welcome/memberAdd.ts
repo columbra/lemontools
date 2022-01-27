@@ -5,6 +5,7 @@ export default new Event("guildMemberAdd", async (bot, member) => {
   const welcome: WelcomeInterface | undefined = await Welcome.findOne({
     serverId: member.guild.id,
   }).exec();
+  bot.logger.debug(`Event welcome fired ${member.user.tag}`);
   if (!welcome) return; // No welcome found === stop
   member
     .send({

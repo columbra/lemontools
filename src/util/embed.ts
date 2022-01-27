@@ -43,7 +43,7 @@ const inviteRow = new MessageActionRow().addComponents([
   new MessageButton()
     .setStyle("LINK")
     .setURL(
-      "https://discord.com/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608"
+      "https://discord.com/api/oauth2/authorize?client_id=896309687136436234&permissions=515463564358&scope=bot%20applications.commands"
     )
     .setLabel("Invite")
     .setEmoji("🔗"), // Link Emoji
