@@ -81,7 +81,7 @@ export default class Bot extends Client {
   public cache = new CacheManager({});
   constructor() {
     super({
-      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS"],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"],
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
@@ -266,6 +266,7 @@ export default class Bot extends Client {
     );
     this.logger.info("Finished registering Axios interceptors/middlewares");
   }
+
   private async _initMonitoring() {
     setInterval(async () => {
       const write = this.InfluxDB.getWriteApi(
@@ -278,7 +279,7 @@ export default class Bot extends Client {
       const mem = new Point("memory");
       const cpu = new Point("cpu");
       const botinfo = new Point("botinfo");
-      const latency = new Point();
+      const latency = new Point("latency");
 
       /**
        * Latency

@@ -43,7 +43,7 @@ const inviteRow = new MessageActionRow().addComponents([
   new MessageButton()
     .setStyle("LINK")
     .setURL(
-      "https://discord.com/oauth2/authorize?client_id=896309687136436234&scope=bot+applications.commands&permissions=448928796608"
+      "https://discord.com/api/oauth2/authorize?client_id=896309687136436234&permissions=515463564358&scope=bot%20applications.commands"
     )
     .setLabel("Invite")
     .setEmoji("🔗"), // Link Emoji
@@ -59,12 +59,27 @@ const inviteRow = new MessageActionRow().addComponents([
     .setEmoji(LemonEmojis.LemonTools),
 ]);
 
+export function epherrf(str: string): InteractionReplyOptions {
+  return {
+    embeds: [
+      new MessageEmbed({
+        description: str,
+        color: "RED",
+      }),
+    ],
+    components: [
+      inviteRow
+    ],
+    ephemeral: true,
+  };
+
 export const enum EmbedColours {
   EMBED_COLOUR = "#2f3136",
   COLOURLESS = "#36393F",
   DISCORD_BLURPLE = "#7289DA",
   HOVER_COLOURLESS = "#32353b",
   DISCORD_LIGHT_BLURPLE = "#5865f2",
+
 }
 
 export { simpleEmbed, embed, errorMessage, inviteRow };
