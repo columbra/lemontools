@@ -18,11 +18,6 @@ export default class Plugin<S = any, T = any> {
   private state: Record<string, S> = {};
 
   constructor(
-    execute: PluginFunction<T>,
-    repeat: PluginRepeatableFunction<T, S>,
-    opt: PluginOptions
-  );
-  constructor(
     public execute: PluginFunction,
     public repeat?: PluginRepeatableFunction,
     public readonly opt: PluginOptions = {}
