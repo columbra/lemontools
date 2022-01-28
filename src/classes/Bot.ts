@@ -178,7 +178,7 @@ export default class Bot extends Client {
     const defer = [];
     Promise.all(
       pluginsPaths.map(async (pluginPath) => {
-        const plugin: Plugin = await import(pluginPath);
+        const plugin: Plugin = (await import(pluginPath)).default;
         if (plugin.opt.initial)
           return plugin
             .execute(this)
