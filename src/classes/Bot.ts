@@ -30,6 +30,7 @@ import { embed, EmbedColours } from "../util/embed";
 import CacheManager from "../lib/cache";
 import giveaway from "../commands/giveaways/giveaway";
 import Giveaway from "../lib/discord-giveaways/src/Giveaway";
+import Plugin from "./Plugin";
 
 /**
  * --------------------
@@ -160,6 +161,7 @@ export default class Bot extends Client {
       );
 
     // Call setup functions
+    this._startPlugins();
     this.login(process.env.BOT_TOKEN);
     this._register();
     this._axiosMiddlewares();
@@ -167,6 +169,42 @@ export default class Bot extends Client {
     this._initReminders();
     this._initGiveawaysDMs();
     this.logger.info("Influx monitoring set up");
+  }
+  private async _startPlugins() {
+    const pluginsPaths = await glob(
+      path.join(__dirname, "../plugins/*.{js,ts}")
+    );
+    const ready = [];
+    const defer = [];
+    Promise.all(
+      pluginsPaths.map(async (pluginPath) => {
+        const plugin: Plugin = await import(pluginPath);
+        if (plugin.opt.initial)
+          return plugin
+            .execute(this)
+            .catch((err) =>
+              this.logger.error(`Enountered error in initial plugin ${err}`)
+            );
+        if (plugin.opt.ready) return ready.push(plugin.execute);
+        defer.push(plugin.execute);
+      })
+    ).then(() => {
+      // Run ready plugins
+      this.on("ready", () => {
+        ready.forEach((plugin) =>
+          plugin(this).catch((err) =>
+            this.logger.error(`Error occured during ready plugin ${err}`)
+          )
+        );
+      });
+
+      // Run non-initial plugins
+      defer.forEach((plugin) =>
+        plugin(this).catch((err) =>
+          this.logger.error(`Error occured during deferred plugin ${err}`)
+        )
+      );
+    });
   }
   private async _register() {
     /**
@@ -446,7 +484,9 @@ export default class Bot extends Client {
             embeds: [
               new MessageEmbed()
                 .setDescription(
-                  `${reaction.emoji} Your entry into the giveaway :arrow_upper_right: [**${
+                  `${
+                    reaction.emoji
+                  } Your entry into the giveaway :arrow_upper_right: [**${
                     giveaway.prize
                   }**](${giveaway.messageURL}) has succeeded!\n\nServer: **${
                     (await this.guilds.fetch(giveaway.guildId)).name
