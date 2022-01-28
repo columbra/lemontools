@@ -172,7 +172,7 @@ export default class Bot extends Client {
   }
   private async _startPlugins() {
     const pluginsPaths = await glob(
-      path.join(__dirname, "../plugins/*.{js,ts}")
+      path.join(__dirname, "../plugins/**/*.{js,ts}")
     );
     const ready = [];
     const defer = [];
