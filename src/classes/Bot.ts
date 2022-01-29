@@ -164,7 +164,6 @@ export default class Bot extends Client {
     this._startPlugins();
     this.login(process.env.BOT_TOKEN);
     this._register();
-    this._axiosMiddlewares();
     this._initMonitoring();
     this._initReminders();
     this._initGiveawaysDMs();
@@ -290,19 +289,6 @@ export default class Bot extends Client {
     )
       return true;
     return false;
-  }
-
-  private _axiosMiddlewares() {
-    this.logger.debug("Registering Axios interceptor");
-    axios.interceptors.request.use(
-      (cfg) =>
-        Object.defineProperty(cfg, "User-Agent", {
-          value:
-            "Lemon Tools v2 (jimke2000@gmail.com github.com/cooljim/lemontools)",
-        }),
-      (err) => Promise.reject(err)
-    );
-    this.logger.info("Finished registering Axios interceptors/middlewares");
   }
 
   private async _initMonitoring() {
