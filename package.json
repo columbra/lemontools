@@ -22,7 +22,8 @@
     "prebuild": "ynpx rimraf build",
     "prebuild:w": "ynpx rimraf build",
     "build": "ynpx tsc -p tsconfig.json",
-    "build:w": "ynpx tsc -p tsconfig.json --watch"
+    "build:w": "ynpx tsc -p tsconfig.json --watch",
+    "start": "node ./build"
   },
   "license": "GPL-3.0-only",
   "devDependencies": {
