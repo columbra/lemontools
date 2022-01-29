@@ -1,5 +1,5 @@
 /**
- * @copyright © Copyright Lemon Bots 2021
+ * @copyright © Copyright Lemon Bots 2022
  * @license GPL-3.0-only
  * @author Jim Ke
  * 
