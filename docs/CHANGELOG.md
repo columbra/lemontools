@@ -18,6 +18,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 
 - Fixed `epherr` template tagging
 - Various bug fixes and patches
+- Performance improvements
 
 For changes 2.0.0 please see the blog post
 
