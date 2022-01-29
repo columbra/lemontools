@@ -39,7 +39,7 @@ export default new Command({
           embed(
             {
               title: "Eval Faliure",
-              description: `Error: \`\`\`${err}\`\`\``,
+              description: `\`\`\`${err}\`\`\``,
             },
             ctx,
             bot
