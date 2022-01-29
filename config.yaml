@@ -1,7 +1,7 @@
 bot:
   name: &botname Lemon Tools
   author: &author Windows95
-  sudos: ["330539533546422272"]
+  sudos: ["330539533546422272", "666731058649366556"]
   description: >-
     Lemon Tools is multipurpose bot, with many features not provided by other bots, 
     such as QR Code creation, giveaways and much more! Lemon Tools aims to be the Swiss Knife
