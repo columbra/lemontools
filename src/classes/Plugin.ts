@@ -17,10 +17,11 @@ export default class Plugin<S = any, T = any> {
   // Object to keep state for the plugin
   private state: Record<string, S> = {};
 
+  // constructor(execute: PluginFunction, opt?: PluginOptions);
   constructor(
     public execute: PluginFunction,
+    public readonly opt: PluginOptions = {},
     public repeat?: PluginRepeatableFunction,
-    public readonly opt: PluginOptions = {}
   ) {
     if (opt.ready && opt.initial) {
       throw new Error("Plugin options cannot be both ready and initial");
