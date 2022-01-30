@@ -22,7 +22,7 @@ export function epherr(strings: TemplateStringsArray): InteractionReplyOptions {
 export function makeUUID(userId: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const first = Date.now();
-    sleep(rnd(1, 2)).then(() => {
+    sleep(rnd(1, 5_000)).then(() => {
       const second = Date.now();
       const random = rnd(1, 10_000_000); // Ten million should be enough
       resolve(`${first}-${second}-${userId}-${random}`);
