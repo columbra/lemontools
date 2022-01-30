@@ -71,7 +71,15 @@ export default new Command({
         const toBlocks = [];
         const removeBlocks = [];
         toggle ? toBlocks.push(subcommand) : removeBlocks.push(subcommand);
-        editUserBlockingPrefs(ctx, toBlocks, removeBlocks);
+        await editUserBlockingPrefs(ctx, toBlocks, removeBlocks);
+        ctx.editReply({
+          embeds: [
+            simpleEmbed(
+              `You have ${toggle ? "blocked" : "unblocked"} ${subcommand}`,
+              bot
+            ),
+          ],
+        });
     }
   },
 });
@@ -89,14 +97,15 @@ async function editUserBlockingPrefs(
     .lean()
     .exec();
   if (!doc) {
-    await UserBlockingPreferences.create({
+    return await UserBlockingPreferences.create({
       userId: ctx.user.id,
       blocks: [...toBlocks], // Can't remove blocks if user does not have any to begin with!
     });
   }
-  const newBlocks = [...(doc.blocks || []), ...toBlocks].filter(
-    (x) => !removeBlocks.includes(x)
-  ); // True = keep element
+  const newBlocks = [
+    ...(doc.blocks || []),
+    ...toBlocks.filter((b) => !(doc?.blocks || []).includes(b)),
+  ].filter((x) => !removeBlocks.includes(x)); // True = keep element
   await UserBlockingPreferences.updateOne(
     { userId: ctx.user.id },
     { blocks: newBlocks }
