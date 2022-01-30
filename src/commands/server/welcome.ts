@@ -75,7 +75,7 @@ export default new Command({
           title,
           description,
           footer: {
-            text: `Powered by ${bot.config.bot.name}. This bot is providing a service, to disable further DMs, please block this bot.`,
+            text: `Powered by ${bot.config.bot.name}. This bot is providing a service, to disable further DMs, please use the /block command to configure blocking.`,
             iconURL: ctx.guild.iconURL(),
           },
         };

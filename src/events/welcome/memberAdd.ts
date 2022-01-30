@@ -1,4 +1,5 @@
 import Event from "../../classes/Event";
+import UserBlockingPreferences from "../../schema/UserBlockingPreferences";
 import Welcome, { WelcomeInterface } from "../../schema/Welcome";
 
 export default new Event("guildMemberAdd", async (bot, member) => {
@@ -7,6 +8,12 @@ export default new Event("guildMemberAdd", async (bot, member) => {
   }).exec();
   bot.logger.debug(`Event welcome fired ${member.user.tag}`);
   if (!welcome) return; // No welcome found === stop
+  const user = await UserBlockingPreferences.findOne({ userId: member.user.id })
+    .lean()
+    .exec();
+  if (user) {
+    if (user.blocks.includes("welcomes")) return; // User has blocked welcome messages
+  }
   member
     .send({
       content: `This message was sent from the server **${member.guild.name}**`,
