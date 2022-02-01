@@ -7,7 +7,10 @@ import {
   ClientEvents,
   Collection,
   LimitedCollection,
+  MessageEmbed,
+  MessageReaction,
   Options,
+  User,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
@@ -22,6 +25,12 @@ import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
 import os from "os";
+import Reminder from "../schema/Reminder";
+import { embed, EmbedColours } from "../util/embed";
+import CacheManager from "../lib/cache";
+import giveaway from "../commands/giveaways/giveaway";
+import Giveaway from "../lib/discord-giveaways/src/Giveaway";
+import Plugin from "./Plugin";
 
 /**
  * --------------------
@@ -70,9 +79,10 @@ export default class Bot extends Client {
     url: process.env.INFLUX_URL,
   };
   private InfluxDB: Influx;
+  public cache = new CacheManager({});
   constructor() {
     super({
-      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS"],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"],
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
@@ -149,11 +159,51 @@ export default class Bot extends Client {
       this.logger.warn(
         "Non-standard environment used. This may cause unexpected behaviour. Please reset the environment to one of debug, dev or production"
       );
+
+    // Call setup functions
+    this._startPlugins();
     this.login(process.env.BOT_TOKEN);
     this._register();
-    this._axiosMiddlewares();
-    this.initMonitoring();
+    this._initMonitoring();
+    this._initReminders();
+    this._initGiveawaysDMs();
     this.logger.info("Influx monitoring set up");
+  }
+  private async _startPlugins() {
+    const pluginsPaths = await glob(
+      path.join(__dirname, "../plugins/**/*.{js,ts}")
+    );
+    const ready = [];
+    const defer = [];
+    Promise.all(
+      pluginsPaths.map(async (pluginPath) => {
+        const plugin: Plugin = (await import(pluginPath)).default;
+        if (plugin.opt.initial)
+          return plugin
+            .execute(this)
+            .catch((err) =>
+              this.logger.error(`Enountered error in initial plugin ${err}`)
+            );
+        if (plugin.opt.ready) return ready.push(plugin.execute);
+        defer.push(plugin.execute);
+      })
+    ).then(() => {
+      // Run ready plugins
+      this.on("ready", () => {
+        ready.forEach((plugin) =>
+          plugin(this).catch((err) =>
+            this.logger.error(`Error occured during ready plugin ${err}`)
+          )
+        );
+      });
+
+      // Run non-initial plugins
+      defer.forEach((plugin) =>
+        plugin(this).catch((err) =>
+          this.logger.error(`Error occured during deferred plugin ${err}`)
+        )
+      );
+    });
   }
   private async _register() {
     /**
@@ -241,19 +291,7 @@ export default class Bot extends Client {
     return false;
   }
 
-  private _axiosMiddlewares() {
-    this.logger.debug("Registering Axios interceptor");
-    axios.interceptors.request.use(
-      (cfg) =>
-        Object.defineProperty(cfg, "User-Agent", {
-          value:
-            "Lemon Tools v2 (jimke2000@gmail.com github.com/cooljim/lemontools)",
-        }),
-      (err) => Promise.reject(err)
-    );
-    this.logger.info("Finished registering Axios interceptors/middlewares");
-  }
-  private async initMonitoring() {
+  private async _initMonitoring() {
     setInterval(async () => {
       const write = this.InfluxDB.getWriteApi(
         this.InfluxConfig.org,
@@ -265,6 +303,12 @@ export default class Bot extends Client {
       const mem = new Point("memory");
       const cpu = new Point("cpu");
       const botinfo = new Point("botinfo");
+      const latency = new Point("latency");
+
+      /**
+       * Latency
+       */
+      latency.floatField("ws", this.ws.ping);
 
       mem
         .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1048576) // 1048576 = 1024 ** 2
@@ -294,7 +338,7 @@ export default class Bot extends Client {
       botinfo.floatField("cache_members", this.users.cache.size);
       botinfo.floatField("cache_servers", this.guilds.cache.size);
 
-      write.writePoints([mem, cpu, botinfo]);
+      write.writePoints([mem, cpu, botinfo, latency]);
       write.close().then(() => this.logger.debug("Wrote to Influx monitoring"));
     }, 60_000);
   }
@@ -314,5 +358,138 @@ export default class Bot extends Client {
 
     // Find out the percentage used for this specific CPU and return it
     return (currentCPUUsage / total) * 100;
+  }
+
+  private async _initReminders() {
+    // Wait for ready
+    await this._readyPromise(this);
+    // First check if any timers have already expired
+    // $lt = get all that are lower than Date.now() (which means)
+    // they have expired
+    this.logger.info(`Attempting to find any expired reminders`);
+    const expd = await Reminder.find({ time: { $lt: Date.now() } });
+    this.logger.debug(`Found ${expd.length} expired reminders (initial sweep)`);
+    Promise.all(
+      expd.map(async (r) => {
+        const user = await this.users.fetch(r.userId);
+        user
+          .send({
+            embeds: [
+              new MessageEmbed()
+                .setTitle("A reminder has expired")
+                .setDescription(
+                  `Your reminder set for <t:${Math.round(
+                    r.time / 1000
+                  )}:F> has expired. The reminder was:
+          
+          ${r.reminder}`
+                )
+                .setThumbnail("https://img.icons8.com/fluency/344/alarm.png")
+                .setFooter({
+                  text: "Icons From icons8.com",
+                })
+                .setColor(this.config.style.colour.primary),
+              ,
+            ],
+          })
+          .then(() => {
+            // Teardown function
+            // DO NOT REMOVE .then since without it the
+            // document does not delete. I have no idea
+            // why, dont question it.
+            Reminder.deleteOne({ uuid: r.uuid }).then();
+          })
+          .catch((err) =>
+            this.logger.error(
+              `Error sending reminder to user ${r.userId}! ${err}`
+            )
+          );
+      })
+    );
+
+    // Then check every minute
+    setInterval(async () => {
+      const expd = await Reminder.find({ time: { $lt: Date.now() } });
+      this.logger.debug(
+        `Found ${expd.length} expired reminders (after initial)`
+      );
+      if (expd.length === 0) return;
+      Promise.all(
+        expd.map(async (r) => {
+          const user = await this.users.fetch(r.userId);
+          user
+            .send({
+              embeds: [
+                new MessageEmbed()
+                  .setTitle("A reminder has expired")
+                  .setDescription(
+                    `Your reminder set for <t:${Math.round(
+                      r.time / 1000
+                    )}:F> has expired. The reminder was:
+          
+          ${r.reminder}`
+                  )
+                  .setThumbnail("https://img.icons8.com/fluency/344/alarm.png")
+                  .setFooter({
+                    text: "Icons From icons8.com",
+                  })
+                  .setColor(this.config.style.colour.primary),
+              ],
+            })
+            .then(() => {
+              // Teardown function
+              // DO NOT REMOVE .then since without it the
+              // document does not delete. I have no idea
+              // why, dont question it.
+              Reminder.deleteOne({ uuid: r.uuid }).then();
+            })
+            .catch((err) =>
+              this.logger.error(
+                `Error sending reminder to user ${r.userId}! ${err}`
+              )
+            );
+        })
+      );
+    }, 10_000); // TODO: Replace with 60k
+  }
+
+  private _readyPromise(that: this) {
+    return new Promise((resolve) => {
+      if (this.isReady()) return resolve(true);
+      that.on("ready", () => resolve(true));
+    });
+  }
+
+  private _initGiveawaysDMs() {
+    // Initialise DMs on react
+    this.GiveawayManager.on(
+      "giveawayReactionAdded",
+      async (giveaway: Giveaway, member: User, reaction: MessageReaction) => {
+        member
+          .send({
+            embeds: [
+              new MessageEmbed()
+                .setDescription(
+                  `${
+                    reaction.emoji
+                  } Your entry into the giveaway :arrow_upper_right: [**${
+                    giveaway.prize
+                  }**](${giveaway.messageURL}) has succeeded!\n\nServer: **${
+                    (await this.guilds.fetch(giveaway.guildId)).name
+                  }**`
+                )
+                .setFooter({
+                  text: "This bot is providing a service. To disable further DMs, block the bot.",
+                })
+                .setColor(EmbedColours.EMBED_COLOUR),
+            ],
+          })
+          .catch((r) =>
+            this.logger.warn(
+              `Failed whilst sending message to user about giveaway entried: ${r}`
+            )
+          );
+      }
+    );
   }
 }

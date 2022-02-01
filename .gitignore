@@ -1,6 +1,5 @@
 .env*
 build
-config.yaml
 node_modules
 !.env.example
 *.log

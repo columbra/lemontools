@@ -1,7 +1,11 @@
 import Command from "../../classes/Command";
 import { simpleEmbed } from "../../util/embed";
 import { rnd } from "../../util/number";
-import { Canvas, createCanvas, NodeCanvasRenderingContext2D } from "canvas";
+import {
+  Canvas,
+  createCanvas,
+  CanvasRenderingContext2D as NodeCanvasRenderingContext2D,
+} from "canvas";
 import { MessageAttachment } from "discord.js";
 
 export default new Command({

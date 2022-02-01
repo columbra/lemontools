@@ -69,3 +69,12 @@ if (["dev", "debug"].includes(process.env.ENVIRONMENT)) {
 export const bot = new Bot();
 
 bot.start();
+
+/**
+ * Error handling
+ */
+
+// Write an error handler to catch rejected promises
+process.on("unhandledRejection", (err) => {
+  bot.logger.error(`Unhandled Rejection: ${err}`);
+});

@@ -6,6 +6,23 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# 2.0.2
+
+## What's new
+
+- Re-added the `/pokemon` command from `v1`
+- Added caching - this means some commands should work faster now!
+- Added welcome DMs to welcome new users to your server. Use `/welcome` to edit, disable and manage welcome DMs
+- Plugin system: contribute your own extensions/plugins to Lemon Tools!
+
+## Fixes
+
+- Fixed `epherr` template tagging
+- Various bug fixes and patches
+- Performance improvements
+
+For changes 2.0.0 please see the blog post
+
 # v1.4.1
 
 ## What's new
