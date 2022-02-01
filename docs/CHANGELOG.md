@@ -13,6 +13,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 - Re-added the `/pokemon` command from `v1`
 - Added caching - this means some commands should work faster now!
 - Added welcome DMs to welcome new users to your server. Use `/welcome` to edit, disable and manage welcome DMs
+- Plugin system: contribute your own extensions/plugins to Lemon Tools!
 
 ## Fixes
 
