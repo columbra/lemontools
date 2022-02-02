@@ -5,6 +5,7 @@
   <br />
     <a href="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml">
     <img src="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml/badge.svg" />
+      [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B2AAOTI)
   </a>
 </p>
 
