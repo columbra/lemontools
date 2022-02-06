@@ -53,10 +53,6 @@ export default new Command({
     switch (subcommand) {
       case "disable":
         Welcome.deleteOne({ serverId: ctx.guildId }).then((d) => {
-          if (d.deletedCount > 1)
-            bot.logger.crit(
-              `!!! USER MANAGED TO DELETE MORE THAN ONE DOCUMENT IN WELCOME.TS !!!`
-            );
           if (d.deletedCount === 0)
             return ctx.reply(
               epherrf(
