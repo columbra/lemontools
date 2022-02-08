@@ -14,3 +14,8 @@ style:
   colour:
     primary: "#FEF250"
     secondary: "Secondary colour hex code."
+
+  # Status control
+  status:
+    type: WATCHING
+    message: /help

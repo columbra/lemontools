@@ -16,3 +16,8 @@ style:
     primary: "Primary colour hex code. Use in embeds"
     secondary: "Secondary colour hex code."
   
+  # Status control
+  status:
+    type: WATCHING
+    message: a movie
+  
