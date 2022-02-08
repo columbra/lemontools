@@ -11,6 +11,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 ## What's new
 
 - Dictionary command to search up stuff in the dictionary
+- Added helpful statuses
 
 ## Changes
 
