@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const { EventEmitter } = require('node:events');
-=======
 const { EventEmitter } = require('events');
->>>>>>> dev
 const { setTimeout, setInterval } = require('node:timers');
 const { writeFile, readFile, access } = require('fs/promises');
 const merge = require('deepmerge');
