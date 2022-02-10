@@ -16,6 +16,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 ## Changes
 
 - Edited `config.yaml` to match my (Compositr) new username
+- Temporarily disabling welcome system to push forwards two updates.
 
 # 2.0.2
 
