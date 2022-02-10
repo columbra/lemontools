@@ -6,6 +6,18 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# 2.1.0
+
+## What's new
+
+- Dictionary command to search up stuff in the dictionary
+- Added helpful statuses
+
+## Changes
+
+- Edited `config.yaml` to match my (Compositr) new username
+- Temporarily disabling welcome system to push forwards two updates.
+
 # 2.0.2
 
 ## What's new

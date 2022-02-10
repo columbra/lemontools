@@ -1,6 +1,6 @@
 bot:
   name: &botname Lemon Tools
-  author: &author Windows95
+  author: &author Compositr
   sudos: ["330539533546422272"]
   description: >-
     Lemon Tools is multipurpose bot, with many features not provided by other bots, 
@@ -14,3 +14,8 @@ style:
   colour:
     primary: "#FEF250"
     secondary: "Secondary colour hex code."
+
+  # Status control
+  status:
+    type: WATCHING
+    message: /help
