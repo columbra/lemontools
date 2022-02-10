@@ -82,7 +82,7 @@ export default class Bot extends Client {
   public cache = new CacheManager({});
   constructor() {
     super({
-      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/],
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
