@@ -83,7 +83,7 @@ export default class Bot extends Client {
   constructor() {
     super({
       intents: [
-        "GUgit checkout -b dev origin/devILDS",
+        "GUILDS",
         "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/,
       ],
       // Credit: salvage
