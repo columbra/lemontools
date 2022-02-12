@@ -9,7 +9,8 @@ import {
   MessageEmbed,
   MessageReaction,
   Options,
-  User
+  Sweepers,
+  User,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
@@ -80,10 +81,7 @@ export default class Bot extends Client {
   public cache = new CacheManager({});
   constructor() {
     super({
-      intents: [
-        "GUILDS",
-        "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/,
-      ],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/],
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
@@ -91,14 +89,19 @@ export default class Bot extends Client {
       makeCache: Options.cacheWithLimits({
         // Keep default thread sweeping behavior
         ...Options.defaultMakeCacheSettings,
+
         // Override MessageManager
         MessageManager: {
           sweepInterval: 300,
-          sweepFilter: LimitedCollection.filterByLifetime({
+          sweepFilter: Sweepers.filterByLifetime({
             lifetime: 1800,
             getComparisonTimestamp: (e) =>
               e.editedTimestamp ?? e.createdTimestamp,
           }),
+          maxSize: 1_000,
+        },
+        GuildMemberManager: {
+          sweepInterval: 300,
         },
       }),
     });
