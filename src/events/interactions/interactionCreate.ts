@@ -7,6 +7,8 @@ export default new Event("interactionCreate", async (bot, ctx) => {
   const { commandName } = ctx;
   bot.logger.debug(`Command ${commandName} recieved from gateway.`);
   const command = bot.commands.get(commandName);
+  if (ctx.channel.type === "DM" || !ctx.inGuild())
+    return ctx.reply(errorMessage("Commands cannot be used in DMs!"));
   if (!command)
     return bot.logger.error(
       `Received gateway event for command ${commandName} which does not exist!`
