@@ -49,11 +49,6 @@ const inviteRow = new MessageActionRow().addComponents([
     .setEmoji("🔗"), // Link Emoji
   new MessageButton()
     .setStyle("LINK")
-    .setURL("https://cooljim.github.io/lemontools")
-    .setLabel("Website")
-    .setEmoji("🖥"), // Computer Emoji
-  new MessageButton()
-    .setStyle("LINK")
     .setURL("https://discord.gg/h9bRr6FNsM")
     .setLabel("Support Server")
     .setEmoji(LemonEmojis.LemonTools),
