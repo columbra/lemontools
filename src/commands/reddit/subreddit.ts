@@ -53,13 +53,13 @@ export default new Command({
         )
       );
     const { children: posts } = data;
-    const { data: post } = posts.filter((p) => p.data.over_18 && isNSFW)[
+    const { data: post } = posts.filter((p) => p.data.over_18 && !isNSFW)[
       rnd(0, posts.length)
     ] || { data: null }; // Remove over_18 (nsfw) posts then randomly select a post
     if (!post)
       return ctx.editReply(
         errorMessage(
-          "Whoops! There are no posts avaliable to show right now. *(PSST: NSFW posts cannot be shown due to Discord TOS)*"
+          "Whoops! There are no posts avaliable to show right now. *(PSST: NSFW posts cannot be shown outside of NSFW channels due to Discord TOS)*"
         )
       );
     const embeds = [
