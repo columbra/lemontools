@@ -59,7 +59,7 @@ export default new Command({
     if (!post)
       return ctx.editReply(
         errorMessage(
-          "Whoops! There are no posts avaliable to show right now. *(PSST: NSFW posts cannot be shown outside of NSFW channels due to Discord TOS. Ask your server admins to add a NSFW channel if you dont have one already.)*"
+          "Whoops! There are no posts avaliable to show right now. \n\n*(PSST: NSFW posts cannot be shown outside of NSFW channels due to Discord TOS. Ask your server admins to add a NSFW channel if you dont have one already.)*"
         )
       );
     const embeds = [
