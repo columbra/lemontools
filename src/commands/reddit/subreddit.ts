@@ -53,9 +53,9 @@ export default new Command({
         )
       );
     const { children: posts } = data;
-    const { data: post } = posts.filter((p) => p.data.over_18 && isNSFW)[
-      rnd(0, posts.length)
-    ] || { data: null }; // Remove over_18 (nsfw) posts then randomly select a post
+    const { data: post } = posts.filter((p) =>
+      p.data.over_18 ? isNSFW : true
+    )[rnd(0, posts.length)] || { data: null }; // Remove over_18 (nsfw) posts then randomly select a post
     if (!post)
       return ctx.editReply(
         errorMessage(
