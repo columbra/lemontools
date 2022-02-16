@@ -30,17 +30,12 @@ export default new Command({
     const url = `https://reddit.com/r/${query}/hot.json`; // Missing data.after = subreddit does not exist
     const json = await getJSON<SubredditPosts>(url).catch((err) => {
       bot.logger.warn(`Error whilst fetching subreddit ${query}, ${err}`);
-      ctx.editReply(
-        errorMessage(
-          `There was an error trying to fetch a post from that subreddit. This might be because the subreddit does not exist!`
-        )
-      );
       return;
     });
     if (!json)
       return ctx.editReply(
         errorMessage(
-          `There was an error trying to fetch a post from that subreddit. This might be because the subreddit does not exist!`
+          `There was an error trying to fetch a post from that subreddit. This might be because the subreddit is banned.`
         )
       );
     const { data } = json.data;
