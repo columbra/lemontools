@@ -6,6 +6,15 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# 2.1.1
+
+## What's new
+
+## Changes
+
+- Bumped follow-redirects to non-vunlerable version (Change by Dependabot [bot]) This fixes a security flaw in the package
+- Allowed NSFW subreddits & posts if you execute the command in a NSFW channel 
+
 # 2.1.0
 
 ## What's new

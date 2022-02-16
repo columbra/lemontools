@@ -1,4 +1,4 @@
-import { MessageActionRow, MessageButton } from "discord.js";
+import { MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import Command from "../../classes/Command";
 import { SubredditPosts } from "../../typings/reddit/subreddit";
 import { embed, errorMessage } from "../../util/embed";
@@ -13,7 +13,6 @@ export default new Command({
   perms: [],
   usage: "<subreddit>",
   example: "facepalm",
-  
 
   options: [
     {
@@ -27,6 +26,7 @@ export default new Command({
   async execute({ bot, ctx, args }) {
     await ctx.deferReply();
     const query = args.getString("subreddit").toLowerCase();
+    const isNSFW = (ctx.channel as TextChannel).nsfw;
     const url = `https://reddit.com/r/${query}/hot.json`; // Missing data.after = subreddit does not exist
     const json = await getJSON<SubredditPosts>(url).catch((err) => {
       bot.logger.warn(`Error whilst fetching subreddit ${query}, ${err}`);
@@ -53,13 +53,13 @@ export default new Command({
         )
       );
     const { children: posts } = data;
-    const { data: post } = posts.filter((p) => !p.data.over_18)[
-      rnd(0, posts.length)
-    ] || { data: null }; // Remove over_18 (nsfw) posts then randomly select a post
+    const { data: post } = posts.filter((p) =>
+      p.data.over_18 ? isNSFW : true
+    )[rnd(0, posts.length)] || { data: null }; // Remove over_18 (nsfw) posts then randomly select a post
     if (!post)
       return ctx.editReply(
         errorMessage(
-          "Whoops! There are no posts avaliable to show right now. *(PSST: NSFW posts cannot be shown due to Discord TOS)*"
+          "Whoops! There are no posts avaliable to show right now. \n\n*(PSST: NSFW posts cannot be shown outside of NSFW channels due to Discord TOS. Ask your server admins to add a NSFW channel if you dont have one already.)*"
         )
       );
     const embeds = [

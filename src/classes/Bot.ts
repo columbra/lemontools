@@ -1,5 +1,4 @@
 import { InfluxDB as Influx, Point } from "@influxdata/influxdb-client";
-import axios from "axios";
 import chalk from "chalk";
 import {
   ApplicationCommandDataResolvable,
@@ -10,26 +9,26 @@ import {
   MessageEmbed,
   MessageReaction,
   Options,
+  Sweepers,
   User,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
 import yaml from "js-yaml";
 import mongoose from "mongoose";
+import os from "os";
 import path from "path";
 import { promisify } from "util";
 import winston, { transports } from "winston";
+import CacheManager from "../lib/cache";
+import Giveaway from "../lib/discord-giveaways/src/Giveaway";
+import Reminder from "../schema/Reminder";
 import { CommandRegisterOptions } from "../typings/Bot";
 import { CommandOptions } from "../typings/CommandItems";
+import { EmbedColours } from "../util/embed";
 import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
-import os from "os";
-import Reminder from "../schema/Reminder";
-import { embed, EmbedColours } from "../util/embed";
-import CacheManager from "../lib/cache";
-import giveaway from "../commands/giveaways/giveaway";
-import Giveaway from "../lib/discord-giveaways/src/Giveaway";
 import Plugin from "./Plugin";
 
 /**
@@ -82,10 +81,7 @@ export default class Bot extends Client {
   public cache = new CacheManager({});
   constructor() {
     super({
-      intents: [
-        "GUILDS",
-        "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/,
-      ],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/],
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
@@ -93,14 +89,19 @@ export default class Bot extends Client {
       makeCache: Options.cacheWithLimits({
         // Keep default thread sweeping behavior
         ...Options.defaultMakeCacheSettings,
+
         // Override MessageManager
         MessageManager: {
           sweepInterval: 300,
-          sweepFilter: LimitedCollection.filterByLifetime({
+          sweepFilter: Sweepers.filterByLifetime({
             lifetime: 1800,
             getComparisonTimestamp: (e) =>
               e.editedTimestamp ?? e.createdTimestamp,
           }),
+          maxSize: 1_000,
+        },
+        GuildMemberManager: {
+          sweepInterval: 300,
         },
       }),
     });
