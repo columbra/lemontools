@@ -54,18 +54,22 @@ export default new Command({
         });
         break;
       case "decode":
-        const decoded = decode(domain);
-        ctx.reply({
-          embeds: [
-            embed(
-              {
-                description: `Encoded: \`${domain}\`\nOriginal: \`${decoded}\``,
-              },
-              ctx,
-              bot
-            ),
-          ],
-        });
+        try {
+          const decoded = decode(domain);
+          ctx.reply({
+            embeds: [
+              embed(
+                {
+                  description: `Encoded: \`${domain}\`\nOriginal: \`${decoded}\``,
+                },
+                ctx,
+                bot
+              ),
+            ],
+          });
+        } catch (e) {
+          ctx.reply(epherrf(e));
+        }
         break;
       default:
         ctx.reply(
