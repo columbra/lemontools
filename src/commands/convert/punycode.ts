@@ -68,7 +68,7 @@ export default new Command({
             ],
           });
         } catch (e) {
-          ctx.reply(epherrf(e));
+          ctx.reply(epherrf(`Invalid domain: \`${domain}\`! Please make sure the domain is proper punycode`));
         }
         break;
       default:
