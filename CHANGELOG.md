@@ -11,6 +11,11 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 ## What's new
 
 - Punycode encoder & decoder
+- Added string tools
+  - String length
+  - String lowercase
+  - String UPPERCASE
+  - String esreveR
 
 # 2.1.1
 
