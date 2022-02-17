@@ -16,8 +16,11 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
   - String lowercase
   - String UPPERCASE
   - String esreveR
+- Hashing tools
 
 ## Changes
+
+- Fix Subreddit command crashing on 403
 
 # 2.1.1
 
