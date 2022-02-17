@@ -29,7 +29,31 @@ export default new Command({
         {
           name: "sha512",
           value: "sha512",
-        }
+        },
+        {
+          name: "ripemd160",
+          value: "ripemd160",
+        },
+        {
+          name: "whirlpool",
+          value: "whirlpool",
+        },
+        {
+          name: "blake2b512",
+          value: "blake2b512",
+        },
+        {
+          name: "blake2s256",
+          value: "blake2s256",
+        },
+        {
+          name: "sha3-224",
+          value: "sha3-224",
+        },
+        {
+          name: "sha3-256",
+          value: "sha3-256",
+        },
       ],
     },
     {
@@ -46,7 +70,10 @@ export default new Command({
     const hashed = crypto.createHash(algorithm).update(string).digest("hex");
     ctx.reply({
       embeds: [
-        simpleEmbed(`Original: \`${string}\`\nHashed: \`${hashed}\`\nAlgorithm: ${algorithm}`, bot),
+        simpleEmbed(
+          `Original: \`${string}\`\nHashed: \`${hashed}\`\nAlgorithm: ${algorithm}`,
+          bot
+        ),
       ],
     });
   },
