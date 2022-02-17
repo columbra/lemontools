@@ -71,7 +71,7 @@ export default new Command({
     ctx.reply({
       embeds: [
         simpleEmbed(
-          `Original: \`${string}\`\nHashed: \`${hashed}\`\nAlgorithm: ${algorithm}`,
+          `Original: \`${string}\`\nHashed: \`${hashed}\`\nAlgorithm: [${algorithm}](https://en.wikipedia.org/wiki/${algorithm})`,
           bot
         ),
       ],
