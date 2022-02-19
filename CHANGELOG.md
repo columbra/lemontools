@@ -17,6 +17,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
   - String UPPERCASE
   - String esreveR
 - Hashing tools
+- Radix conversion tool
 
 ## Changes
 
