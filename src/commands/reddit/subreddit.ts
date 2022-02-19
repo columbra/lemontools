@@ -88,6 +88,17 @@ export default new Command({
           .setLabel(`Go to /r/${query}`)
           .setURL(`https://reddit.com/r/${query}/hot`)
           .setStyle("LINK"),
+        new MessageButton()
+          .setLabel("Go to post")
+          .setURL(post.permalink)
+          .setStyle("LINK"),
+      ]),
+      new MessageActionRow().addComponents([
+        new MessageButton()
+          .setCustomId("delete")
+          .setStyle("DANGER")
+          .setLabel("Delete")
+          .setEmoji("🗑️"),
       ]),
     ];
     ctx.editReply({
