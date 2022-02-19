@@ -21,7 +21,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 
 ## Changes
 
-- Fix Subreddit command crashing on 403
+- Fix Subreddit command crashing on `403`
 - Deprecated old plugin system, made better new one
 
 # 2.1.1
