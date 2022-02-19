@@ -35,6 +35,7 @@ export default new Command({
       ],
     },
   ],
+  example: "encode google.com",
   async execute({ bot, args, ctx }) {
     const sub = args.getSubcommand(true);
     const domain = args.getString("domain");

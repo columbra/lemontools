@@ -63,6 +63,7 @@ export default new Command({
       required: true,
     },
   ],
+  example: "md5 Hello World",
   async execute({ bot, args, ctx }) {
     const algorithm = args.getString("hash");
     const string = args.getString("string");

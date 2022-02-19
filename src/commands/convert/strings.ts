@@ -60,6 +60,7 @@ export default new Command({
       ],
     },
   ],
+  example: "length hello",
   async execute({ bot, args, ctx }) {
     const sub = args.getSubcommand(true);
     const string = args.getString("string");
