@@ -29,6 +29,7 @@ import { EmbedColours } from "../util/embed";
 import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
+import LemonPlugin from "./LemonPlugin";
 import Plugin from "./Plugin";
 
 /**
@@ -177,36 +178,20 @@ export default class Bot extends Client {
     const pluginsPaths = await glob(
       path.join(__dirname, "../plugins/**/*.{js,ts}")
     );
-    const ready = [];
-    const defer = [];
+    const ready: LemonPlugin[] = [];
+    const plugins: LemonPlugin[] = [];
     Promise.all(
       pluginsPaths.map(async (pluginPath) => {
-        const plugin: Plugin = (await import(pluginPath)).default;
-        if (plugin.opt.initial)
-          return plugin
-            .execute(this)
-            .catch((err) =>
-              this.logger.error(`Enountered error in initial plugin ${err}`)
-            );
-        if (plugin.opt.ready) return ready.push(plugin.execute);
-        defer.push(plugin.execute);
+        const plugin: LemonPlugin = (await import(pluginPath)).default;
+        if (plugin.options?.ready) return ready.push(plugin);
+        plugins.push(plugin);
       })
     ).then(() => {
-      // Run ready plugins
+      this.logger.info(`${plugins.length + ready.length} plugins loaded.`);
       this.on("ready", () => {
-        ready.forEach((plugin) =>
-          plugin(this).catch((err) =>
-            this.logger.error(`Error occured during ready plugin ${err}`)
-          )
-        );
+        ready.forEach((plugin) => plugin.func(this));
       });
-
-      // Run non-initial plugins
-      defer.forEach((plugin) =>
-        plugin(this).catch((err) =>
-          this.logger.error(`Error occured during deferred plugin ${err}`)
-        )
-      );
+      plugins.forEach((plugin) => plugin.func(this));
     });
   }
   private async _register() {
