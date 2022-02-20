@@ -8,4 +8,5 @@ export const enum LemonEmojis {
   Offline = "<:lemonoffline:929323412730552370>",
   Discord = "<:discord:899931683187470356>",
   DiscordJS = "<:discordjs:899931467826745415>",
+  Class = "<:class:899930983720185877>",
 }
