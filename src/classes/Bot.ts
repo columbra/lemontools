@@ -218,7 +218,7 @@ export default class Bot extends Client {
     this.on("ready", () =>
       this._registerCommands({
         commands,
-        guild: this._isDev() ? process.env.TEST_GUILD : null,
+        guild: this.isDev() ? process.env.TEST_GUILD : null,
       })
     );
 
@@ -271,7 +271,7 @@ export default class Bot extends Client {
       this.application?.commands.set(commands);
     }
   }
-  private _isDev() {
+   isDev() {
     if (
       process.env.ENVIRONMENT === "debug" ||
       process.env.ENVIRONMENT === "dev"
@@ -287,7 +287,7 @@ export default class Bot extends Client {
         this.InfluxConfig.bucket
       );
       write.useDefaultTags({
-        env: this._isDev() ? "development" : "production",
+        env: this.isDev() ? "development" : "production",
       });
       const mem = new Point("memory");
       const cpu = new Point("cpu");
