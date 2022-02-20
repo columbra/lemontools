@@ -5,7 +5,7 @@ import { epherrf } from "../../util/embed";
 export default new Event("interactionCreate", async (bot, ctx) => {
   if (!ctx.isButton()) return;
   if (ctx.customId !== "delete") return;
-  if (ctx.user.id !== ctx.message.author.id)
+  if (ctx.user.id !== ctx.member.user.id)
     return ctx.reply(epherrf("You can only delete your own interactions."));
   await (ctx.message as Message).delete().catch((err) => {
     bot.logger.warn(`Error deleting interaction ${ctx.id}, error ${err}`);
