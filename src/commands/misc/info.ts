@@ -27,16 +27,16 @@ export default new Command({
                 name: "Stats for nerds",
                 value: `${LemonEmojis.Var} Heap Usage: \`${
                   process.memoryUsage().heapUsed / 1_000_000
-                }\`MB
+                }\`mb
                 ${LemonEmojis.Property} Heap Total \`${
                   process.memoryUsage().heapTotal / 1_000_000
-                }\`MB
+                }\`mb
                 ${LemonEmojis.Class} C++ V8 Object Usage: \`${
                   process.memoryUsage().external / 1_000_000
-                }\`MB
+                }\`mb
                 ${LemonEmojis.Method} Total Allocation: \`${
                   process.memoryUsage().rss / 1_000_000
-                }\`MB
+                }\`mb
                 :id: PID: \`${process.pid}\`
                 ${LemonEmojis.Tux} Platform: \`${process.platform}\``,
               },
