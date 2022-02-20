@@ -1,6 +1,7 @@
 import Command from "../../classes/Command";
 import { embed, inviteRow } from "../../util/embed";
 import { LemonEmojis } from "../../util/emoji";
+import discord from "discord.js";
 
 export default new Command({
   name: "info",
@@ -19,7 +20,8 @@ export default new Command({
                 name: "Stats for nerds",
                 value: `${LemonEmojis.Node} Node Version: \`${process.version}\`
                 :hammer_and_wrench: Architecture: \`${process.arch}\`
-                ${LemonEmojis.v8} v8 Engine Version: \`${process.versions.v8}\``,
+                ${LemonEmojis.v8} v8 Engine Version: \`${process.versions.v8}\`
+                ${LemonEmojis.DiscordJS} DiscordJS Version: \`${discord.version}\``,
               },
             ],
           },
