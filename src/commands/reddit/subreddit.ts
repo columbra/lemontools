@@ -90,7 +90,7 @@ export default new Command({
           .setStyle("LINK"),
         new MessageButton()
           .setLabel("Go to post")
-          .setURL(post.permalink)
+          .setURL(`https://reddit.com${post.permalink}`)
           .setStyle("LINK"),
       ]),
       new MessageActionRow().addComponents([
