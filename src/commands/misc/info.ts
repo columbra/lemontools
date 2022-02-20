@@ -17,11 +17,28 @@ export default new Command({
             description: bot.config.bot.description,
             fields: [
               {
-                name: "Stats for nerds",
+                name: "Version Information",
                 value: `${LemonEmojis.Node} Node Version: \`${process.version}\`
                 :hammer_and_wrench: Architecture: \`${process.arch}\`
                 ${LemonEmojis.v8} v8 Engine Version: \`${process.versions.v8}\`
                 ${LemonEmojis.DiscordJS} DiscordJS Version: \`${discord.version}\``,
+              },
+              {
+                name: "Stats for nerds",
+                value: `${LemonEmojis.Var} Heap Usage: \`${
+                  process.memoryUsage().heapUsed / 1_000_000
+                }\`MB
+                ${LemonEmojis.Property} Heap Total \`${
+                  process.memoryUsage().heapTotal / 1_000_000
+                }\`MB
+                ${LemonEmojis.Class} C++ V8 Object Usage: \`${
+                  process.memoryUsage().external / 1_000_000
+                }\`MB
+                ${LemonEmojis.Method} Total Allocation: \`${
+                  process.memoryUsage().rss / 1_000_000
+                }\`MB
+                :id: PID: \`${process.pid}\`
+                ${LemonEmojis.Tux} Platform: \`${process.platform}\``,
               },
             ],
           },
