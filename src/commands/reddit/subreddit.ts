@@ -95,10 +95,9 @@ export default new Command({
       ]),
       new MessageActionRow().addComponents([
         new MessageButton()
-          .setCustomId("delete")
+          .setCustomId(`delete`)
           .setStyle("DANGER")
-          .setLabel("Delete")
-          .setEmoji("🗑️"),
+          .setLabel("Delete"),
       ]),
     ];
     ctx.editReply({
