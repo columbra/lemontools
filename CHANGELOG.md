@@ -24,6 +24,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 
 - Fix Subreddit command crashing on `403`
 - Deprecated old plugin system, made better new one
+- Allowed `/colour` command to be used without a `#` sign
 
 # 2.1.1
 
