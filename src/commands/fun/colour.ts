@@ -20,8 +20,10 @@ export default new Command({
     },
   ],
   async execute({ bot, args, ctx }) {
-    const hex = args.getString("hex");
-    if (!regex.test(hex) || hex.length < 6)
+    const hex = args.getString("hex").includes("#")
+      ? args.getString("hex")
+      : `#${args.getString("hex")}`;
+    if (!regex.test(hex))
       return ctx.reply(
         epherr`Hex needs to be a valid hex colour code. See [**:arrow_upper_right: this**](https://en.wikipedia.org/wiki/List_of_colors:_A%E2%80%93F) Wikipedia article about colours.`
       );
