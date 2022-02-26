@@ -18,7 +18,8 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
   - String esreveR
 - Hashing tools
 - Radix conversion tool
-- Added delete button to /subreddit
+- Added delete button to `/subreddit`
+- `/serverinfo` command
 
 ## Changes
 
