@@ -49,7 +49,7 @@ export default new Command({
           },
           {
             name: "ID",
-            value: guild.id,
+            value: `\`${guild.id}\``,
           },
         ],
       },
