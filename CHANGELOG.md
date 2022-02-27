@@ -20,6 +20,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 - Radix conversion tool
 - Added delete button to `/subreddit`
 - `/serverinfo` command
+- `/unixtime` command
 
 ## Changes
 
