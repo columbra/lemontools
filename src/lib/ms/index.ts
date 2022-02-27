@@ -73,7 +73,8 @@ interface Options {
  */
 function ms(value: StringValue, options?: Options): Promise<number>;
 function ms(value: number, options?: Options): string;
-function ms(value: StringValue | number, options?: Options): Promise<number> | string {
+function ms(value: string, options?: Options): Promise<number>
+function ms(value: StringValue | number | string, options?: Options): Promise<number> | string {
   try {
     if (typeof value === "string" && value.length > 0) {
       return parse(value);
