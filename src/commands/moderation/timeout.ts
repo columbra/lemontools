@@ -51,7 +51,7 @@ export default new Command({
       .catch(() => {
         ctx.editReply(
           epherrf(
-            "Failed to timeout user. Perhaps they are already timed out, or that I don't have permission to time them out."
+            "Failed to timeout user. Perhaps they are already timed out, or that I don't have permission to time them out. (Max timeout is 2 weeks)"
           )
         );
       });
