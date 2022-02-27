@@ -34,7 +34,7 @@ export default new Command({
   async execute({ bot, args, ctx }) {
     const format = args.getString("format") || "milliseconds";
     const unix = args.getNumber("unix");
-    const formatted = format === "milliseconds" ? unix / 1000 : unix;
+    const formatted = format === "milliseconds" ? Math.round(unix / 1000) : unix;
     ctx.reply({
       embeds: [
         simpleEmbed(
