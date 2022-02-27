@@ -20,7 +20,9 @@ export default new Command({
         fields: [
           {
             name: "Owner",
-            value: (await bot.users.fetch(guild.ownerId)).tag,
+            value: `${(await bot.users.fetch(guild.ownerId)).tag} (<@${
+              guild.ownerId
+            }>)`,
           },
           {
             name: "Members",
