@@ -29,7 +29,8 @@ import { EmbedColours } from "../util/embed";
 import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
-import Plugin from "./Plugin";
+import LemonPlugin from "./LemonPlugin";
+
 
 /**
  * --------------------
@@ -177,36 +178,20 @@ export default class Bot extends Client {
     const pluginsPaths = await glob(
       path.join(__dirname, "../plugins/**/*.{js,ts}")
     );
-    const ready = [];
-    const defer = [];
+    const ready: LemonPlugin[] = [];
+    const plugins: LemonPlugin[] = [];
     Promise.all(
       pluginsPaths.map(async (pluginPath) => {
-        const plugin: Plugin = (await import(pluginPath)).default;
-        if (plugin.opt.initial)
-          return plugin
-            .execute(this)
-            .catch((err) =>
-              this.logger.error(`Enountered error in initial plugin ${err}`)
-            );
-        if (plugin.opt.ready) return ready.push(plugin.execute);
-        defer.push(plugin.execute);
+        const plugin: LemonPlugin = (await import(pluginPath)).default;
+        if (plugin.options?.ready) return ready.push(plugin);
+        plugins.push(plugin);
       })
     ).then(() => {
-      // Run ready plugins
+      this.logger.info(`${plugins.length + ready.length} plugins loaded.`);
       this.on("ready", () => {
-        ready.forEach((plugin) =>
-          plugin(this).catch((err) =>
-            this.logger.error(`Error occured during ready plugin ${err}`)
-          )
-        );
+        ready.forEach((plugin) => plugin.func(this));
       });
-
-      // Run non-initial plugins
-      defer.forEach((plugin) =>
-        plugin(this).catch((err) =>
-          this.logger.error(`Error occured during deferred plugin ${err}`)
-        )
-      );
+      plugins.forEach((plugin) => plugin.func(this));
     });
   }
   private async _register() {
@@ -233,7 +218,7 @@ export default class Bot extends Client {
     this.on("ready", () =>
       this._registerCommands({
         commands,
-        guild: this._isDev() ? process.env.TEST_GUILD : null,
+        guild: this.isDev() ? process.env.TEST_GUILD : null,
       })
     );
 
@@ -286,7 +271,7 @@ export default class Bot extends Client {
       this.application?.commands.set(commands);
     }
   }
-  private _isDev() {
+   isDev() {
     if (
       process.env.ENVIRONMENT === "debug" ||
       process.env.ENVIRONMENT === "dev"
@@ -302,7 +287,7 @@ export default class Bot extends Client {
         this.InfluxConfig.bucket
       );
       write.useDefaultTags({
-        env: this._isDev() ? "development" : "production",
+        env: this.isDev() ? "development" : "production",
       });
       const mem = new Point("memory");
       const cpu = new Point("cpu");

@@ -6,6 +6,29 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# 2.2.0
+
+## What's new
+
+- Punycode encoder & decoder
+- Added string tools
+  - String length
+  - String lowercase
+  - String UPPERCASE
+  - String esreveR
+- Hashing tools
+- Radix conversion tool
+- Added delete button to `/subreddit`
+- `/serverinfo` command
+- `/unixtime` command
+
+## Changes
+
+- Fix Subreddit command crashing on `403`
+- Deprecated old plugin system, made better new one
+- Allowed `/colour` command to be used without a `#` sign
+
+
 # 2.1.1
 
 ## What's new
