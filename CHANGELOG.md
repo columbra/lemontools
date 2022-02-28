@@ -28,6 +28,7 @@ This is the changelog page for Lemon Tools. _Most,_ but not all changes will be 
 - Deprecated old plugin system, made better new one
 - Allowed `/colour` command to be used without a `#` sign
 
+
 # 2.1.1
 
 ## What's new
