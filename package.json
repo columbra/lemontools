@@ -3,7 +3,7 @@
     "@influxdata/influxdb-client": "^1.21.0",
     "@types/js-yaml": "^4.0.5",
     "axios": "^0.24.0",
-    "canvas": "^2.8.0",
+    "canvas": "^2.9.0",
     "chalk": "4.x.x",
     "chart.js": "^3.7.0",
     "chartjs-node-canvas": "^4.1.5",
@@ -36,5 +36,6 @@
   },
   "engines": {
     "node": "^16.14.0"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }
