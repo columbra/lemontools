@@ -76,5 +76,10 @@ bot.start();
 
 // Write an error handler to catch rejected promises
 process.on("unhandledRejection", (err) => {
-  bot.logger.error(`Unhandled Rejection: ${err}`);
+  bot.logger.crit(`Unhandled Rejection: ${err}`);
 });
+
+// Write an error handler to catch thrown errors
+process.on("uncaughtException", (err) => {
+  bot.logger.crit(`Uncaught Exception: ${err}`);
+})
