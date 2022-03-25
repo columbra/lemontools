@@ -30,7 +30,7 @@ import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
 import LemonPlugin from "./LemonPlugin";
-
+import "tslib"
 
 /**
  * --------------------
@@ -86,25 +86,27 @@ export default class Bot extends Client {
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
+       * See discordjs.guide
        */
       makeCache: Options.cacheWithLimits({
-        // Keep default thread sweeping behavior
-        ...Options.defaultMakeCacheSettings,
-
-        // Override MessageManager
-        MessageManager: {
-          sweepInterval: 300,
-          sweepFilter: Sweepers.filterByLifetime({
-            lifetime: 1800,
-            getComparisonTimestamp: (e) =>
-              e.editedTimestamp ?? e.createdTimestamp,
-          }),
-          maxSize: 1_000,
-        },
-        GuildMemberManager: {
-          sweepInterval: 300,
-        },
-      }),
+        MessageManager: 150, 
+        PresenceManager: 0,
+        GuildStickerManager: 0,
+        ApplicationCommandManager: 100,
+        GuildBanManager: 0,
+        GuildMemberManager: 30,
+        GuildEmojiManager: 0,
+        BaseGuildEmojiManager: 0,
+        UserManager: 50,
+        GuildInviteManager: 0,
+        GuildScheduledEventManager: 0,
+        ReactionManager: 0,
+        ReactionUserManager: 0,
+        ThreadManager: 10,
+        VoiceStateManager: 0,
+        StageInstanceManager: 0,
+        ThreadMemberManager: 10
+      })
     });
 
     this.logger = winston.createLogger({
@@ -138,6 +140,7 @@ export default class Bot extends Client {
   }
   public async start() {
     this.logger.info(`Start function called`);
+    this.logger.debug(`Connecting to MongoDB database`);
     this.db = (await mongoose.connect(process.env.MONGO)).Connection;
     this.logger.info("Connected to MongoDB database.");
 
@@ -165,6 +168,7 @@ export default class Bot extends Client {
         "Non-standard environment used. This may cause unexpected behaviour. Please reset the environment to one of debug, dev or production"
       );
 
+    this.logger.info(`Calling setup functions`);
     // Call setup functions
     this._startPlugins();
     this.login(process.env.BOT_TOKEN);
