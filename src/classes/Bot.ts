@@ -306,7 +306,7 @@ export default class Bot extends Client {
       /**
        * Latency
        */
-      latency.floatField("ws", this.ws.ping);
+      latency.floatField("ws", this.ws.ping || 0);
 
       mem
         .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1048576) // 1048576 = 1024 ** 2
