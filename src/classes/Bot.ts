@@ -30,7 +30,9 @@ import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
 import LemonPlugin from "./LemonPlugin";
+
 import "tslib"
+
 
 /**
  * --------------------
@@ -275,7 +277,10 @@ export default class Bot extends Client {
       this.application?.commands.set(commands);
     }
   }
+
   isDev() {
+
+
     if (
       process.env.ENVIRONMENT === "debug" ||
       process.env.ENVIRONMENT === "dev"
