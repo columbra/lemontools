@@ -6,6 +6,12 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
 
+# 2.2.1
+
+## What's new
+- Migrate to Yarn 2 (using PNP)
+- 
+
 # 2.2.0
 
 ## What's new
