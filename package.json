@@ -1,6 +1,6 @@
 {
   "name": "lemontools",
-  "version": "2.2.1", 
+  "version": "2.2.1-patch1", 
   "dependencies": {
     "@influxdata/influxdb-client": "^1.21.0",
     "@types/js-yaml": "^4.0.5",
