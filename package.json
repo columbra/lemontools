@@ -6,6 +6,7 @@
     "@types/js-yaml": "^4.0.5",
     "axios": "^0.24.0",
     "canvas": "^2.9.0",
+    "capture-website": "^2.3.0",
     "chalk": "4.x.x",
     "chart.js": "^3.7.0",
     "chartjs-node-canvas": "^4.1.5",
