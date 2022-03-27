@@ -1981,7 +1981,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-
 "safe-buffer@npm:^5.1.0, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
