@@ -17,6 +17,10 @@ export default new Command({
             description: bot.config.bot.description,
             fields: [
               {
+                name: "General Info",
+                value: `Owner: The almighty basement-dwelling ${bot.config.bot.author}`,
+              },
+              {
                 name: "Version Information",
                 value: `${LemonEmojis.Node} Node Version: \`${process.version}\`
                 :hammer_and_wrench: Architecture: \`${process.arch}\`
