@@ -16,4 +16,11 @@ export default [
   "What is your favourite thing to do in your free time?",
   "State the dumbest thing you have ever done",
   "If you could become a fictional character for one day, who would it be?",
+  "If you were invisible, what would you do?",
+  "What's something your parents don't know",
+  "What's something you wish you could change",
+  "Where is the strangest place you have been",
+  "What is the longest you have ever slept",
+  "What is something you'd stand in line for 3 hours for?",
+  "If you had to wear flip flops or high heels for the next year, what would you wear?",
 ] as const;
