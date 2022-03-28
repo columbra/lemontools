@@ -18,7 +18,7 @@ export default new Command({
             fields: [
               {
                 name: "General Info",
-                value: `Owner: The almighty basement-dwelling ${bot.config.bot.author}`,
+                value: `Owner: ${bot.config.bot.author}`,
               },
               {
                 name: "Version Information",
