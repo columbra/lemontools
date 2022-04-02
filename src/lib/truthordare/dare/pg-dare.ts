@@ -17,4 +17,5 @@ export default [
   "GET DOWN AND GIMME 20 - Lemon Tools Dev Team",
   "Eat an ice cube",
   "In the next 10 minutes, try to scare someone",
+  "The group asks you a question. You must answer."
 ] as const;
