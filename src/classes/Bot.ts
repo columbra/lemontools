@@ -9,8 +9,8 @@ import {
   MessageEmbed,
   MessageReaction,
   Options,
-  User,
   Sweepers,
+  User,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
@@ -29,7 +29,6 @@ import { EmbedColours } from "../util/embed";
 import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
-import Plugin from "./Plugin";
 import LemonPlugin from "./LemonPlugin";
 
 import "tslib"
