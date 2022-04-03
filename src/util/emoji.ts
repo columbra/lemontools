@@ -6,4 +6,11 @@ export const enum LemonEmojis {
   Gilds = "<:lemonawards:926022127860195368>",
   Online = "<:lemononline:929321893759168543>",
   Offline = "<:lemonoffline:929323412730552370>",
+  Discord = "<:discord:899931683187470356>",
+  DiscordJS = "<:discordjs:899931467826745415>",
+  Class = "<:class:899930983720185877>",
+  Var = "<:var:900229247854063617>",
+  Property = "<:property:899931263815811073>",
+  Method = "<:method:899931097910095883>",
+  Tux = "<:linux:944854091979448330>",
 }

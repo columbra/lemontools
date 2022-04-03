@@ -1,13 +1,10 @@
 import axios from "axios";
-import Plugin from "../../classes/Plugin";
+import LemonPlugin from "../../classes/LemonPlugin";
 
-export default new Plugin(async (bot) => {
-  bot.logger.info(`Started Axios UserAgent Plugin`);
-  axios.interceptors.request.use(
-    (config) => {
-      config.headers["User-Agent"] =
-        "Lemon Tools v2 (github.com/cooljim/lemontools)";
-      return config;
-    }
-  );
-}, {});
+export default new LemonPlugin("useragent", async (bot) => {
+  axios.interceptors.request.use((config) => {
+    config.headers["User-Agent"] =
+      "Lemon Tools v2 (github.com/cooljim/lemontools)";
+    return config;
+  });
+});

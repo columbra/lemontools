@@ -4,7 +4,57 @@ permalink: /changelog
 layout: single
 ---
 
-This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in this document.
+This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in th
+
+# 2.2.1-patch1
+
+## Fixes
+- Fixed InfluxDB writing error
+
+# 2.2.1
+
+## What's new
+- Migrate to Yarn 2 (using PNP)
+
+
+
+# 2.2.1
+
+## What's new
+- Migrate to Yarn 2 (using PNP)
+
+
+# 2.2.0
+
+## What's new
+
+- Punycode encoder & decoder
+- Added string tools
+  - String length
+  - String lowercase
+  - String UPPERCASE
+  - String esreveR
+- Hashing tools
+- Radix conversion tool
+- Added delete button to `/subreddit`
+- `/serverinfo` command
+- `/unixtime` command
+
+## Changes
+
+- Fix Subreddit command crashing on `403`
+- Deprecated old plugin system, made better new one
+- Allowed `/colour` command to be used without a `#` sign
+
+
+# 2.1.1
+
+## What's new
+
+## Changes
+
+- Bumped follow-redirects to non-vunlerable version (Change by Dependabot [bot]) This fixes a security flaw in the package
+- Allowed NSFW subreddits & posts if you execute the command in a NSFW channel 
 
 # 2.1.0
 

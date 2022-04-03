@@ -1,9 +1,8 @@
-import Plugin from "../../classes/Plugin";
+import LemonPlugin from "../../classes/LemonPlugin";
 
-export default new Plugin(
-  async (bot) => {
+export default new LemonPlugin("status", async (bot) => {
+  setInterval(async () => {
     bot.user.setPresence({
-      status: "online",
       activities: [
         {
           name: `${(await bot.guilds.fetch()).size} servers`,
@@ -15,6 +14,7 @@ export default new Plugin(
         },
       ],
     });
-  },
-  { ready: true }
-);
+  }, 60_000);
+}, {
+  ready: true
+});

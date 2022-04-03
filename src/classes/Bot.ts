@@ -9,7 +9,8 @@ import {
   MessageEmbed,
   MessageReaction,
   Options,
-  User
+  User,
+  Sweepers,
 } from "discord.js";
 import fs from "fs";
 import syncglob from "glob";
@@ -29,6 +30,10 @@ import AutoCompleter from "./AutoComplete";
 import Event from "./Event";
 import GiveawaysManager from "./GiveawayManager";
 import Plugin from "./Plugin";
+import LemonPlugin from "./LemonPlugin";
+
+import "tslib"
+
 
 /**
  * --------------------
@@ -80,27 +85,31 @@ export default class Bot extends Client {
   public cache = new CacheManager({});
   constructor() {
     super({
-      intents: [
-        "GUILDS",
-        "GUILD_MESSAGE_REACTIONS" /*, "GUILD_MEMBERS"*/,
-      ],
+      intents: ["GUILDS", "GUILD_MESSAGE_REACTIONS", "GUILD_MEMBERS"],
       // Credit: salvage
       /**
        * @author Salvage_Dev#3650
+       * See discordjs.guide
        */
       makeCache: Options.cacheWithLimits({
-        // Keep default thread sweeping behavior
-        ...Options.defaultMakeCacheSettings,
-        // Override MessageManager
-        MessageManager: {
-          sweepInterval: 300,
-          sweepFilter: LimitedCollection.filterByLifetime({
-            lifetime: 1800,
-            getComparisonTimestamp: (e) =>
-              e.editedTimestamp ?? e.createdTimestamp,
-          }),
-        },
-      }),
+        MessageManager: 150, 
+        PresenceManager: 0,
+        GuildStickerManager: 0,
+        ApplicationCommandManager: 100,
+        GuildBanManager: 0,
+        GuildMemberManager: 30,
+        GuildEmojiManager: 0,
+        BaseGuildEmojiManager: 0,
+        UserManager: 50,
+        GuildInviteManager: 0,
+        GuildScheduledEventManager: 0,
+        ReactionManager: 0,
+        ReactionUserManager: 0,
+        ThreadManager: 10,
+        VoiceStateManager: 0,
+        StageInstanceManager: 0,
+        ThreadMemberManager: 10
+      })
     });
 
     this.logger = winston.createLogger({
@@ -134,6 +143,7 @@ export default class Bot extends Client {
   }
   public async start() {
     this.logger.info(`Start function called`);
+    this.logger.debug(`Connecting to MongoDB database`);
     this.db = (await mongoose.connect(process.env.MONGO)).Connection;
     this.logger.info("Connected to MongoDB database.");
 
@@ -161,6 +171,7 @@ export default class Bot extends Client {
         "Non-standard environment used. This may cause unexpected behaviour. Please reset the environment to one of debug, dev or production"
       );
 
+    this.logger.info(`Calling setup functions`);
     // Call setup functions
     this._startPlugins();
     this.login(process.env.BOT_TOKEN);
@@ -174,36 +185,20 @@ export default class Bot extends Client {
     const pluginsPaths = await glob(
       path.join(__dirname, "../plugins/**/*.{js,ts}")
     );
-    const ready = [];
-    const defer = [];
+    const ready: LemonPlugin[] = [];
+    const plugins: LemonPlugin[] = [];
     Promise.all(
       pluginsPaths.map(async (pluginPath) => {
-        const plugin: Plugin = (await import(pluginPath)).default;
-        if (plugin.opt.initial)
-          return plugin
-            .execute(this)
-            .catch((err) =>
-              this.logger.error(`Enountered error in initial plugin ${err}`)
-            );
-        if (plugin.opt.ready) return ready.push(plugin.execute);
-        defer.push(plugin.execute);
+        const plugin: LemonPlugin = (await import(pluginPath)).default;
+        if (plugin.options?.ready) return ready.push(plugin);
+        plugins.push(plugin);
       })
     ).then(() => {
-      // Run ready plugins
+      this.logger.info(`${plugins.length + ready.length} plugins loaded.`);
       this.on("ready", () => {
-        ready.forEach((plugin) =>
-          plugin(this).catch((err) =>
-            this.logger.error(`Error occured during ready plugin ${err}`)
-          )
-        );
+        ready.forEach((plugin) => plugin.func(this));
       });
-
-      // Run non-initial plugins
-      defer.forEach((plugin) =>
-        plugin(this).catch((err) =>
-          this.logger.error(`Error occured during deferred plugin ${err}`)
-        )
-      );
+      plugins.forEach((plugin) => plugin.func(this));
     });
   }
   private async _register() {
@@ -230,7 +225,7 @@ export default class Bot extends Client {
     this.on("ready", () =>
       this._registerCommands({
         commands,
-        guild: this._isDev() ? process.env.TEST_GUILD : null,
+        guild: this.isDev() ? process.env.TEST_GUILD : null,
       })
     );
 
@@ -283,7 +278,10 @@ export default class Bot extends Client {
       this.application?.commands.set(commands);
     }
   }
-  private _isDev() {
+
+  isDev() {
+
+
     if (
       process.env.ENVIRONMENT === "debug" ||
       process.env.ENVIRONMENT === "dev"
@@ -299,7 +297,7 @@ export default class Bot extends Client {
         this.InfluxConfig.bucket
       );
       write.useDefaultTags({
-        env: this._isDev() ? "development" : "production",
+        env: this.isDev() ? "development" : "production",
       });
       const mem = new Point("memory");
       const cpu = new Point("cpu");
@@ -309,7 +307,7 @@ export default class Bot extends Client {
       /**
        * Latency
        */
-      latency.floatField("ws", this.ws.ping);
+      latency.floatField("ws", this.ws.ping || 0);
 
       mem
         .floatField("heapUsed_mb", process.memoryUsage().heapUsed / 1048576) // 1048576 = 1024 ** 2

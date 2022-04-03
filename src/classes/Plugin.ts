@@ -13,6 +13,9 @@ interface PluginOptions {
   repeat?: number; // How often the plugin should repeat. (In milliseconds)
 }
 
+/**
+ * @deprecated Use the newer LemonFunction class instead
+ */
 export default class Plugin<S = any, T = any> {
   // Object to keep state for the plugin
   private state: Record<string, S> = {};
