@@ -20,36 +20,49 @@
   </a>
 </p>
 <!-- [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B2AAOTI) -->
-  
+
 
 This source code is licensed under the GNU GPL 3.0 License. See LICENSE for more information.
 
-> Lemon tools is an open-sourced, completely free-to-use Discord bot with a few tricks up it's sleeves! It can fetch the news, fetch Coronavirus information and even spark a conversation
+> Lemon Tools is the premier multipurpose Discord bot for your server. Lemon Tools is fully open source, and trusted by many servers around the globe. Our goal is to create a useful, and simple bot to cover all your bot and automation needs in a Discord server. Invite Lemon Tools today!
 
 # How to self-host
 
-Firstly, Download a copy of the source code. You should have NodeJS (v16.10.x +) installed on your machine, and yarn already installed.
+## Install Requirements
 
-After that, run these commands
+Firstly, download a copy of the source code. You need [Node.js](https://nodejs.org) and [Yarn](https://classic.yarnpkg.com)
 
-```bash
-$ touch .env
-$ nano .env # Edit the env file with your secrets. Take a look at the example file to see what fields are needed
-$ touch config.yaml
-$ nano config.yaml # Edit config.yaml with your wanted values. Take a look at config.example.yaml for an example
-```
-
-Open a terminal window in the directory where you have the code. Type these commands:
+Then, run these commands in the folder of the downloaded code
 
 ```bash
-$ yarn
-$ yarn build
+# Install dependencies
+yarn
 ```
 
-Once that is done, run
+## Setup & Configure
+
+After installing all the required dependencies, create a `.env` file at the base of the code (not in `src`). Copy the following into the `.env` file, filling in the required values
+
+```env
+ENVIRONMENT=production
+BOT_TOKEN=Bot token
+NASA=NASA Token
+MONGO=MongoDB Connection URI (with password)
+NYT=NYT API Key (required for news)
+ORG=Influx DB org
+BUCKET=Influx DB Bucket
+INFLUX=Influx API Key
+INFLUX_URL=Influx DB URL
+```
+
+Next, open the `config.yaml` file and edit the values. See `config.example.yaml` for more information.
+
+## Build Step
+
+This is the final step of self hosting. Type this command into the terminal:
 
 ```bash
-$ node ./build
+yarn build && yarn start
 ```
 
-The bot should start. If it does not, open an [Issue](https://github.com/cooljim/lemontools/issues/new) describing your problem.
+This will build Lemon Tools and launch it. If all goes well, your bot should come online!
