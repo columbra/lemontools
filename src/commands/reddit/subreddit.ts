@@ -1,10 +1,10 @@
 import { MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import Command from "../../classes/Command";
 import { SubredditPosts } from "../../typings/reddit/subreddit";
-import { embed, errorMessage } from "../../util/embed";
-import { LemonEmojis } from "../../util/emoji";
-import { rnd } from "../../util/number";
-import { getJSON } from "../../util/web";
+import { embed, errorMessage } from "../../helper/util/embed";
+import { LemonEmojis } from "../../helper/util/emoji";
+import { rnd } from "../../helper/util/number";
+import { getJSON } from "../../helper/util/web";
 
 export default new Command({
   name: "subreddit",
@@ -92,12 +92,6 @@ export default new Command({
           .setLabel("Go to post")
           .setURL(`https://reddit.com${post.permalink}`)
           .setStyle("LINK"),
-      ]),
-      new MessageActionRow().addComponents([
-        new MessageButton()
-          .setCustomId(`delete`)
-          .setStyle("DANGER")
-          .setLabel("Delete"),
       ]),
     ];
     ctx.editReply({

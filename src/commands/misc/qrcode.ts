@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { embed, errorMessage } from "../../util/embed";
+import { embed, errorMessage } from "../../helper/util/embed";
 
 const regex =
   /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/; // Check url validity

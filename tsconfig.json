@@ -14,7 +14,8 @@
     "skipDefaultLibCheck": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "allowJs": true
+    "allowJs": true,
+    "rootDir": "src"
   },
   "include": ["src", "environment.d.ts"],
   "exclude": ["node_modules"]
