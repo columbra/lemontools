@@ -1,7 +1,7 @@
 import Command from "../../classes/Command";
 import { ApodResponse } from "../../typings/nasa/apod";
-import { embed, errorMessage } from "../../util/embed";
-import { getJSON } from "../../util/web";
+import { embed, errorMessage } from "../../helper/util/embed";
+import { getJSON } from "../../helper/util/web";
 
 export default new Command({
   name: "apod",

@@ -1,8 +1,8 @@
 import Command from "../../classes/Command";
 import ms, { StringValue } from "../../lib/ms";
 import Reminder from "../../schema/Reminder";
-import { simpleEmbed } from "../../util/embed";
-import { epherr, makeUUID } from "../../util/strings";
+import { simpleEmbed } from "../../helper/util/embed";
+import { epherr, makeUUID } from "../../helper/util/strings";
 
 export default new Command({
   name: "remindme",

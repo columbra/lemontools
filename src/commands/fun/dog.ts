@@ -1,6 +1,6 @@
 import axios from "axios";
 import Command from "../../classes/Command";
-import { embed } from "../../util/embed";
+import { embed } from "../../helper/util/embed";
 
 export default new Command({
   name: "dog",

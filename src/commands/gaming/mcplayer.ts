@@ -1,8 +1,8 @@
 import Command from "../../classes/Command";
 import { MCPlayer } from "../../typings/mcplayer";
-import { embed } from "../../util/embed";
-import { epherr } from "../../util/strings";
-import { getJSON } from "../../util/web";
+import { embed } from "../../helper/util/embed";
+import { epherr } from "../../helper/util/strings";
+import { getJSON } from "../../helper/util/web";
 
 export default new Command({
   name: "mcplayer",

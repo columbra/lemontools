@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { inviteRow, simpleEmbed } from "../../util/embed";
+import { inviteRow, simpleEmbed } from "../../helper/util/embed";
 
 export default new Command({
   name: "invite",

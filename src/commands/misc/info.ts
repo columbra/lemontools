@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
-import { embed, inviteRow } from "../../util/embed";
-import { LemonEmojis } from "../../util/emoji";
+import { embed, inviteRow } from "../../helper/util/embed";
+import { LemonEmojis } from "../../helper/util/emoji";
 import discord from "discord.js";
 
 export default new Command({

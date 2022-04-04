@@ -144,13 +144,6 @@ export default class Bot extends Client {
     this.db = (await mongoose.connect(process.env.MONGO)).Connection;
     this.logger.info("Connected to MongoDB database.");
 
-    this.GiveawayManager = new GiveawaysManager(this, {
-      default: {
-        botsCanWin: false,
-        embedColor: this.config.style.colour.primary,
-        reaction: "🎉",
-      },
-    });
     this.logger.info("Giveaways ready");
     this.logger.debug(`Starting...`);
     if (process.env.ENVIRONMENT === "debug")

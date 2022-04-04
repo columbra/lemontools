@@ -1,8 +1,8 @@
 import Command from "../../classes/Command";
 import { MCServer } from "../../typings/mcserver";
-import { embed } from "../../util/embed";
-import { LemonEmojis } from "../../util/emoji";
-import { getJSON } from "../../util/web";
+import { embed } from "../../helper/util/embed";
+import { LemonEmojis } from "../../helper/util/emoji";
+import { getJSON } from "../../helper/util/web";
 
 export default new Command({
   name: "mcserver",

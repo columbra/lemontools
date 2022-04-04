@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
 import ms from "../../lib/ms";
-import { epherrf, simpleEmbed } from "../../util/embed";
+import { epherrf, simpleEmbed } from "../../helper/util/embed";
 
 export default new Command({
   name: "timeout",

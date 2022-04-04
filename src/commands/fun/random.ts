@@ -1,8 +1,8 @@
 import { Message, MessageActionRow, MessageButton } from "discord.js";
 import Command from "../../classes/Command";
-import { simpleEmbed } from "../../util/embed";
-import { rnd } from "../../util/number";
-import { disabledComponents as disableComponents } from "../../util/components";
+import { simpleEmbed } from "../../helper/util/embed";
+import { rnd } from "../../helper/util/number";
+import { disabledComponents as disableComponents } from "../../helper/util/components";
 
 export default new Command({
   name: "random",

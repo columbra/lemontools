@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
 import pgTruth from "../../lib/truthordare/truth/pg-truth";
-import { embed } from "../../util/embed";
+import { embed } from "../../helper/util/embed";
 
 export default new Command({
   name: "truth",

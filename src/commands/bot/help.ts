@@ -7,9 +7,9 @@ import {
   MessageSelectMenu,
 } from "discord.js";
 import Command from "../../classes/Command";
-import { disabledComponents as disableComponents } from "../../util/components";
-import { embed, errorMessage, inviteRow } from "../../util/embed";
-import { capitalise } from "../../util/strings";
+import { disabledComponents as disableComponents } from "../../helper/util/components";
+import { embed, errorMessage, inviteRow } from "../../helper/util/embed";
+import { capitalise } from "../../helper/util/strings";
 
 export default new Command({
   name: "help",
@@ -32,7 +32,7 @@ export default new Command({
     if (!query) {
       const msg = (await ctx.deferReply({ fetchReply: true })) as Message;
 
-      const { commands } = bot;
+      const { commands } = bot.CommandManager;
       const categories = new Set<string>();
       const res = embed(
         {
@@ -106,7 +106,7 @@ export default new Command({
         });
       });
     } else {
-      const command = bot.commands.get(query.replace("/", ""));
+      const command = bot.CommandManager.commands.get(query.replace("/", ""));
       if (!command)
         return ctx.reply(
           errorMessage(

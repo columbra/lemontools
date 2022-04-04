@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
 import crypto from "crypto";
-import { simpleEmbed } from "../../util/embed";
+import { simpleEmbed } from "../../helper/util/embed";
 
 export default new Command({
   name: "hash",

@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { rnd } from "../../util/number";
+import { rnd } from "../../helper/util/number";
 
 export default new Command({
   name: "coin",

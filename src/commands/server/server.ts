@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
-import { embed } from "../../util/embed";
-import { capitalise } from "../../util/strings";
+import { embed } from "../../helper/util/embed";
+import { capitalise } from "../../helper/util/strings";
 
 export default new Command({
   name: "serverinfo",

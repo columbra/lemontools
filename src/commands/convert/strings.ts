@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { epherrf, simpleEmbed } from "../../util/embed";
+import { epherrf, simpleEmbed } from "../../helper/util/embed";
 
 export default new Command({
   name: "strings",

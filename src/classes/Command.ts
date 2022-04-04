@@ -1,4 +1,4 @@
-import { PermissionResolvable } from "discord.js";
+import { ApplicationCommand, PermissionResolvable } from "discord.js";
 import { CommandOptions, ExecuteFunction } from "../typings/CommandItems";
 
 export default class Command implements CommandOptions {
@@ -8,7 +8,8 @@ export default class Command implements CommandOptions {
   description: string;
   name: string;
   example?: string;
-  category: string
+  category: string;
+  options?: CommandOptions["options"];
   constructor(opt: CommandOptions) {
     Object.assign(this, opt);
   }

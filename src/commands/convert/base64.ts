@@ -1,5 +1,5 @@
 import Command from "../../classes/Command";
-import { simpleEmbed } from "../../util/embed";
+import { simpleEmbed } from "../../helper/util/embed";
 
 export default new Command({
   name: "base64",

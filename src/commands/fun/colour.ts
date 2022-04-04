@@ -1,8 +1,8 @@
 import Command from "../../classes/Command";
-import { epherr } from "../../util/strings";
+import { epherr } from "../../helper/util/strings";
 import Canvas from "canvas";
 import { MessageAttachment } from "discord.js";
-import { simpleEmbed } from "../../util/embed";
+import { simpleEmbed } from "../../helper/util/embed";
 
 const regex = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
 

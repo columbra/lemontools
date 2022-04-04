@@ -1,8 +1,8 @@
 import { Message, MessageActionRow, MessageButton } from "discord.js";
 import Command from "../../classes/Command";
-import { simpleEmbed } from "../../util/embed";
+import { simpleEmbed } from "../../helper/util/embed";
 import { evaluate } from "mathjs";
-import { disabledComponents as disableComponents } from "../../util/components";
+import { disabledComponents as disableComponents } from "../../helper/util/components";
 
 export default new Command({
   name: "calc",

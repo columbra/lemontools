@@ -5,26 +5,39 @@ import {
   MessageEmbedOptions,
 } from "discord.js";
 import { MessageActionRow, MessageButton } from "discord.js";
-import Bot from "../classes/Bot";
+import Bot from "../../classes/NewBot";
+import getConfig from "../../helper/config/GetConfig";
 import { LemonEmojis } from "./emoji";
 
 function embed(
   opt: MessageEmbedOptions,
   ctx: Interaction,
-  bot: Bot
+  bot?: Bot
 ): MessageEmbed {
   return new MessageEmbed(opt)
-    .setColor(parseInt(bot.config.style.colour.primary.replace("#", ""), 16))
+    .setColor(
+      parseInt(
+        bot?.config.style.colour.primary.replace("#", "") ||
+          getConfig().style.colour.primary.replace("#", ""),
+        16
+      )
+    )
     .setFooter({
       text: `Command run by ${ctx.user.username}`,
       iconURL: ctx.user.avatarURL(),
     })
     .setTimestamp();
 }
-function simpleEmbed(str: string, bot: Bot): MessageEmbed {
+function simpleEmbed(str: string, bot?: Bot): MessageEmbed {
   return new MessageEmbed()
     .setDescription(str)
-    .setColor(parseInt(bot.config.style.colour.primary.replace("#", ""), 16));
+    .setColor(
+      parseInt(
+        bot?.config.style.colour.primary.replace("#", "") ||
+          getConfig().style.colour.primary.replace("#", ""),
+        16
+      )
+    );
 }
 
 function errorMessage(err: string): InteractionReplyOptions {
@@ -62,9 +75,7 @@ export function epherrf(str: string): InteractionReplyOptions {
         color: "RED",
       }),
     ],
-    components: [
-      inviteRow
-    ],
+    components: [inviteRow],
     ephemeral: true,
   };
 }
@@ -75,7 +86,6 @@ export const enum EmbedColours {
   DISCORD_BLURPLE = "#7289DA",
   HOVER_COLOURLESS = "#32353b",
   DISCORD_LIGHT_BLURPLE = "#5865f2",
-
 }
 
 export { simpleEmbed, embed, errorMessage, inviteRow };

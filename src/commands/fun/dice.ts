@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
-import { simpleEmbed } from "../../util/embed";
-import { rnd } from "../../util/number";
+import { simpleEmbed } from "../../helper/util/embed";
+import { rnd } from "../../helper/util/number";
 import {
   Canvas,
   createCanvas,

@@ -1,6 +1,6 @@
 import { decode, encode } from "punycode";
 import Command from "../../classes/Command";
-import { embed, epherrf } from "../../util/embed";
+import { embed, epherrf } from "../../helper/util/embed";
 
 export default new Command({
   name: "punycode",

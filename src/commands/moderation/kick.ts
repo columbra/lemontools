@@ -1,6 +1,6 @@
 import { GuildMember } from "discord.js";
 import Command from "../../classes/Command";
-import { errorMessage, simpleEmbed } from "../../util/embed";
+import { errorMessage, simpleEmbed } from "../../helper/util/embed";
 
 export default new Command({
   name: "kick",

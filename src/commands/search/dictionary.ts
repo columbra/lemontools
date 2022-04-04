@@ -1,7 +1,7 @@
 import Command from "../../classes/Command";
-import { embed, epherrf } from "../../util/embed";
-import { capitalise } from "../../util/strings";
-import { getJSON } from "../../util/web";
+import { embed, epherrf } from "../../helper/util/embed";
+import { capitalise } from "../../helper/util/strings";
+import { getJSON } from "../../helper/util/web";
 
 export default new Command({
   name: "dictionary",

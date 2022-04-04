@@ -1,8 +1,8 @@
 import Command from "../../classes/Command";
 import { NYTSectionHeadlines, Result } from "../../typings/nyt";
-import { embed } from "../../util/embed";
-import { capitalise, epherr } from "../../util/strings";
-import { getJSON } from "../../util/web";
+import { embed } from "../../helper/util/embed";
+import { capitalise, epherr } from "../../helper/util/strings";
+import { getJSON } from "../../helper/util/web";
 
 const sections = [
   "arts",
