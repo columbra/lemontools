@@ -6,6 +6,12 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in th
 
+# 3.0.0
+
+A new major version; a new rewrite.
+
+Lemon Tools v3 rewrite.
+
 # 2.3.0
 
 ## What's new
