@@ -4,7 +4,6 @@ import getConfig from "../helper/config/GetConfig";
 import Logger from "../modules/logs/Logger";
 import EventManager from "../modules/event/EventManager";
 import makeCache from "../helper/config/MakeCache";
-import pkg from "../../package.json";
 
 export default class Bot extends Client {
   public logger = new Logger();
@@ -21,7 +20,7 @@ export default class Bot extends Client {
       makeCache,
     });
     this.logger.info(
-      `\n🍋 Lemon Tools 🍋\n > Name: ${this.config.bot.name}\n > Version: ${pkg.version}`
+      `\n🍋 Lemon Tools 🍋\n > Name: ${this.config.bot.name}\n`
     );
   }
 }
