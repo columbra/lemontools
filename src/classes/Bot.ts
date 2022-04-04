@@ -5,11 +5,9 @@ import {
   Client,
   ClientEvents,
   Collection,
-  LimitedCollection,
   MessageEmbed,
   MessageReaction,
   Options,
-  Sweepers,
   User,
 } from "discord.js";
 import fs from "fs";
