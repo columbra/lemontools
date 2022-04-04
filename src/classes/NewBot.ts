@@ -3,6 +3,7 @@ import CommandManager from "../modules/command/CommandManager";
 import getConfig from "../helper/config/GetConfig";
 import Logger from "../modules/logs/Logger";
 import EventManager from "../modules/event/EventManager";
+import makeCache from "../helper/config/MakeCache";
 
 export default class Bot extends Client {
   public logger = new Logger();
@@ -16,6 +17,7 @@ export default class Bot extends Client {
   constructor() {
     super({
       intents: ["GUILDS", "GUILD_MEMBERS"],
+      makeCache,
     });
   }
 }
