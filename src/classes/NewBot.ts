@@ -20,7 +20,7 @@ export default class Bot extends Client {
       makeCache,
     });
     this.logger.info(
-      `\n\n🍋 Lemon Tools 🍋\n > Name: ${this.config.bot.name}`
+      `\n\n🍋 Lemon Tools 🍋\n > Name: ${this.config.bot.name}\n`
     );
   }
 }
