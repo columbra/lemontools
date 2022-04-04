@@ -4,7 +4,7 @@ import { embed } from "../../util/embed";
 export default new Command({
   name: "user",
   description: "Get information about a user",
-  category: "misc",
+  category: "server",
   perms: [],
   usage: "<user>",
   example: "@Windows95",
