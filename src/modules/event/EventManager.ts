@@ -18,7 +18,10 @@ const glob = promisify(syncGlob);
 
 class EventManager {
   private _create = Date.now();
-  private readonly _events: Collection<string, Event<keyof ClientEvents>>;
+  private readonly _events = new Collection<
+    string,
+    Event<keyof ClientEvents>
+  >();
 
   constructor(private bot: Bot) {
     bot.logger.info(

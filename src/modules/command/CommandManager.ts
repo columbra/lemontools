@@ -30,7 +30,7 @@ declare interface CommandManager {
 
 class CommandManager extends EventEmitter {
   private _create = Date.now();
-  private readonly _commands: Collection<string, Command>;
+  private readonly _commands = new Collection<string, Command>();
 
   constructor(private bot: Bot) {
     super({});
