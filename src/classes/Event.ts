@@ -1,5 +1,5 @@
 import { ClientEvents } from "discord.js";
-import Bot from "./Bot";
+import Bot from "./NewBot";
 
 export default class Event<K extends keyof ClientEvents, R = any> {
   constructor(

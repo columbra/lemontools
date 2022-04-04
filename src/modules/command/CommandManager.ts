@@ -1,10 +1,18 @@
-import { ApplicationCommandDataResolvable, Collection } from "discord.js";
+import {
+  ApplicationCommandDataResolvable,
+  Collection,
+  CommandInteraction,
+  CommandInteractionOptionResolver,
+  Permissions,
+} from "discord.js";
 import { EventEmitter } from "events";
 import { promisify } from "util";
 import Command from "../../classes/Command";
 import Bot from "../../classes/NewBot";
 import syncGlob from "glob";
 import path from "path";
+import getConfig from "../../helper/config/GetConfig";
+import { epherrf } from "../../util/embed";
 
 const glob = promisify(syncGlob);
 
@@ -37,7 +45,7 @@ class CommandManager extends EventEmitter {
     this.bot.logger.info("CommandManager: Loading commands");
     const rawCommands: ApplicationCommandDataResolvable[] = [];
     const commandFiles: string[] = await glob(
-      path.join(__dirname, "../../commands/*.{ts,js}")
+      path.join(__dirname, "../../commands/**/*.{ts,js}")
     );
     if (!commandFiles.length)
       return this.bot.logger.error("CommandManager: No commands found.");
@@ -76,6 +84,50 @@ class CommandManager extends EventEmitter {
       this.bot.application.commands.set(rawCommands);
       this.emit("commandsRegistered");
     });
+  }
+
+  private borderControl(command: Command, ctx: CommandInteraction) {
+    /**
+     * Glory to Arstotska
+     *
+     * I salute you, inspector!
+     */
+
+    const config = getConfig();
+    if (!ctx.inGuild()) return false;
+    if (
+      !(ctx.member.permissions as unknown as Readonly<Permissions>).has(
+        command.perms ?? []
+      )
+    )
+      return false;
+    if (command.sudo && !config.sudos.includes(ctx.user.id)) return false;
+
+    return true;
+  }
+
+  public run(ctx: CommandInteraction) {
+    this.emit("commandReceived", ctx.commandName);
+    const command = this.commands.get(ctx.commandName);
+    if (!command) return;
+    if (!this.borderControl(command, ctx))
+      return ctx.reply(
+        epherrf(`
+    You cannot execute that command here. Perhaps you are missing a permission.
+    
+    **Note:** Commands don't work in DMs
+    `)
+      );
+    command
+      .execute({
+        args: ctx.options as CommandInteractionOptionResolver,
+        bot: this.bot,
+        ctx,
+      })
+      .catch((err) => {
+        this.emit("commandError", err);
+        this.bot.logger.error(err);
+      });
   }
 
   public get commands(): Collection<string, Command> {

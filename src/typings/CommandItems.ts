@@ -4,7 +4,7 @@ import {
   CommandInteractionOptionResolver,
   PermissionResolvable,
 } from "discord.js";
-import Bot from "../classes/Bot";
+import Bot from "../classes/NewBot";
 
 export interface RunOptions {
   bot: Bot;
@@ -20,5 +20,5 @@ export type CommandOptions = {
   execute: ExecuteFunction;
   usage?: string;
   example?: string;
-  category: string
+  category: string;
 } & ChatInputApplicationCommandData;
