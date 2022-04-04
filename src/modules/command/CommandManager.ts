@@ -12,7 +12,7 @@ import Bot from "../../classes/NewBot";
 import syncGlob from "glob";
 import path from "path";
 import getConfig from "../../helper/config/GetConfig";
-import { epherrf } from "../../util/embed";
+import { epherrf } from "../../helper/util/embed";
 
 const glob = promisify(syncGlob);
 

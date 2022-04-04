@@ -1,4 +1,4 @@
-import Bot from "./Bot";
+import Bot from "./NewBot";
 
 export type LemonPluginFunction = (bot: Bot) => Promise<unknown>;
 export interface LemonPluginOptions {
