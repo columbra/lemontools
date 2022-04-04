@@ -42,7 +42,7 @@ hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
  */
 import * as dotenv from "./lib/dotenv";
 import path from "path";
-import Bot from "./classes/Bot";
+import Bot from "./classes/NewBot";
 
 const { parsed } = dotenv.config({
   path: path.join(__dirname, `../.env`),
@@ -68,8 +68,6 @@ if (["dev", "debug"].includes(process.env.ENVIRONMENT)) {
 
 export const bot = new Bot();
 
-bot.start();
-
 /**
  * Error handling
  */
@@ -82,4 +80,4 @@ process.on("unhandledRejection", (err) => {
 // Write an error handler to catch thrown errors
 process.on("uncaughtException", (err) => {
   bot.logger.crit(`Uncaught Exception: ${err}`);
-})
+});
