@@ -12,6 +12,11 @@ A new major version; a new rewrite.
 
 Lemon Tools v3 rewrite.
 
+## Changes
+- Split everything into modules & managers, see the `modules` folder
+- Purged a lot of stuff which was unused
+- Moved `util` into `helper`
+
 # 2.3.0
 
 ## What's new
