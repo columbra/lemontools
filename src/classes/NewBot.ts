@@ -22,5 +22,16 @@ export default class Bot extends Client {
     this.logger.info(
       `\n\n🍋 Lemon Tools 🍋\n > Name: ${this.config.bot.name}\n`
     );
+
+    if(this.isDev()) this.logger.warn(`Running in developer or debug mode`)
+    this.start();
+  }
+
+  private start() {
+    const _create = Date.now()
+    this.logger.info("Logging in")
+    this.login(process.env.BOT_TOKEN).then(() => {
+      this.logger.info(`Successfully logged in as ${this.user.tag}. Took ${Date.now() - _create}ms`)
+    });
   }
 }
