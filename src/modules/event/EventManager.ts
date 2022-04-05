@@ -13,20 +13,18 @@ import syncGlob from "glob";
 import path from "path";
 import getConfig from "../../helper/config/GetConfig";
 import Event from "../../classes/Event";
+import Manager from "../../classes/Manager";
 
 const glob = promisify(syncGlob);
 
-class EventManager {
-  private _create = Date.now();
+class EventManager extends Manager {
   private readonly _events = new Collection<
     string,
     Event<keyof ClientEvents>
   >();
 
-  constructor(private bot: Bot) {
-    bot.logger.info(
-      `EventManager successfully started. Took ${Date.now() - this._create}ms`
-    );
+  constructor(bot: Bot) {
+    super("EventManager", bot);
     this.loadEvents();
   }
 
