@@ -101,7 +101,7 @@ class CommandManager extends EventEmitter {
       )
     )
       return false;
-    if (command.sudo && !config.sudos.includes(ctx.user.id)) return false;
+    if (command.sudo && !config.bot.sudos.includes(ctx.user.id)) return false;
 
     return true;
   }
