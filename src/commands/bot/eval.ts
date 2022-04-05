@@ -4,7 +4,7 @@ import { embed } from "../../helper/util/embed";
 export default new Command({
   name: "eval",
   description: "For developer use only.",
-  category: "misc",
+  category: "bot",
   perms: [],
   sudo: true,
   options: [

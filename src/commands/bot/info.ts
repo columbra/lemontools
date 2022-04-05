@@ -7,7 +7,7 @@ export default new Command({
   name: "info",
   description: "Get some information about Lemon Tools",
   perms: [],
-  category: "misc",
+  category: "bot",
   async execute({ bot, ctx, args }) {
     ctx.reply({
       embeds: [
