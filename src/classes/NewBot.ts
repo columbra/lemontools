@@ -5,6 +5,7 @@ import Logger from "../modules/logs/Logger";
 import EventManager from "../modules/event/EventManager";
 import makeCache from "../helper/config/MakeCache";
 import PluginManager from "../modules/plugin/PluginManager";
+import ListenerManager from "../modules/web/Listener";
 
 export default class Bot extends Client {
   public logger = new Logger();
@@ -15,6 +16,7 @@ export default class Bot extends Client {
   public CommandManager = new CommandManager(this);
   public EventManager = new EventManager(this);
   public PluginManager = new PluginManager(this);
+  public ListenderManager = new ListenerManager(this)
 
   constructor() {
     super({
