@@ -6,6 +6,7 @@ import EventManager from "../modules/event/EventManager";
 import makeCache from "../helper/config/MakeCache";
 import PluginManager from "../modules/plugin/PluginManager";
 import ListenerManager from "../modules/web/Listener";
+import MonitoringManager from "../modules/logs/MonitoringManager";
 
 export default class Bot extends Client {
   public logger = new Logger();
@@ -16,7 +17,8 @@ export default class Bot extends Client {
   public CommandManager = new CommandManager(this);
   public EventManager = new EventManager(this);
   public PluginManager = new PluginManager(this);
-  public ListenderManager = new ListenerManager(this)
+  public ListenderManager = new ListenerManager(this);
+  public MonitoringManager = new MonitoringManager(this);
 
   constructor() {
     super({
@@ -30,7 +32,6 @@ export default class Bot extends Client {
 
   private start() {
     const _create = Date.now();
-    this.logger.info("Logging in");
     this.login(process.env.BOT_TOKEN).then(() => {
       this.logger.info(
         `Successfully logged in as ${this.user.tag}. Took ${
