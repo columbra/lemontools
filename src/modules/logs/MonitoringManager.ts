@@ -13,6 +13,7 @@ export default class MonitoringManager extends Manager {
     const config = getConfig();
     super("MonitoringManager", bot);
     if (config.modules.MonitoringManager.enabled) this.start();
+    else bot.logger.info(`MonitoringManager: This module has been disabled`);
   }
 
   private async start() {
