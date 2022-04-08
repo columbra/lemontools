@@ -1,6 +1,6 @@
 import Command from "../../classes/Command";
 import ms, { StringValue } from "../../lib/ms";
-import Reminder from "../../schema/Reminder";
+import Reminder from "../../schema/reminder/Reminder";
 import { simpleEmbed } from "../../helper/util/embed";
 import { epherr, makeUUID } from "../../helper/util/strings";
 

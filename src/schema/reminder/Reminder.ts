@@ -9,3 +9,11 @@ const ReminderSchema = new Schema({
 })
 
 export default model("Reminder", ReminderSchema)
+
+export interface ReminderType {
+  time: number,
+  reminder: string,
+  userId: string,
+  created: number,
+  uuid: string
+}

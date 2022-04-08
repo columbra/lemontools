@@ -9,13 +9,15 @@ bot:
   perms: 274878286912
 
 style:
-  # Colour *must* be spelt the proper way
-  # a.k.a. the non-US way
   colour:
     primary: "#FEF250"
     secondary: "Secondary colour hex code."
 
-  # Status control
   status:
     type: WATCHING
     message: /help
+
+modules: 
+  ReminderManager:
+    checkInterval: 60_000
+    doInitialSweep: true
