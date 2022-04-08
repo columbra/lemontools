@@ -38,6 +38,9 @@ export default class ReminderManager extends Manager {
         const deleteReminder = () =>
           Reminder.deleteOne({ uuid: reminder.uuid }).exec();
         const user = await this.bot.users.fetch(reminder.userId);
+        this.bot.logger.verbose(
+          `ReminderManager: Sending reminder to ${user.tag} (${user.id})`
+        );
         user
           .send({
             embeds: [
@@ -49,7 +52,7 @@ export default class ReminderManager extends Manager {
           })
           .then(deleteReminder, deleteReminder)
           .catch(() =>
-            this.bot.logger.debug(
+            this.bot.logger.verbose(
               `ReminderManager: Failed to send reminder to user ${user}.`
             )
           );

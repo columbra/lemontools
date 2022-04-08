@@ -24,6 +24,9 @@ export default class PluginManager extends Manager {
     for (const file of pluginFiles) {
       const plugin: LemonPlugin = (await import(file)).default;
       try {
+        this.bot.logger.verbose(
+          `PluginManager: ${plugin.name} loaded and running`
+        );
         plugin.func(this.bot);
       } catch (err) {
         this.bot.logger.error(

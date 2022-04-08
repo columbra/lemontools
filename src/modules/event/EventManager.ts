@@ -42,7 +42,10 @@ class EventManager extends Manager {
     }
     Promise.all(
       this._events.map(async (event) => {
-        this.bot.on(event.event, (...args) => event.run(this.bot, ...args));
+        this.bot.on(event.event, (...args) => {
+          this.bot.logger.verbose(`EventManager: ${event.event} fired`);
+          event.run(this.bot, ...args);
+        });
       })
     );
 

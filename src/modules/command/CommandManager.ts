@@ -108,9 +108,18 @@ class CommandManager extends EventEmitter {
 
   public run(ctx: CommandInteraction) {
     this.emit("commandReceived", ctx.commandName);
+    this.bot.logger.verbose(
+      `CommandManager: Received command ${ctx.commandName} from ${ctx.user.tag} (${ctx.user.id})`
+    );
     const command = this.commands.get(ctx.commandName);
-    if (!command) return;
-    if (!this.borderControl(command, ctx))
+    if (!command)
+      return this.bot.logger.error(
+        `CommandManager: Command ${ctx.commandName} not found`
+      );
+    if (!this.borderControl(command, ctx)) {
+      this.bot.logger.verbose(
+        `CommandManager: Border control check failed for ${ctx.commandName} from ${ctx.user.tag} (${ctx.user.id})`
+      );
       return ctx.reply(
         epherrf(`
     You cannot execute that command here. Perhaps you are missing a permission.
@@ -118,15 +127,23 @@ class CommandManager extends EventEmitter {
     **Note:** Commands don't work in DMs
     `)
       );
+    }
     command
       .execute({
         args: ctx.options as CommandInteractionOptionResolver,
         bot: this.bot,
         ctx,
       })
+      .then(() =>
+        this.bot.logger.verbose(
+          `CommandManager: Command ${ctx.commandName} executed from ${ctx.user.tag} (${ctx.user.id})`
+        )
+      )
       .catch((err) => {
         this.emit("commandError", err);
-        this.bot.logger.error(err);
+        this.bot.logger.error(
+          `CommandManager: Error occured running command ${ctx.commandName}: ${err.stack} ${err}`
+        );
       });
   }
 

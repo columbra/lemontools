@@ -26,20 +26,34 @@ export default class ListenerManager extends Manager {
     server.use(bodyParser.json());
 
     server.post("/api", (req, res) => {
-      if (!req.headers.authorization)
+      this.bot.logger.verbose(`ListenerManager: Received request on API route`);
+
+      if (!req.headers.authorization) {
+        this.bot.logger.verbose(
+          `ListenerManager: No authorization header from API request originating from ${req.ip}`
+        );
         return res.status(401).json({
           message: "Missing Authorization Header",
           data: null,
         });
-      if (req.headers.authorization !== LISTENER_SECRET)
+      }
+      if (req.headers.authorization !== LISTENER_SECRET) {
+        this.bot.logger.verbose(
+          `ListenerManager: Invalid authorization header from API request originating from ${req.ip}`
+        );
         return res.status(401).json({
           message: "Invalid Authorization Header",
           data: null,
         });
+      }
       this.handler(req, res);
     });
 
     server.get("/ping", (req, res) => {
+      this.bot.logger.verbose(
+        `ListenerManager: Received request on ping route`
+      );
+
       res.status(200).json({
         message: "OK",
         data: null,
