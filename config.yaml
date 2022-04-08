@@ -21,3 +21,5 @@ modules:
   ReminderManager:
     checkInterval: 60_000
     doInitialSweep: true
+  MonitoringManager:
+    enabled: true

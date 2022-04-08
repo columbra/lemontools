@@ -2,6 +2,7 @@ import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import Manager from "../../classes/Manager";
 import Bot from "../../classes/NewBot";
 import os from "os";
+import getConfig from "../../helper/config/GetConfig";
 
 export default class MonitoringManager extends Manager {
   private influx = new InfluxDB({
@@ -9,8 +10,9 @@ export default class MonitoringManager extends Manager {
     token: process.env.INFLUX,
   });
   constructor(bot: Bot) {
+    const config = getConfig();
     super("MonitoringManager", bot);
-    this.start();
+    if (config.modules.MonitoringManager.enabled) this.start();
   }
 
   private async start() {
