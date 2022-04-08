@@ -22,7 +22,7 @@ export default class Logger {
           winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
           LoggerConsts.loggerFormat
         ),
-        level: process.env.ENVIRONMENT === "debug" ? "debug" : "info",
+        level: process.env.ENVIRONMENT === "debug" ? "verbose" : "info",
       }),
       new transports.File({
         format: winston.format.combine(
