@@ -31,15 +31,24 @@ export default class Logger {
         ),
         filename: `log-lemontools-${Date.now()}.log`,
       }),
+      new transports.File({
+        format: winston.format.combine(
+          winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+          LoggerConsts.fileFormat
+        ),
+        filename: `log-lemontools-verbose.log`,
+        level: "verbose",
+      }),
     ],
   });
   constructor() {
     this.info(
       `Logger successfully started. Took ${Date.now() - this._create}ms`
     );
+    this.verbose(`New log entry for ${new Date().toISOString()}`);
   }
 
-  private _log(level: 0 | 1 | 2 | 3 | 4, str: string) {
+  private _log(level: 0 | 1 | 2 | 3 | 4 | 5, str: string) {
     const key = findKey(LoggerConsts.loggerLevels, level);
     return this._winston.log(key, str);
   }
@@ -57,5 +66,8 @@ export default class Logger {
   }
   public debug(str: string) {
     return this._log(4, str);
+  }
+  public verbose(str: string) {
+    return this._log(5, str);
   }
 }

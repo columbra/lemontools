@@ -7,6 +7,7 @@ const loggerLevels = {
   warn: 2,
   info: 3,
   debug: 4,
+  verbose: 5
 } as const;
 const loggerColours = {
   crit: "bgRed bold white",
@@ -14,6 +15,7 @@ const loggerColours = {
   warn: "yellow",
   info: "cyan",
   debug: "magenta bold",
+  verbose: "white bold"
 } as const;
 const loggerFormat = winston.format.printf(
   ({ level, message, timestamp }) =>
