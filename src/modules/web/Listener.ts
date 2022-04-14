@@ -46,6 +46,9 @@ export default class ListenerManager extends Manager {
           data: null,
         });
       }
+      this.bot.logger.verbose(
+        `ListenerManager: valid API request originating from ${req.ip}. Sending to handler for prcoessing`
+      );
       this.handler(req, res);
     });
 
@@ -56,7 +59,14 @@ export default class ListenerManager extends Manager {
 
       res.status(200).json({
         message: "OK",
-        data: null,
+        data: {
+          easterEgg: `${this.bot.config.bot.name} | Based on Lemon Tools`,
+          bot: {
+            uptime: this.bot.uptime,
+            ping: this.bot.ws.ping,
+          },
+          machine: {},
+        },
       });
     });
 
@@ -69,5 +79,10 @@ export default class ListenerManager extends Manager {
     );
   }
 
-  private async handler(req: Request, res: Response) {}
+  private async handler(req: Request, res: Response) {
+    res.status(501).json({
+      message: "Not Implemented",
+      data: null,
+    });
+  }
 }
