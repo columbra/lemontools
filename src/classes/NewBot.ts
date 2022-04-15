@@ -8,6 +8,7 @@ import PluginManager from "../modules/plugin/PluginManager";
 import ListenerManager from "../modules/web/Listener";
 import MonitoringManager from "../modules/logs/MonitoringManager";
 import PreCloseCleanupManager from "../modules/cleanup/PreCloseCleanupManager";
+import UncaughtErrorHandlerManager from "../modules/error/UncaughtErrorHandlerManager";
 
 export default class Bot extends Client {
   public logger = new Logger();
@@ -20,7 +21,8 @@ export default class Bot extends Client {
   public PluginManager = new PluginManager(this);
   public ListenderManager = new ListenerManager(this);
   public MonitoringManager = new MonitoringManager(this);
-  public PreCloseCleanupManager = new PreCloseCleanupManager(this)
+  public PreCloseCleanupManager = new PreCloseCleanupManager(this);
+  public UncaughtErrorHandlerManager = new UncaughtErrorHandlerManager(this);
 
   constructor() {
     super({
