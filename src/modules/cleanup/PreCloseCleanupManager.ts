@@ -15,7 +15,7 @@ export default class PreCloseCleanupManager extends Manager {
     });
   }
 
-  private async exit(event: typeof listenTo[number]) {
+  async exit(event: typeof listenTo[number]) {
     const _start = Date.now();
     this.bot.logger.info(
       `PreCloseCleanupManager: Detected code exit. Cleaning up...`
