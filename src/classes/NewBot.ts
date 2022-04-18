@@ -9,6 +9,7 @@ import ListenerManager from "../modules/web/Listener";
 import MonitoringManager from "../modules/logs/MonitoringManager";
 import PreCloseCleanupManager from "../modules/cleanup/PreCloseCleanupManager";
 import UncaughtErrorHandlerManager from "../modules/error/UncaughtErrorHandlerManager";
+import AutoCompleterManager from "../modules/command/AutoCompleterManager";
 
 export default class Bot extends Client {
   public logger = new Logger();
@@ -23,6 +24,7 @@ export default class Bot extends Client {
   public MonitoringManager = new MonitoringManager(this);
   public PreCloseCleanupManager = new PreCloseCleanupManager(this);
   public UncaughtErrorHandlerManager = new UncaughtErrorHandlerManager(this);
+  public AutoCompleterManager = new AutoCompleterManager(this);
 
   constructor() {
     super({
