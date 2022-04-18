@@ -6,6 +6,5 @@ export default new Event("interactionCreate", async (bot, ctx) => {
     `EventManager/Child: autoCompleteInteraction received from ${ctx.user.tag} (${ctx.user.id})`
   );
   const response = bot.AutoCompleterManager.run(ctx);
-  console.log(response)
   ctx.respond(response || []);
 });
