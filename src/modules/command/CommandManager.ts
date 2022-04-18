@@ -49,12 +49,16 @@ class CommandManager extends EventEmitter {
     );
     if (!commandFiles.length)
       return this.bot.logger.error("CommandManager: No commands found.");
-    for (const file of commandFiles) {
-      const command: Command = (await import(file)).default;
-      this._commands.set(command.name, command);
-      rawCommands.push(command);
-      this.emit("commandLoaded", command);
-    }
+
+    // Async loading
+    await Promise.all(
+      commandFiles.map(async (file) => {
+        const command: Command = (await import(file)).default;
+        this._commands.set(command.name, command);
+        rawCommands.push(command);
+        this.emit("commandLoaded", command);
+      })
+    );
 
     this.registerCommands(
       rawCommands,
