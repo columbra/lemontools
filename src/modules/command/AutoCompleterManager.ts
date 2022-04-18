@@ -55,6 +55,7 @@ export default class AutoCompleterManager extends Manager {
     ctx: AutocompleteInteraction
   ): void | ApplicationCommandOptionChoice[] {
     const { commandName: command } = ctx;
+    this.bot.logger.verbose(`AutoCompleterManager: Running autcomplete for ${command}`);
     const autoCompleter = this.autoCompleters.get(command);
     if (!autoCompleter) {
       this.bot.logger.error(

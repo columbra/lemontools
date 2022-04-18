@@ -1,27 +1,15 @@
-import {
-  ApplicationCommandDataResolvable,
-  ClientEvents,
-  Collection,
-  CommandInteraction,
-  CommandInteractionOptionResolver,
-  Permissions,
-} from "discord.js";
+import { ClientEvents, Collection } from "discord.js";
 import { promisify } from "util";
-import Command from "../../classes/Command";
 import Bot from "../../classes/NewBot";
 import syncGlob from "glob";
 import path from "path";
-import getConfig from "../../helper/config/GetConfig";
 import Event from "../../classes/Event";
 import Manager from "../../classes/Manager";
 
 const glob = promisify(syncGlob);
 
 class EventManager extends Manager {
-  private readonly _events = new Collection<
-    string,
-    Event<keyof ClientEvents>
-  >();
+  private readonly _events: Event<keyof ClientEvents>[] = [];
 
   constructor(bot: Bot) {
     super("EventManager", bot);
@@ -36,19 +24,21 @@ class EventManager extends Manager {
     );
     if (!eventFiles.length)
       return this.bot.logger.error("EventManager: No events found.");
+    this.bot.logger.verbose(`EventManager: ${eventFiles.length} events found`);
     for (const file of eventFiles) {
       const event: Event<keyof ClientEvents> = (await import(file)).default;
-      this._events.set(event.event, event);
+      this._events.push(event);
     }
-    Promise.all(
-      this._events.map(async (event) => {
-        this.bot.on(event.event, (...args) => {
-          this.bot.logger.verbose(`EventManager: ${event.event} fired`);
-          event.run(this.bot, ...args);
-        });
-      })
-    );
 
+    this._events.forEach((event, i) => {
+      this.bot.logger.verbose(
+        `EventManager: Registered event ${event.event}, (#${i+1})`
+      );
+      this.bot.on(event.event, (...args) => {
+        this.bot.logger.verbose(`EventManager: ${event.event} fired`);
+        event.run(this.bot, ...args);
+      });
+    });
     this.bot.logger.info(
       `EventManager: Event registering successful. Took ${
         Date.now() - _start
