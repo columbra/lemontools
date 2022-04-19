@@ -17,6 +17,9 @@ Lemon Tools v3 rewrite.
 - Purged a lot of stuff which was unused
 - Moved `util` into `helper`
 
+## New Features
+- New `/convertid` command to convert Snowflakes into times
+
 # 2.3.0
 
 ## What's new
