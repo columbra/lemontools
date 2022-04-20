@@ -3,6 +3,7 @@ import Bot from "../../classes/NewBot";
 import express from "express";
 import bodyParser from "body-parser";
 import type { Request, Response } from "express";
+import { Guild, User } from "discord.js";
 
 /**
  * This is the Manager which listens for web requests.
@@ -25,7 +26,7 @@ export default class ListenerManager extends Manager {
 
     server.use(bodyParser.json());
 
-    server.post("/api", (req, res) => {
+    server.all("/api/:path", (req, res) => {
       this.bot.logger.verbose(`ListenerManager: Received request on API route`);
 
       if (!req.headers.authorization) {
@@ -49,7 +50,7 @@ export default class ListenerManager extends Manager {
       this.bot.logger.verbose(
         `ListenerManager: valid API request originating from ${req.ip}. Sending to handler for prcoessing`
       );
-      this.handler(req, res);
+      return this.handler(req, res, req.params.path);
     });
 
     server.get("/ping", (req, res) => {
@@ -79,10 +80,52 @@ export default class ListenerManager extends Manager {
     );
   }
 
-  private async handler(req: Request, res: Response) {
-    res.status(501).json({
-      message: "Not Implemented",
-      data: null,
-    });
+  private async handler(req: Request, res: Response, path: string) {
+    const _start = Date.now();
+    this.bot.logger.verbose(
+      `ListenerManager: Received request on /api/${path} route from ${req.ip}`
+    );
+    const handler = this.handlers[path];
+    if (!handler)
+      return res.status(404).json({ message: "Not found", data: null });
+    const ret = handler(req, res);
+    this.bot.logger.verbose(
+      `ListenerManager: /api/${path} took ${Date.now() - _start}ms`
+    );
+    return ret;
   }
+
+  private handlers = {
+    amInGuild: async (req, res) => {
+      const {
+        query: { guildId },
+      } = req;
+      if (!guildId || typeof guildId !== "string")
+        return res
+          .status(400)
+          .json({ message: "Missing or malformed guildId", data: null });
+      const guild: Guild | null = await this.bot.guilds
+        .fetch(guildId)
+        .catch(() => null);
+      if (!guild)
+        return res
+          .status(404)
+          .json({ message: "Guild not found", data: false });
+      return res.status(200).json({ message: "OK, guild found", data: true });
+    },
+    amInGuilds: async (req, res) => {
+      const { body } = req;
+      if (!body || !body.guildIds || !Array.isArray(body.guildIds))
+        return res
+          .status(400)
+          .json({ message: "Missing or malformed guildIds array", data: null });
+      const data = await Promise.all(
+        (body.guildIds as string[]).map(async (id) => ({
+          id,
+          amIn: !!(await this.bot.guilds.fetch(id).catch(() => null)),
+        }))
+      );
+      res.status(200).json({ message: "OK", data });
+    },
+  } as { [key: string]: (req: Request, res: Response) => any };
 }
