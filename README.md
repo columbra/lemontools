@@ -2,10 +2,6 @@
 
 <div align="center">
   <img src="https://i.imgur.com/x8CCQmk.png" />
-  <br />
-    <a href="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml">
-    <img src="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml/badge.svg" />
-  </a>
 </div>
 
 <div align="center">
@@ -21,11 +17,12 @@
 </div>
 
 
-This source code is licensed under the GNU GPL 3.0 License. See LICENSE for more information.
+**This source code is licensed under the GNU GPL 3.0 License. See LICENSE for more information.**
 
 > Lemon Tools is the premier multipurpose Discord bot for your server. Lemon Tools is fully open source, and trusted by many servers around the globe. Our goal is to create a useful, and simple bot to cover all your bot and automation needs in a Discord server. Invite Lemon Tools today!
 
 # How to self-host
+> Holup! If you want to add Lemon Tools to your server, rather than self hosting it, [invite it here](https://discord.com/oauth2/authorize?client_id=896309687136436234&permissions=515463564358&scope=bot%20applications.commands). Inviting the bot is the best way to use Lemon Tools
 
 ## Install Requirements
 
