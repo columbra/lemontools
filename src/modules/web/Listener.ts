@@ -1,5 +1,5 @@
 import Manager from "../../classes/Manager";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 import express from "express";
 import bodyParser from "body-parser";
 import type { Request, Response } from "express";

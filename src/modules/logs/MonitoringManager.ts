@@ -1,6 +1,6 @@
 import { InfluxDB, Point } from "@influxdata/influxdb-client";
 import Manager from "../../classes/Manager";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 import os from "os";
 import getConfig from "../../helper/config/GetConfig";
 

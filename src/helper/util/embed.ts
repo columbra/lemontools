@@ -5,7 +5,7 @@ import {
   MessageEmbedOptions,
 } from "discord.js";
 import { MessageActionRow, MessageButton } from "discord.js";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 import getConfig from "../../helper/config/GetConfig";
 import { LemonEmojis } from "./emoji";
 

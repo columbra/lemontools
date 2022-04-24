@@ -42,7 +42,7 @@ hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
  */
 import * as dotenv from "./lib/dotenv";
 import path from "path";
-import Bot from "./classes/NewBot";
+import Bot from "./classes/Bot";
 
 const { parsed } = dotenv.config({
   path: path.join(__dirname, `../.env`),

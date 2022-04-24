@@ -1,6 +1,6 @@
 import { ClientEvents, Collection } from "discord.js";
 import { promisify } from "util";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 import syncGlob from "glob";
 import path from "path";
 import Event from "../../classes/Event";

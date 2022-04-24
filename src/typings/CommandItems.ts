@@ -4,7 +4,7 @@ import {
   CommandInteractionOptionResolver,
   PermissionResolvable,
 } from "discord.js";
-import Bot from "../classes/NewBot";
+import Bot from "../classes/Bot";
 
 export interface RunOptions {
   bot: Bot;

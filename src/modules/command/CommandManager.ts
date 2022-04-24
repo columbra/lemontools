@@ -8,7 +8,7 @@ import {
 import { EventEmitter } from "events";
 import { promisify } from "util";
 import Command from "../../classes/Command";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 import syncGlob from "glob";
 import path from "path";
 import getConfig from "../../helper/config/GetConfig";

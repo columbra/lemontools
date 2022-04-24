@@ -1,5 +1,5 @@
 import Manager from "../../classes/Manager";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 
 export default class UncaughtErrorHandlerManager extends Manager {
   private _errors = 0;

@@ -1,5 +1,5 @@
 import Manager from "../../classes/Manager";
-import Bot from "../../classes/NewBot";
+import Bot from "../../classes/Bot";
 import syncGlob from "glob";
 import { promisify } from "util";
 import path from "path";
