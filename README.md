@@ -1,25 +1,24 @@
 # Lemon Tools Source Code
 
-<p align="center">
+<div align="center">
   <img src="https://i.imgur.com/x8CCQmk.png" />
   <br />
     <a href="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml">
     <img src="https://github.com/CoolJim/lemontools/actions/workflows/codeql-analysis.yml/badge.svg" />
   </a>
-</p>
+</div>
 
-<p align="center">
+<div align="center">
   <a href="https://top.gg/bot/896309687136436234">
     <img src="https://top.gg/api/widget/896309687136436234.svg" />
   </a>
-</p>
+</div>
  
-<p align="center">
+<div align="center">
   <a href="https://ko-fi.com/B0B2AAOTI">
     <img src="https://ko-fi.com/img/githubbutton_sm.svg" />
   </a>
-</p>
-<!-- [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B2AAOTI) -->
+</div>
 
 
 This source code is licensed under the GNU GPL 3.0 License. See LICENSE for more information.
