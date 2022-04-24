@@ -125,7 +125,78 @@ export default class ListenerManager extends Manager {
           amIn: !!(await this.bot.guilds.fetch(id).catch(() => null)),
         }))
       );
-      res.status(200).json({ message: "OK", data });
+      return res.status(200).json({ message: "OK", data });
     },
-  } as { [key: string]: (req: Request, res: Response) => any };
+    getGuildData: async (req, res) => {
+      const {
+        query: { guildId },
+      } = req;
+      if (!guildId || typeof guildId !== "string")
+        return res.status(400).json({
+          message: "Missing or malformed guildId",
+          data: null,
+        });
+      const guild: Guild | null = await this.bot.guilds
+        .fetch(guildId)
+        .catch(() => null);
+      if (!guild?.available)
+        return res.status(404).json({
+          message: "Guild not found",
+          data: null,
+        });
+      return res.status(200).json({
+        message: "OK",
+        data: guild,
+      });
+    },
+    setNickInServer: async (req, res) => {
+      const {
+        query: { guildId },
+      } = req;
+      const { nick } = req?.body;
+      if (!guildId || typeof guildId !== "string")
+        return res.status(400).json({
+          message: "Missing or malformed guildId",
+          data: null,
+        });
+      if (!nick || typeof nick !== "string")
+        return res.status(400).json({
+          message: "Missing nick or nick is not string",
+          data: null,
+        });
+      if (nick.length === 0 || nick.length >= 32)
+        return res.status(400).json({
+          message:
+            "Invalid nick length. Nicknames must be between 1 and 32 chars",
+          data: null,
+        });
+      const guild: Guild | null = await this.bot.guilds
+        .fetch(guildId)
+        .catch(() => null);
+      if (!guild)
+        return res.status(404).json({
+          message: "Guild not found",
+          data: null,
+        });
+      return guild.me
+        .setNickname(nick)
+        .then((me) => {
+          res.status(204).end();
+        })
+        .catch((r) => {
+          res.status(500).json({
+            message: "Error setting nick",
+            data: r,
+          });
+        });
+    },
+  } as {
+    [key: string]: (
+      req: Request,
+      res: Response<{
+        message: string;
+        data: any;
+      }>
+    ) => any;
+  };
 }
