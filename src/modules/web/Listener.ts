@@ -1,4 +1,4 @@
-import Manager from "../../classes/Manager";
+import Manager from "../../classes/base/managers/Manager";
 import Bot from "../../classes/Bot";
 import express from "express";
 import bodyParser from "body-parser";

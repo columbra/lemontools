@@ -4,7 +4,7 @@ import Bot from "../../classes/Bot";
 import syncGlob from "glob";
 import path from "path";
 import Event from "../../classes/Event";
-import Manager from "../../classes/Manager";
+import Manager from "../../classes/base/managers/Manager";
 
 const glob = promisify(syncGlob);
 

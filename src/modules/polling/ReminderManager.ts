@@ -1,5 +1,5 @@
 import { MessageEmbed } from "discord.js";
-import Manager from "../../classes/Manager";
+import Manager from "../../classes/base/managers/Manager";
 import type Bot from "../../classes/Bot";
 import getConfig from "../../helper/config/GetConfig";
 import Reminder, { ReminderType } from "../../schema/reminder/Reminder";
