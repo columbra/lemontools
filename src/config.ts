@@ -47,5 +47,25 @@ export default {
       StageInstanceManager: 0,
       ThreadMemberManager: 10,
     } as CacheWithLimitsOptions,
+
+    logging: {
+      config: {
+        levels: {
+          crit: 0,
+          error: 1,
+          warn: 2,
+          info: 3,
+          verbose: 4,
+        },
+        colors: {
+          crit: "bgRed bold white",
+          error: "bold red",
+          warn: "yellow",
+          info: "cyan",
+          debug: "magenta bold",
+          verbose: "white bold",
+        },
+      },
+    },
   },
 } as const;
