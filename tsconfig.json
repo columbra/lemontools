@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "alwaysStrict": true,
+    "strict": true,
+    "emitBOM": true,
+    "outDir": "build",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "module": "commonjs",
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*", "src/*"],
+  "exclude": ["node_modules", "build"]
+}
