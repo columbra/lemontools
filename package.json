@@ -20,5 +20,8 @@
   },
   "engines": {
     "node": "17.9.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.4"
   }
 }
