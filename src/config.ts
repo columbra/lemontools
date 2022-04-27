@@ -3,7 +3,12 @@
  * @since v3.0.0
  */
 
-import type { BitFieldResolvable, ClientOptions, IntentsString } from "discord.js";
+import type {
+  BitFieldResolvable,
+  CacheWithLimitsOptions,
+  ClientOptions,
+  IntentsString,
+} from "discord.js";
 
 export default {
   style: {
@@ -17,9 +22,30 @@ export default {
   },
   bot: {
     // Intents will take precedence over options specified below
-    intents: ["GUILDS", "GUILD_MEMBERS"] as BitFieldResolvable<IntentsString, number>,
-    options: {
+    intents: ["GUILDS", "GUILD_MEMBERS"] as BitFieldResolvable<
+      IntentsString,
+      number
+    >,
+    options: {} as ClientOptions,
 
-    } as ClientOptions
+    cache: {
+      MessageManager: 150,
+      PresenceManager: 0,
+      GuildStickerManager: 0,
+      ApplicationCommandManager: 100,
+      GuildBanManager: 0,
+      GuildMemberManager: 30,
+      GuildEmojiManager: 0,
+      BaseGuildEmojiManager: 0,
+      UserManager: 50,
+      GuildInviteManager: 0,
+      GuildScheduledEventManager: 0,
+      ReactionManager: 0,
+      ReactionUserManager: 0,
+      ThreadManager: 10,
+      VoiceStateManager: 0,
+      StageInstanceManager: 0,
+      ThreadMemberManager: 10,
+    } as CacheWithLimitsOptions,
   },
 } as const;
