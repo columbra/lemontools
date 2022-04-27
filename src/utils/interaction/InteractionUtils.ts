@@ -38,7 +38,9 @@ export default class InteractionUtils {
       ],
     });
 
-    const confirm = await interaction.channel?.awaitMessageComponent({
+    if(!interaction.channel) throw new Error("No channel found")
+
+    const confirm = await interaction.channel.awaitMessageComponent({
       componentType: "BUTTON",
       filter: (i) => i.user.id === interaction.user.id,
       time: 60_000,
