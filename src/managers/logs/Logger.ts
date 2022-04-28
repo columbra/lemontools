@@ -9,7 +9,7 @@ import config from "../../config";
 import type LemonTools from "../../LemonTools";
 
 export default class Logger extends Manager {
-  winston = winston.createLogger({
+  public winston = winston.createLogger({
     levels: config.bot.logging.config.levels,
     transports: [
       new winston.transports.Console({
@@ -35,6 +35,6 @@ export default class Logger extends Manager {
     tag: string,
     content: string
   ) {
-    winston.log(level, `< ${tag} > ${content}`);
+    this.winston.log(level, `< ${tag} > ${content}`);
   }
 }
