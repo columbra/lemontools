@@ -1,8 +1,8 @@
 /**
- * @fileoverview Place to import everything
+ * @fileoverview Entry point for the program
  * @since v3.0.0
  */
 
-export default {
+import LemonTools from "./LemonTools";
 
-};
+new LemonTools();

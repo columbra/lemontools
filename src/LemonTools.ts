@@ -17,9 +17,16 @@ export default class LemonTools extends Client {
       intents: config.bot.intents,
       makeCache: Options.cacheWithLimits(config.bot.cache),
     });
+
+    this.start();
   }
 
   async start() {
     await this.login(process.env.BOT_TOKEN);
+    this.Logger.log(
+      "info",
+      "LemonTools",
+      `Logged in as ${this.user?.tag ?? "an unknown user"}`
+    );
   }
 }
