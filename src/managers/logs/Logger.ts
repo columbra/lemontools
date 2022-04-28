@@ -20,9 +20,7 @@ export default class Logger extends Manager {
           winston.format.timestamp({
             format: "YYYY-MM-DD HH:mm:ss.SSS [TZ] ZZ",
           }),
-          winston.format.printf(
-            (info) => `[${info.level}] ${info.message}`
-          )
+          winston.format.printf((info) => `[${info.level}] ${info.message}`)
         ),
       }),
     ],
@@ -32,7 +30,11 @@ export default class Logger extends Manager {
     super(lemontools, "Logger");
   }
 
-  log(level: string, tag: string, content: string) {
+  log(
+    level: keyof typeof config.bot.logging.config.levels,
+    tag: string,
+    content: string
+  ) {
     winston.log(level, `< ${tag} > ${content}`);
   }
 }
