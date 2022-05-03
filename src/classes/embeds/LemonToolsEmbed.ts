@@ -10,7 +10,7 @@ import config from "../../config";
 export default class LemonToolsEmbed extends MessageEmbed {
   constructor(data: MessageEmbedOptions = {}, user?: User) {
     super(data);
-    this.setColor(config.style.colours.primary);
+    if (!data.color) this.setColor(config.style.colours.primary);
     if (user)
       return this.setFooter({
         text: `${user.tag} | Powered by ${config.style.name.short}`,
