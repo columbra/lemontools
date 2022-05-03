@@ -6,6 +6,7 @@
 import CommandCustomContext from "../../classes/commands/CommandCustomContext";
 import { ErrorCodes } from "../../classes/errors/ErrorCode";
 import EventListener from "../../classes/events/EventListener";
+import config from "../../config";
 import InteractionUtils from "../../utils/interaction/InteractionUtils";
 
 export default new EventListener(
@@ -27,6 +28,16 @@ export default new EventListener(
           ErrorCodes.YOU_NO_PERMISSION
         );
     }
+
+    if (
+      command.opts.reqs?.sudo &&
+      !config.bot.sudos.includes(interaction.user.id as any)
+    )
+      return InteractionUtils.standardError(
+        interaction,
+        "You are not worthy of using this command. You need sudo permissions",
+        ErrorCodes.YOU_NOT_WORTHY
+      );
 
     command
       .execute({

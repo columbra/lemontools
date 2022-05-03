@@ -68,5 +68,7 @@ export default {
         },
       },
     },
+
+    sudos: ["330539533546422272"],
   },
 } as const;
