@@ -21,7 +21,7 @@ export interface CommandOpts {
 
 export interface CommandExecuteParams {
   ctx: CommandCustomContext;
-  bot: LemonTools;
+  lemontools: LemonTools;
 }
 
 export type CommandExecute<T = unknown> = (
