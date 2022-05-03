@@ -14,4 +14,7 @@ export default class ErrorCode {
 export enum ErrorCodes {
   UNKNOWN,
   COMMAND_NOT_FOUND,
+  BOT_NO_PERMISSION,
+  YOU_NO_PERMISSION,
+  YOU_NOT_WORTHY,
 }

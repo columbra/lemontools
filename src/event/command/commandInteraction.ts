@@ -19,6 +19,15 @@ export default new EventListener(
         "Command not found",
         ErrorCodes.COMMAND_NOT_FOUND
       );
+    if (command.opts.reqs?.permissions) {
+      if (!interaction.memberPermissions?.has(command.opts.reqs.permissions))
+        return InteractionUtils.standardError(
+          interaction,
+          "You don't have the required permissions",
+          ErrorCodes.YOU_NO_PERMISSION
+        );
+    }
+
     command
       .execute({
         ctx: new CommandCustomContext(lemontools, interaction),

@@ -3,7 +3,10 @@
  * @since v3.0.0
  */
 
-import type { PermissionResolvable } from "discord.js";
+import type {
+  ApplicationCommandOptionData,
+  PermissionResolvable,
+} from "discord.js";
 import type LemonTools from "../../LemonTools";
 import type CommandCustomContext from "./CommandCustomContext";
 
@@ -16,7 +19,8 @@ export interface CommandOpts {
   description: string;
   category: string;
   cooldown?: number;
-  permissions: PermissionResolvable[];
+  options?: ApplicationCommandOptionData[];
+  reqs?: CommandOptsRequirements;
 }
 
 export interface CommandExecuteParams {
@@ -27,3 +31,8 @@ export interface CommandExecuteParams {
 export type CommandExecute<T = unknown> = (
   params: CommandExecuteParams
 ) => Promise<T>;
+
+export interface CommandOptsRequirements {
+  permissions?: PermissionResolvable[];
+  sudo?: boolean;
+}
