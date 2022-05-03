@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Utility struct for error codes
+ * @since v3.0.0
+ */
+
 export default class ErrorCode {
   public time = new Date();
   constructor(public code: ErrorCodes) {}
