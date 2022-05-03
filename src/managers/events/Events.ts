@@ -8,6 +8,7 @@ import type LemonTools from "../../LemonTools";
 import FileSystemUtils from "../../utils/files/FileSystemUtils";
 import type EventListener from "../../classes/events/EventListener";
 import type { ClientEvents } from "discord.js";
+import paths from "path"
 
 export default class Events extends Manager {
   constructor(lemontools: LemonTools) {
@@ -15,7 +16,7 @@ export default class Events extends Manager {
     this.load();
   }
 
-  async load(path = "event/**/*") {
+  async load(path = `${paths.join(__dirname, "../../event")}/**/*`) {
     const events = await FileSystemUtils.importGlob<
       EventListener<keyof ClientEvents>
     >(path);
