@@ -73,5 +73,7 @@ export default {
     },
 
     sudos: ["330539533546422272"],
+
+    testGuild: "937975082582687784",
   },
 } as const;
