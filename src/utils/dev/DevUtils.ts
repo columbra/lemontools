@@ -4,5 +4,5 @@
  */
 
 export default class DevUtils {
-  static isDev = () => !(process.env.ENVIRONMENT === "production");
+  static isDev = () => !(process.env.MODE === "prod");
 }
