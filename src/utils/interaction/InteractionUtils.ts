@@ -74,6 +74,15 @@ export default class InteractionUtils {
           interaction.user
         ),
       ],
+
+      components: [
+        new MessageActionRow().setComponents([
+          new MessageButton()
+            .setURL(config.style.links.supportDiscord)
+            .setEmoji("🙋")
+            .setLabel(`Support Server`),
+        ]),
+      ],
     });
   }
 

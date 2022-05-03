@@ -20,6 +20,9 @@ export default {
       full: "Lemon Tools",
       short: "Lemon Tools",
     },
+    links: {
+      supportDiscord: "https://discord.gg/Xn3wcwHnZg",
+    },
   },
   bot: {
     // Intents will take precedence over options specified below
