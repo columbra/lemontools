@@ -52,3 +52,5 @@ enum Colours {
   HOMEBREW_COLOR = "#C86E38",
   HOW_LONG_TO_BEAT_COLOR = "#91A1F4",
 }
+
+export default Colours
