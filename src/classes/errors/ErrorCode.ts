@@ -7,8 +7,8 @@ export default class ErrorCode {
   public time = new Date();
   constructor(public code: ErrorCodes) {}
 
-  [Symbol("toString")]() {
-    return `${this.time}>${this.code}`;
+  toString() {
+    return `${this.time.getTime()}>${this.code}`;
   }
 }
 export enum ErrorCodes {

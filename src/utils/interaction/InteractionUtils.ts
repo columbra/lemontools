@@ -67,7 +67,7 @@ export default class InteractionUtils {
             fields: [
               {
                 name: `Error Code`,
-                value: `${new ErrorCode(code)}`,
+                value: new ErrorCode(code).toString(),
               },
             ],
           },
@@ -80,7 +80,8 @@ export default class InteractionUtils {
           new MessageButton()
             .setURL(config.style.links.supportDiscord)
             .setEmoji("🙋")
-            .setLabel(`Support Server`),
+            .setLabel(`Support Server`)
+            .setStyle("LINK"),
         ]),
       ],
     });
