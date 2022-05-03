@@ -76,4 +76,18 @@ export default class InteractionUtils {
       ],
     });
   }
+
+  static async userError(interaction: CommandInteraction, content: string) {
+    interaction.reply({
+      embeds: [
+        new LemonToolsEmbed(
+          {
+            color: config.style.colours.danger,
+            description: content,
+          },
+          interaction.user
+        ),
+      ],
+    });
+  }
 }
