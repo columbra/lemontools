@@ -14,6 +14,7 @@ export default {
   style: {
     colours: {
       primary: "#FEF250",
+      danger: "#F40404",
     },
     name: {
       full: "Lemon Tools",
