@@ -3,7 +3,11 @@
  * @since v3.0.0
  */
 
-import type { CommandInteraction } from "discord.js";
+import type {
+  ButtonInteraction,
+  CommandInteraction,
+  SelectMenuInteraction,
+} from "discord.js";
 import LemonToolsEmbed from "../../classes/embeds/LemonToolsEmbed";
 import { v4 as uuidv4 } from "uuid";
 import { MessageActionRow, MessageButton } from "discord.js";
@@ -52,8 +56,36 @@ export default class InteractionUtils {
     return false;
   }
 
+  static standaloneStdError(content: string, code: ErrorCodes) {
+    return {
+      embeds: [
+        new LemonToolsEmbed({
+          color: config.style.colours.danger,
+          title: `Sorry! Something went wrong on our end`,
+          description: content,
+          fields: [
+            {
+              name: `Error Code`,
+              value: new ErrorCode(code).toString(),
+            },
+          ],
+        }),
+      ],
+
+      components: [
+        new MessageActionRow().setComponents([
+          new MessageButton()
+            .setURL(config.style.links.supportDiscord)
+            .setEmoji("🙋")
+            .setLabel(`Support Server`)
+            .setStyle("LINK"),
+        ]),
+      ],
+    };
+  }
+
   static async standardError(
-    interaction: CommandInteraction,
+    interaction: RepliableInteractions,
     content: string,
     code: ErrorCodes
   ) {
@@ -87,7 +119,24 @@ export default class InteractionUtils {
     });
   }
 
-  static async userError(interaction: CommandInteraction, content: string) {
+  static standaloneUserError(
+    interaction: RepliableInteractions,
+    content: string
+  ) {
+    return {
+      embeds: [
+        new LemonToolsEmbed(
+          {
+            color: config.style.colours.danger,
+            description: content,
+          },
+          interaction.user
+        ),
+      ],
+    };
+  }
+
+  static async userError(interaction: RepliableInteractions, content: string) {
     interaction.reply({
       embeds: [
         new LemonToolsEmbed(
@@ -100,4 +149,18 @@ export default class InteractionUtils {
       ],
     });
   }
+
+  static disableComponents(components: MessageActionRow[]) {
+    for (const component of components) {
+      for (const item of component.components) {
+        item.setDisabled(true);
+      }
+    }
+    return components;
+  }
 }
+
+export type RepliableInteractions =
+  | CommandInteraction
+  | ButtonInteraction
+  | SelectMenuInteraction;
