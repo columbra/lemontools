@@ -11,13 +11,19 @@ export default class CommandCustomContext<S = unknown> {
   public readonly time: Date;
   public readonly timestamp: string;
   public state: Record<string | number | symbol, S> = {};
-  constructor(public lemontools: LemonTools, public interaction: CommandInteraction) {
+  constructor(
+    public lemontools: LemonTools,
+    public interaction: CommandInteraction
+  ) {
     this.time = interaction.createdAt;
     this.timestamp = this.time.toISOString();
   }
 
   public reply(reply: Reply) {
-    return this.interaction.reply(reply);
+    return this.interaction.reply({
+      fetchReply: true,
+      ...reply,
+    });
   }
 
   public async edit(reply: Reply) {
