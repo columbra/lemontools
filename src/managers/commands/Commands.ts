@@ -22,7 +22,7 @@ export default class Commands extends Manager {
   }
 
   async load(path: string = `${paths.join(__dirname, "../../commands")}/**/*`) {
-    const commands = await FileSystemUtils.importGlob<Command>(path);
+    const commands = await FileSystemUtils.importGlob<Command>(path, ".js", ".helper.js");
     await Promise.all(
       commands.map(async (command) => {
         this.commands.set(command.opts.name, command);
