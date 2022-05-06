@@ -7,6 +7,8 @@ enum Emojis {
   // Icons
   SEARCH = "<:search:971335975970156574>",
   EXTERNAL = "<:external:971335975928221706>",
+  REPLY = "<:reply:972087296633495622>",
+  REPLYCONT = "<:replyCont:972087296599945226>",
 }
 
 export default Emojis;
