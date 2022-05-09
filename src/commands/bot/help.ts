@@ -3,11 +3,7 @@
  * @since v3.0.0
  */
 
-import {
-  Message,
-  MessageActionRow,
-  MessageSelectMenu,
-} from "discord.js";
+import { Message, MessageActionRow, MessageSelectMenu } from "discord.js";
 import Command from "../../classes/commands/Command";
 import Reply from "../../classes/commands/CommandCustomReply";
 import LemonToolsEmbed from "../../classes/embeds/LemonToolsEmbed";
@@ -17,6 +13,7 @@ import crypto from "node:crypto";
 import Emojis from "../../utils/constants/Emojis";
 import { ErrorCodes } from "../../classes/errors/ErrorCode";
 import { commandSearch } from "./helper/commandSearch.helper";
+import { PromoRow } from "../../utils/constants/Components";
 
 export default new Command(
   {
@@ -150,8 +147,22 @@ export default new Command(
       // Slice off UUID & _
       const query = value.slice(37);
 
-      if (query === "search")
-        commandSearch(ctx, session, lemontools, i);
+      if (query === "search") commandSearch(ctx, session, lemontools, i);
+      else {
+        i.update(
+          new Reply({
+            embeds: [
+              new LemonToolsEmbed(
+                {
+                  description: "Click the buttons below to select an action.",
+                },
+                ctx.interaction.user
+              ),
+            ],
+            components: [PromoRow],
+          })
+        );
+      }
     });
     coll.on("end", () => {
       const { components } = reply;
@@ -161,5 +172,3 @@ export default new Command(
     });
   }
 );
-
-
