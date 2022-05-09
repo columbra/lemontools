@@ -81,6 +81,8 @@ export default new Command(
       );
       return ctx.reply(new Reply(embed));
     }
+    // IF THE USER USES /help WITHOUT PARAMS
+    // OPEN A HELP MENU
 
     // Generate unique session UUID
     // This makes sure only the original user can interaction with their own help menu
@@ -97,8 +99,10 @@ export default new Command(
       },
       ctx.interaction.user
     );
+
+    // Generate the menu
     const actionChoices = new MessageActionRow().addComponents([
-      new MessageSelectMenu({})
+      new MessageSelectMenu()
         .setPlaceholder("Select an action")
         .setCustomId(`${session}_actionselect`)
         .addOptions([
@@ -116,48 +120,48 @@ export default new Command(
           },
         ]),
     ]);
-    const reply = await ctx.reply(
+
+    // Send reply
+    await ctx.reply(
       new Reply({
         embeds: [embed],
         components: [actionChoices],
       })
     );
-    if (!(reply instanceof Message))
-      return ctx.followUp(
-        new Reply(
-          InteractionUtils.standaloneStdError(
-            "Something went wrong fetching the message.",
-            ErrorCodes.MESSAGE_FETCH_RETURNED_APIMESSAGE
-          )
-        )
-      );
-    ctx.state.reply = reply;
-    const coll = reply.createMessageComponentCollector({
-      componentType: "SELECT_MENU",
-      // Check session is the same
-      filter: (i) => i.customId.includes(session),
-      time: 69420, // ms
-    });
-    coll.on("collect", (i) => {
-      if (i.user.id !== ctx.interaction.user.id)
-        return i.reply({
-          ...new Reply(
-            InteractionUtils.standaloneUserError(i, "Not your command!")
-          ),
-          ephemeral: true,
-        });
-      const [value] = i.values;
-      // Slice off UUID & _
-      const query = value.slice(37);
 
-      if (query === "search") commandSearch(ctx, session, lemontools, i);
-      else {
-        i.update(
+    // // Add reply to the state
+    // ctx.state.reply = reply;
+
+    const selection = await ctx.interaction.channel
+      ?.awaitMessageComponent({
+        filter: (i) =>
+          i.customId.includes(`${session}_`) &&
+          i.user.id === ctx.interaction.user.id,
+        componentType: "SELECT_MENU",
+        time: 60000, // ms
+      })
+      .catch(() => null);
+
+    // If selection expired, disabled components
+    if (selection === null)
+      return ctx.interaction.editReply({
+        components: InteractionUtils.disableComponents([actionChoices]),
+      });
+
+    switch (selection?.customId) {
+      case `${session}_search`:
+        // Open command search dialogue
+        commandSearch(ctx, session, lemontools, selection);
+        break;
+
+      case `${session}_links`:
+        // Open links dialogue
+        selection.update(
           new Reply({
             embeds: [
               new LemonToolsEmbed(
                 {
-                  description: "Click the buttons below to select an action.",
+                  description: `Click the buttons below to see select an action.`,
                 },
                 ctx.interaction.user
               ),
@@ -165,13 +169,6 @@ export default new Command(
             components: [PromoRow],
           })
         );
-      }
-    });
-    coll.on("end", () => {
-      const { components } = reply;
-      ctx.interaction.editReply({
-        components: InteractionUtils.disableComponents(components),
-      });
-    });
+    }
   }
 );
