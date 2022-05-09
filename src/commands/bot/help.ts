@@ -50,7 +50,7 @@ export default new Command(
                 command.opts.options
                   ? ` ${command.opts.options
                       .map(
-                        (o: any) =>
+                        (o) =>
                           `${o.required ? "<" : "["}${o.name}${
                             o.required ? ">" : "]"
                           }`
