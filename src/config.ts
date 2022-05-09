@@ -22,6 +22,10 @@ export default {
     },
     links: {
       supportDiscord: "https://discord.gg/Xn3wcwHnZg",
+      // Permissions integer, used to generate invites
+      permissions: BigInt(515463564358),
+      inviteLink: `https://discord.com/api/oauth2/authorize?client_id=896309687136436234&permissions=515463564358&scope=bot%20applications.commands`,
+      website: "https://compositr.dev/lemontools"
     },
   },
   bot: {
