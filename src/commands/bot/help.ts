@@ -79,8 +79,11 @@ export default new Command(
         },
         ctx.interaction.user
       );
-      ctx.reply(new Reply(embed));
+      return ctx.reply(new Reply(embed));
     }
+
+    // Generate unique session UUID
+    // This makes sure only the original user can interaction with their own help menu
     const session = crypto.randomUUID();
     const embed = new LemonToolsEmbed(
       {
