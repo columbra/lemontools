@@ -5,6 +5,8 @@
 
 import type {
   ApplicationCommandOptionData,
+  ApplicationCommandSubCommandData,
+  ApplicationCommandSubGroupData,
   PermissionResolvable,
 } from "discord.js";
 import type LemonTools from "../../LemonTools";
@@ -19,7 +21,10 @@ export interface CommandOpts {
   description: string;
   category: string;
   cooldown?: number;
-  options?: ApplicationCommandOptionData[];
+  options?: Exclude<
+    ApplicationCommandOptionData,
+    ApplicationCommandSubCommandData | ApplicationCommandSubGroupData
+  >[];
   reqs?: CommandOptsRequirements;
 }
 
