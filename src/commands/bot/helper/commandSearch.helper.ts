@@ -64,7 +64,7 @@ export async function commandSearch(
       ],
     })
   );
-  const coll = (ctx.state.reply as Message).createMessageComponentCollector({
+  const coll = ctx.interaction.channel!.createMessageComponentCollector({
     componentType: "SELECT_MENU",
     filter: (i) =>
       i.customId.includes(`${newSession}_s`) &&
@@ -80,7 +80,7 @@ export async function commandSearch(
     i.deferUpdate();
   });
 
-  const submit = await (ctx.state.reply as Message).awaitMessageComponent({
+  const submit = await ctx.interaction.channel!.awaitMessageComponent({
     componentType: "BUTTON",
     time: 600000,
     filter: (i) => i.user.id === ctx.interaction.user.id,
@@ -89,7 +89,7 @@ export async function commandSearch(
     return ctx.interaction.editReply({
       components: [
         ...InteractionUtils.disableComponents(
-          (await (ctx.state.reply as Message).fetch(true)).components
+          (await ctx.fetchReply())?.components as MessageActionRow[]
         ),
       ],
     });
@@ -111,7 +111,7 @@ export async function commandSearch(
           )
         )
       );
-    ctx.edit(
+    submit.update(
       new Reply({
         embeds: [
           new LemonToolsEmbed(
@@ -124,7 +124,7 @@ export async function commandSearch(
         ],
         components: [
           ...InteractionUtils.disableComponents(
-            (await (ctx.state.reply as Message).fetch(true)).components
+            (await ctx.fetchReply())?.components as MessageActionRow[]
           ),
         ],
       })

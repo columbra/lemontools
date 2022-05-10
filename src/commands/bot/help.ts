@@ -148,7 +148,7 @@ export default new Command(
         components: InteractionUtils.disableComponents([actionChoices]),
       });
 
-    switch (selection?.customId) {
+    switch (selection?.values[0]) {
       case `${session}_search`:
         // Open command search dialogue
         commandSearch(ctx, session, lemontools, selection);
