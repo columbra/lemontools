@@ -13,6 +13,9 @@ enum Emojis {
   ADDUSER = "<:adduser:972098874309238914>",
   HELP = "<:help:972098873759760395>",
   GLOBE = "<:globe:972099981106372628>",
+
+  // Animated
+  COINFLIP = "<a:coinflip:974135194200182854>",
 }
 
 export default Emojis;
