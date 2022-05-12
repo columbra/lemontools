@@ -27,8 +27,6 @@ export default class CommandCustomContext<S = unknown> {
   }
 
   public async edit(reply: Reply) {
-    if (!this.interaction.replied)
-      throw new TypeError(`Cannot edit a message that hasn't been replied to`);
     return await this.interaction.editReply(reply);
   }
 
