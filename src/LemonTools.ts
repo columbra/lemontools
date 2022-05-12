@@ -8,6 +8,7 @@ import config from "./config";
 import Commands from "./managers/commands/Commands";
 import Events from "./managers/events/Events";
 import Logger from "./managers/logs/Logger";
+import DevUtils from "./utils/dev/DevUtils";
 
 export default class LemonTools extends Client {
   // Managers
@@ -32,5 +33,6 @@ export default class LemonTools extends Client {
       "LemonTools",
       `Logged in as ${this.user?.tag ?? "an unknown user"}`
     );
+    if(DevUtils.isDev()) this.Logger.log("warn", "LemonTools", `Developer mode enabled. Only the development server will receive updates.`)
   }
 }
