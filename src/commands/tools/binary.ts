@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Translate binary to text and vice versa
+ * @since v3.0.0
+ */
+
 import Command from "../../classes/commands/Command";
 import Reply from "../../classes/commands/CommandCustomReply";
 import LemonToolsEmbed from "../../classes/embeds/LemonToolsEmbed";
