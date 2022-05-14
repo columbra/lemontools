@@ -8,6 +8,13 @@
     <img src="https://ko-fi.com/img/githubbutton_sm.svg" />
   </a>
   <br>
+  <a href="https://railway.app?referralCode=compositr">
+    <img src="https://img.shields.io/static/v1?label=Hosted%20on&message=Railway&color=853BCE&style=for-the-badge&logo=railway">
+    <img src="https://img.shields.io/github/issues/compositr/lemontools?style=for-the-badge">
+    <img src="	https://img.shields.io/github/stars/compositr/lemontools?style=for-the-badge">
+    <img src="https://img.shields.io/github/license/compositr/lemontools?style=for-the-badge">
+  </a>
+  <br>
 
 [Discord Server](https://discord.gg/Xn3wcwHnZg) | [Website](https://compositr.dev/lemontools) | [Donate 💛](https://ko-fi.com/B0B2AAOTI)
 
