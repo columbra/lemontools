@@ -22,7 +22,7 @@
     "winston": "^3.7.2"
   },
   "engines": {
-    "node": "17.9.0"
+    "node": "18.1.0"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
