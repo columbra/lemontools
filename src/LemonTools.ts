@@ -9,12 +9,14 @@ import Commands from "./managers/commands/Commands";
 import Events from "./managers/events/Events";
 import Logger from "./managers/logs/Logger";
 import DevUtils from "./utils/dev/DevUtils";
+import Cache from "./managers/cache/Cache";
 
 export default class LemonTools extends Client {
   // Managers
   public Logger = new Logger(this);
-  public Commands = new Commands(this)
-  public Events = new Events(this)
+  public Commands = new Commands(this);
+  public Events = new Events(this);
+  public Cache = new Cache(this);
 
   constructor() {
     super({
@@ -33,6 +35,11 @@ export default class LemonTools extends Client {
       "LemonTools",
       `Logged in as ${this.user?.tag ?? "an unknown user"}`
     );
-    if(DevUtils.isDev()) this.Logger.log("warn", "LemonTools", `Developer mode enabled. Only the development server will receive updates.`)
+    if (DevUtils.isDev())
+      this.Logger.log(
+        "warn",
+        "LemonTools",
+        `Developer mode enabled. Only the development server will receive updates.`
+      );
   }
 }

@@ -5,14 +5,13 @@
 
 import axios from "axios";
 import type { MessageEmbedOptions } from "discord.js";
-import type LemonTools from "../../LemonTools";
 
 export default class Apod {
   static async get() {
     const { data } = await axios.get(
       `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_KEY}`
     );
-    return {
+    const embed = {
       title: data.title,
       description: data.description,
       image: {
@@ -25,6 +24,8 @@ export default class Apod {
       },
       timestamp: new Date(),
     } as MessageEmbedOptions;
+
+    return embed;
   }
 }
 
