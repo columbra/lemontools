@@ -25,7 +25,7 @@ export default {
       // Permissions integer, used to generate invites
       permissions: BigInt(515463564358),
       inviteLink: `https://discord.com/api/oauth2/authorize?client_id=896309687136436234&permissions=515463564358&scope=bot%20applications.commands`,
-      website: "https://compositr.dev/lemontools"
+      website: "https://compositr.dev/lemontools",
     },
   },
   bot: {
@@ -79,5 +79,9 @@ export default {
     sudos: ["330539533546422272"],
 
     testGuild: "937975082582687784",
+  },
+  diskcache: {
+    path: "/tmp/lemontools/cache.json",
+    sweepEvery: 10_000, // milliseconds
   },
 } as const;
