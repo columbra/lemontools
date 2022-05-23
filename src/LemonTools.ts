@@ -10,6 +10,7 @@ import Events from "./managers/events/Events";
 import Logger from "./managers/logs/Logger";
 import DevUtils from "./utils/dev/DevUtils";
 import Cache from "./managers/cache/Cache";
+import Resources from "./managers/logs/Resources";
 
 export default class LemonTools extends Client {
   // Managers
@@ -17,6 +18,7 @@ export default class LemonTools extends Client {
   public Commands = new Commands(this);
   public Events = new Events(this);
   public Cache = new Cache(this);
+  public Resources = new Resources(this)
 
   constructor() {
     super({
