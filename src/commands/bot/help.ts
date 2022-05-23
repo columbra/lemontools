@@ -11,7 +11,6 @@ import InteractionUtils from "../../utils/interaction/InteractionUtils";
 import StringUtils from "../../utils/string/StringUtils";
 import crypto from "node:crypto";
 import Emojis from "../../utils/constants/Emojis";
-import { ErrorCodes } from "../../classes/errors/ErrorCode";
 import { commandSearch } from "./helper/commandSearch.helper";
 import { PromoRow } from "../../utils/constants/Components";
 
