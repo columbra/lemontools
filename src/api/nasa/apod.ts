@@ -5,15 +5,17 @@
 
 import axios from "axios";
 import type { MessageEmbedOptions } from "discord.js";
+import type APIWrapper from "../../utils/typings/api/APIWrapper";
 
-export default class Apod {
+export default class Apod implements APIWrapper {
+  name = "apod";
   static async get() {
     const { data } = await axios.get(
       `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_KEY}`
     );
     const embed = {
       title: data.title,
-      description: data.description,
+      description: data.explanation,
       image: {
         url: data.hdurl,
       },
