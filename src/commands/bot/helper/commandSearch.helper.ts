@@ -20,7 +20,9 @@ export async function commandSearch(
   lemontools: LemonTools,
   i: SelectMenuInteraction
 ) {
-  const newSession = crypto.randomUUID();
+  const newSession = crypto.randomUUID({
+    disableEntropyCache: true,
+  });
   const categories = new Set(
     Array.from(lemontools.Commands.commands.values()).map(
       (c) => c.opts.category
@@ -77,14 +79,19 @@ export async function commandSearch(
     const values = i.values.map((v) => v.slice(37));
     if (type === "category") filters[0] = [...values];
 
-    i.deferUpdate();
+    await i.deferUpdate();
   });
 
   const submit = await ctx.interaction.channel!.awaitMessageComponent({
     componentType: "BUTTON",
-    time: 600000,
-    filter: (i) => i.user.id === ctx.interaction.user.id,
+    time: 600_000,
+    // The line below is the sole cause of 2+ hours of developer frustration
+    // Please do not touch this line ever again
+    filter: (i) =>
+      i.customId.includes(`${newSession}_s`) &&
+      i.user.id === ctx.interaction.user.id,
   });
+
   if (!submit)
     return ctx.interaction.editReply({
       components: [
@@ -93,6 +100,7 @@ export async function commandSearch(
         ),
       ],
     });
+
   if (submit.customId.includes("_submit")) {
     // Conversion from iterable to array needed for filter
     const filtered = Array.from(lemontools.Commands.commands.values()).filter(
@@ -111,7 +119,7 @@ export async function commandSearch(
           )
         )
       );
-    submit.update(
+    return await submit.update(
       new Reply({
         embeds: [
           new LemonToolsEmbed(
@@ -124,16 +132,16 @@ export async function commandSearch(
         ],
         components: [
           ...InteractionUtils.disableComponents(
-            (await ctx.fetchReply())?.components as MessageActionRow[]
+            (
+              await ctx.fetchReply()
+            )?.components as MessageActionRow[]
           ),
         ],
       })
     );
-
-    return;
   }
   if (submit.customId.includes("_cancel")) {
-    return submit.update(
+    return await submit.update(
       new Reply(
         new LemonToolsEmbed(
           {

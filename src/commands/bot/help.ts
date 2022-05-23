@@ -150,12 +150,11 @@ export default new Command(
     switch (selection?.values[0]) {
       case `${session}_search`:
         // Open command search dialogue
-        commandSearch(ctx, session, lemontools, selection);
-        break;
+        return commandSearch(ctx, session, lemontools, selection);
 
       case `${session}_links`:
         // Open links dialogue
-        selection.update(
+        return selection.update(
           new Reply({
             embeds: [
               new LemonToolsEmbed(
