@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Number utils
+ * @since v3.0.0
+ */
+
 export default class NumberUtils {
   /**
    * Generate a random number between min and max
