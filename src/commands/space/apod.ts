@@ -13,18 +13,22 @@ export default new Command(
     options: [],
   },
   async ({ lemontools, ctx }) => {
+    await ctx.interaction.deferReply();
     try {
       const apod = await Apod.get();
 
-      return ctx.reply(
+      return ctx.edit(
         new Reply(new LemonToolsEmbed(apod, ctx.interaction.user))
       );
     } catch (e) {
       lemontools.Logger.log("error", "APOD", `Error fetching apod ${e}`);
-      return InteractionUtils.standardError(
-        ctx.interaction,
-        `Sorry, but the Astronomy Picture of the Day is not avaliable right now`,
-        ErrorCodes.FETCH_API_ERROR
+      return ctx.edit(
+        new Reply(
+          InteractionUtils.standaloneStdError(
+            `Sorry, but the Astronomy Picture of the Day is not avaliable right now.`,
+            ErrorCodes.EXTERNAL_API_ERROR
+          )
+        )
       );
     }
   }
