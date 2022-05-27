@@ -48,7 +48,7 @@ export default new EventListener(
         lemontools.Logger.log(
           "error",
           "CommandExecute",
-          `Error executing command ${command.opts.name}. ${err}`
+          `Error executing command ${command.opts.name}. ${err} STACK: ${err.stack}`
         )
       );
   }
