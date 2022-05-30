@@ -4,5 +4,5 @@ node_modules/
 # Build Output
 build
 
-# Development Envars
-.env.dev
+# Envars
+.env*
