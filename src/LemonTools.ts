@@ -11,6 +11,7 @@ import Logger from "./managers/logs/Logger";
 import DevUtils from "./utils/dev/DevUtils";
 import Cache from "./managers/cache/Cache";
 import Resources from "./managers/logs/Resources";
+import dotenv from "dotenv";
 
 export default class LemonTools extends Client {
   // Managers
@@ -18,7 +19,7 @@ export default class LemonTools extends Client {
   public Commands = new Commands(this);
   public Events = new Events(this);
   public Cache = new Cache(this);
-  public Resources = new Resources(this)
+  public Resources = new Resources(this);
 
   constructor() {
     super({
@@ -37,11 +38,29 @@ export default class LemonTools extends Client {
       "LemonTools",
       `Logged in as ${this.user?.tag ?? "an unknown user"}`
     );
-    if (DevUtils.isDev())
+
+    // Load environment variables
+
+    // Common environment variables
+    dotenv.config({
+      path: `${__dirname}/../.env.shared`,
+    });
+    if (DevUtils.isDev()) {
+      // Development environment variables
+      dotenv.config({
+        path: `${__dirname}/../.env.dev`,
+      });
+
       this.Logger.log(
         "warn",
         "LemonTools",
         `Developer mode enabled. Only the development server will receive updates.`
       );
+    } else {
+      // Production environment variables
+      dotenv.config({
+        path: `${__dirname}/../.env.prod`,
+      });
+    }
   }
 }
