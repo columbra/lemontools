@@ -32,13 +32,6 @@ export default class LemonTools extends Client {
   }
 
   async start() {
-    await this.login(process.env.BOT_TOKEN);
-    this.Logger.log(
-      "info",
-      "LemonTools",
-      `Logged in as ${this.user?.tag ?? "an unknown user"}`
-    );
-
     // Load environment variables
 
     // Common environment variables
@@ -62,5 +55,13 @@ export default class LemonTools extends Client {
         path: `${__dirname}/../.env.prod`,
       });
     }
+
+    
+    await this.login(process.env.BOT_TOKEN);
+    this.Logger.log(
+      "info",
+      "LemonTools",
+      `Logged in as ${this.user?.tag ?? "an unknown user"}`
+    );
   }
 }
