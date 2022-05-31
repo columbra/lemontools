@@ -1,0 +1,9 @@
+.gitignore
+node_modules/
+dist/
+build/
+LICENSES/
+.env
+README.md
+.env
+CHANGELOG.md
