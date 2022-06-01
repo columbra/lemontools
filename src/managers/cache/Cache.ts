@@ -9,6 +9,7 @@ import fs from "fs/promises";
 import path from "path";
 import config from "../../config";
 import Flatted from "flatted";
+import { DateTime } from "luxon";
 
 export default class Cache extends Manager {
   readonly #path: string;
@@ -28,7 +29,7 @@ export default class Cache extends Manager {
   public async set<T>(key: string, value: T, expires?: number) {
     const cache = await this.#getCache();
     // Intiate sweep if needed
-    if (Date.now() > this.#sweepScheduled) this.#sweep();
+    if (DateTime.now().toMillis() > this.#sweepScheduled) this.#sweep();
     cache[key] = {
       value,
       timestamp: Date.now(),
@@ -45,7 +46,7 @@ export default class Cache extends Manager {
   public async get<T = unknown>(key: string): Promise<undefined | T> {
     const cache = await this.#getCache();
     // Intiate sweep if needed
-    if (Date.now() > this.#sweepScheduled) this.#sweep();
+    if (DateTime.now().toMillis() > this.#sweepScheduled) this.#sweep();
     return cache[key].value as undefined | T;
   }
 
