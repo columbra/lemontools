@@ -2,7 +2,7 @@
  * @fileoverview A huge colours enum for various brands
  * @author Switchblade Authors
  * @license BSD-4-Clause
- * 
+ *
  */
 enum Colours {
   REDDIT_COLOR = "#FF4500",
@@ -51,6 +51,8 @@ enum Colours {
   DRAWCARD_COLOR = "#F06161",
   HOMEBREW_COLOR = "#C86E38",
   HOW_LONG_TO_BEAT_COLOR = "#91A1F4",
+
+  DISCORD_EMBED_COLOR = "#2F3136",
 }
 
-export default Colours
+export default Colours;
