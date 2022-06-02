@@ -79,6 +79,12 @@ export default {
     sudos: ["330539533546422272"],
 
     testGuild: "937975082582687784",
+
+    collectors: {
+      // Timeout for long collectors to wait for a response
+      // Seconds
+      longTimeout: 60_000
+    }
   },
   diskcache: {
     path: "/tmp/lemontools/cache.json",
