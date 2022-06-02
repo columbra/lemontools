@@ -53,6 +53,7 @@ enum Colours {
   HOW_LONG_TO_BEAT_COLOR = "#91A1F4",
 
   DISCORD_EMBED_COLOR = "#2F3136",
+  LEMONTOOLS = "#FEF250",
 }
 
 export default Colours;
