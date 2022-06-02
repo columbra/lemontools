@@ -14,6 +14,7 @@ import Command from "../../classes/commands/Command";
 import Reply from "../../classes/commands/CommandCustomReply";
 import LemonToolsEmbed from "../../classes/embeds/LemonToolsEmbed";
 import { ErrorCodes } from "../../classes/errors/ErrorCode";
+import config from "../../config";
 import Colours from "../../utils/constants/Colours";
 import InteractionUtils from "../../utils/interaction/InteractionUtils";
 
@@ -53,7 +54,7 @@ export default new Command(
     const coll = message.createMessageComponentCollector({
       componentType: "BUTTON",
       filter: (i) => i.user.id === ctx.interaction.user.id,
-      time: 60_000,
+      time: config.bot.collectors.longTimeout,
     });
 
     coll.on("collect", (i) => {
@@ -77,7 +78,7 @@ export default new Command(
         i.update({
           components: [
             ...InteractionUtils.disableComponents(
-              i.message.components as MessageActionRow[]
+              buttons[shift]
             ),
           ],
         });
@@ -102,6 +103,12 @@ export default new Command(
           }),
         ],
         components: buttons[shift],
+      });
+    });
+
+    coll.on("end", () => {
+      message.edit({
+        components: InteractionUtils.disableComponents(buttons[shift]),
       });
     });
   }
