@@ -8,7 +8,9 @@
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "precopy": "mkdir -p ./build/asset",
+    "copy": "cp -r src/asset/**/ build/asset"
   },
   "dependencies": {
     "@types/luxon": "^2.3.2",

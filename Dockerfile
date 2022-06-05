@@ -19,7 +19,7 @@ RUN yarn run tsc -p tsconfig.json
 
 # Copy assets
 RUN mkdir -p build/asset
-RUN cp -r src/asset/**/* build/asset
+RUN cp -r src/asset/**/ build/asset
 
 # Environment variables
 
