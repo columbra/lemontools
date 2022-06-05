@@ -1,6 +1,4 @@
-import { createCanvas } from "canvas";
 import MemeGenerator from "../../classes/generator/MemeGenerator";
-import sizeOf from "image-size";
 
 export const mastermind = new MemeGenerator(
   {

@@ -8,7 +8,7 @@ import type LemonTools from "../../LemonTools";
 import Command from "../commands/Command";
 import sizeOf from "image-size";
 import path from "path";
-import { createCanvas, loadImage } from "canvas";
+import { Canvas, createCanvas, loadImage } from "canvas";
 
 export default class MemeGenerator {
   generate: WrapperFunction;
@@ -38,6 +38,26 @@ export default class MemeGenerator {
     return loadImage(
       path.join(__dirname, "../../asset/meme/", this.opts.image)
     );
+  }
+
+  public makeTextSize(
+    canvas: Canvas,
+    text: string,
+    font: string,
+    baseSize: number
+  ) {
+    const context = canvas.getContext("2d");
+
+    let size = baseSize;
+
+    do {
+      // Assign the font to the context and decrement it so it can be measured again
+      context.font = `${(size -= 10)}px ${font}`;
+      // Compare pixel width of the text to the canvas minus the approximate avatar size
+    } while (context.measureText(text).width > canvas.width / 2);
+
+    // Return the result to use in the actual canvas
+    return context.font;
   }
 
   public toCommand() {
