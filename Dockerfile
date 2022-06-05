@@ -8,6 +8,7 @@ COPY yarn.lock package.json ./
 COPY .env.dev .env.prod .env.shared ./
 
 # Install dependencies
+RUN apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 RUN yarn --prod
 RUN yarn add typescript
 
@@ -15,6 +16,10 @@ RUN yarn add typescript
 COPY . .
 
 RUN yarn run tsc -p tsconfig.json
+
+# Copy assets
+RUN mkdir -p build/asset
+RUN cp -r src/asset/**/* build/asset
 
 # Environment variables
 
