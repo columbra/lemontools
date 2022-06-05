@@ -2,10 +2,10 @@ import { createCanvas } from "canvas";
 import MemeGenerator from "../../classes/generator/MemeGenerator";
 import sizeOf from "image-size";
 
-export const mastermind = new MemeGenerator(
+export const thinkaboutit = new MemeGenerator(
   {
-    image: "mastermind.png",
-    name: "mastermind",
+    image: "thinkaboutit.jpg",
+    name: "thinkaboutit",
     texts: ["top", , "bottom"],
   },
   async function (opts) {
@@ -16,10 +16,10 @@ export const mastermind = new MemeGenerator(
     ctx.font = "69px Impact";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(opts.topText!, canvas.width / 2, 60);
-    ctx.fillText(opts.bottomText!, canvas.width / 2, canvas.height - 65);
+    ctx.fillText(opts.topText!, canvas.width / 2, 80);
+    ctx.fillText(opts.bottomText!, canvas.width / 2, canvas.height - 50);
     return canvas.toBuffer("image/png");
   }
 );
 
-export default mastermind.toCommand();
+export default thinkaboutit.toCommand();
