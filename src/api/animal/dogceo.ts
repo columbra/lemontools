@@ -11,7 +11,7 @@ export default class DogCEO implements APIWrapper {
   name = "dogceo";
   static async get() {
     const { data } = await axios.get(`https://dog.ceo/api/breeds/image/random`);
-    if (!data.success) throw new Error(`DogCEO API Error: ${data.message}`);
+    if (!data.status) throw new Error(`DogCEO API Error: ${data.message}`);
 
     const embed: MessageEmbedOptions = {
       image: {
