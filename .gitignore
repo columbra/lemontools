@@ -6,3 +6,7 @@ build
 
 # Envars
 .env*
+
+# Config Files
+.vscode/
+.DS_Store
