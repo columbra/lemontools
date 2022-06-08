@@ -32,7 +32,7 @@ export async function commandSearch(
     {
       title: "Search Commands",
       description:
-        "Use the filters below to narrow down your search. Already got a specific command in mind? Use `/help command` with the command name to see specific information about that command.",
+        `Use the filters below to narrow down your search. Already got a specific command in mind? Use \`/help command\` with the command name to see specific information about that command.\n\nSearching ${lemontools.Commands.commands.size} commands in ${categories.size} categories.`,
     },
     ctx.interaction.user
   );
