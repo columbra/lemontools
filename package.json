@@ -1,11 +1,12 @@
 {
   "name": "lemontools",
-  "version": "2.2.1-patch1",
+  "version": "2.3.0",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.21.0",
     "@types/js-yaml": "^4.0.5",
     "axios": "^0.24.0",
     "canvas": "^2.9.0",
+    "capture-website": "^2.3.0",
     "chalk": "4.x.x",
     "chart.js": "^3.7.0",
     "chartjs-node-canvas": "^4.1.5",
@@ -15,11 +16,10 @@
     "glob": "^7.2.0",
     "js-yaml": "^4.1.0",
     "mathjs": "^10.0.1",
-    "mongoose": "^6.1.4",
+    "mongoose": "^6.4.6",
     "punycode": "^2.1.1",
     "rimraf": "^3.0.2",
     "serialize-javascript": "^6.0.0",
-    "tslib": "^2.3.1",
     "typescript": "^4.5.5",
     "winston": "^3.3.3"
   },
@@ -39,6 +39,5 @@
   },
   "engines": {
     "node": "^16.14.0"
-  },
-  "packageManager": "yarn@3.2.0"
+  }
 }

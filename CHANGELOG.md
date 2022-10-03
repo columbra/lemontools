@@ -6,6 +6,11 @@ layout: single
 
 This is the changelog page for Lemon Tools. _Most,_ but not all changes will be recorded in th
 
+# 2.3.0
+
+## What's new
+- Added bot creator to /info
+
 # 2.2.1-patch1
 
 ## Fixes
