@@ -1,6 +1,6 @@
 
 # Lemon Tools V3 is coming soon!
-We are developing V3 behind the scenes. The new version will be written in Python with the Pycord library. It will include all the same features as V2 + more such as anti raid, anti nuke, captcha verification and way more! You can find the repo at [https://github.com/Maplerxyz/lemontoolsv3](https://github.com/Maplerxyz/lemontoolsv3). Once the new version fully releases we will create a new branch on this repo.
+We are developing V3 behind the scenes. The new version will be written in Python with the Pycord library. It will include all the same features as V2 + more such as anti raid, anti nuke, captcha verification and way more! Once the new version fully releases we will create a new branch on this repo.
 
 # Lemon Tools Source Code
 
