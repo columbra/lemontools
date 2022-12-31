@@ -1,2 +1,0 @@
-Lemon = #f7f619
-Lemon Pale = #ffffc7
