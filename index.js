@@ -60,7 +60,7 @@ module.exports = client;
 client.login(AuthenticationToken)
   .catch((err) => {
     console.error("[ISSUE] An error has occured while logging in to the bot. Please check the token and try again.");
-    console.error("[USSUE] Error from Discord's API:" + err);
+    console.error("[ISSUE] Error from Discord's API:" + err);
     return process.exit();
   });
 
