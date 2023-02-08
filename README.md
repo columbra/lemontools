@@ -1,5 +1,5 @@
 # Lemon Tools V3 Bot - Introduction:
-A Discord bot made with the npm package discord.js version 14 and it handles Prefix and Slash commands. With many commands and more to come. **Project made with ❤ by Mapler#9195.**<br>
+A Discord bot made with the npm package discord.js version 14 and it handles Prefix and Slash commands. With many commands and more to come. **Project made with ❤ by euphoroid#9195.**<br>
 You can click on the star (⭐️) button above this repository if you liked this project! Thank you all. 🙏
 
 Discord.js Documentation is linked [here](https://discord.js.org/#/docs/discord.js/main/general/welcome).
