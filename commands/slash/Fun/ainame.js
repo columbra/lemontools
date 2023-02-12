@@ -1,5 +1,3 @@
-// create a command that randomly generates a name for a person using ai and returns it as an embed
-
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
