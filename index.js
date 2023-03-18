@@ -34,7 +34,7 @@ const client = new Client({
 
 
 require('https').createServer((req, res) => res.end('Ready.')).listen(3000);
-function http2https(link) {
+// function http2https(link) {
 
 const AuthenticationToken = process.env.TOKEN || config.Client.TOKEN;
 if (!AuthenticationToken) {
