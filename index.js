@@ -1,5 +1,4 @@
 // Thank you, https://github.com/TFAGaming/DiscordJS-V14-Bot-Template for the V14 template!
-// Lemon Tools' git is located here: https://git.compositr.dev/lemontools/lemontools/
 // We also have a github: https://github.com/Compositr/lemontools
 
 const { Client, Partials, Collection, GatewayIntentBits } = require('discord.js');
