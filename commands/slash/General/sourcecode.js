@@ -15,7 +15,7 @@ module.exports = {
             embeds: [
                 new EmbedBuilder()
                     .setTitle("Source Code")
-                    .setDescription("Link to the source code of the bot: \n https://git.compositr.dev/lemontools/lemontools/ \n https://github.com/Compositr/lemontools")
+                    .setDescription("Link to the source code of the bot: https://github.com/columbra/lemontools")
                     .setColor("Yellow")
             ],
             ephemeral: false
