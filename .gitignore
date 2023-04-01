@@ -4,3 +4,4 @@
 .env*
 *.db
 .DS_Store
+build
