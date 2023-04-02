@@ -11,6 +11,9 @@ Discord.js Documentation is linked [here](https://discord.js.org/#/docs/discord.
 • Moderation Commands.<br>
 • Buttons (Coming soon).
 
+# Can't self host?
+No problem! Add our instance of Lemon Tools to your server by clicking this [link](https://discord.com/api/oauth2/authorize?client_id=896309687136436234&permissions=515463564358&scope=bot%20applications.commands). (UPTIME IS NOT GUARANTEED)
+
 # How to setup:
 ### - Requirements:
 
